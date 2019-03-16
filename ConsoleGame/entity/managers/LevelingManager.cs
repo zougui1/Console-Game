@@ -61,7 +61,7 @@ namespace ConsoleGame.entity.managers
 
                     updatedStats = (updatedStats == null) ? "" : updatedStats;
 
-                    updatedStats += (statName + ":" + (int)addStat + ",");
+                    updatedStats += $"{statName}:{(int)addStat},)";
                 }
             }
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGame.items.stuff.armor
 {
-    public abstract class Armor : AbstractStuff
+    public class Armor : AbstractStuff
     {
         public string Category { get; protected set; }
         public int Defense { get; protected set; }

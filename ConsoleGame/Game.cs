@@ -13,21 +13,15 @@ namespace ConsoleGame
 {
     public delegate void Action(object[] args);
 
-    class Game
+    public class Game
     {
         public static Character User { get; set; }
         public static string CurrentLocationType { get; set; }
         public static Town CurrentTown { get; set; }
         public static City CurrentCity { get; set; }
         public static Kingdom CurrentKingdom { get; set; }
-
-
-        private static int s_percentOfMonster = 10;
-        public static int PercentOfMonster
-        {
-            get { return s_percentOfMonster; }
-            set { s_percentOfMonster = value; }
-        }
+        
+        public static int PercentOfMonster { get; set; } = 10;
 
         public static void Init()
         {
@@ -132,8 +126,7 @@ namespace ConsoleGame
         {
             Monster monster = new Monster("Slime");
             monster.Focus = User;
-            Utils.Endl();
-            Utils.Endl();
+            Utils.Endl(2);
             Console.WriteLine("A {0} appears", monster.Name);
             User.Focus = monster;
             Battle(monster);

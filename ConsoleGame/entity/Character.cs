@@ -51,12 +51,12 @@ namespace ConsoleGame.entity
 
             if (Potions > 0)
             {
-                actions[2] = "Drink a potion (" + Potions + ")";
+                actions[2] = $"Drink a potion ({Potions})";
             }
 
             if (HasSpells)
             {
-                actions[3] = "Spells (mana: " + EntityStats.Mana + "/" + EntityStats.MaxMana + ")";
+                actions[3] = $"Spells (mana: {EntityStats.Mana}/{EntityStats.MaxMana})";
             }
 
             Utils.Choices(actions, methods, args);
@@ -111,9 +111,9 @@ namespace ConsoleGame.entity
                 }
                 string spellStr = "";
 
-                spellStr += spell.Name + ": ";
-                spellStr += "power: " + spell.Power + ", ";
-                spellStr += "required mana: " + spell.RequiredMana + ", ";
+                spellStr += $"{spell.Name}: ";
+                spellStr += $"power: {spell.Power}, ";
+                spellStr += $"required mana: {spell.RequiredMana}, ";
                 spellList[index++] = spellStr;
             }
 
@@ -228,8 +228,7 @@ namespace ConsoleGame.entity
             {
                 EntityStats.Experiences -= NeededExperiences;
                 NeededExperiences *= 2;
-                Utils.Endl();
-                Utils.Endl();
+                Utils.Endl(2);
                 Utils.Cconsole.Color("Green").WriteLine("{0} has level up", Name);
                 LevelingManager.LevelUp();
                 Utils.Endl();
@@ -245,8 +244,7 @@ namespace ConsoleGame.entity
 
         public void WinMessage()
         {
-            Utils.Endl();
-            Utils.Endl();
+            Utils.Endl(2);
             Utils.Cconsole.Color("Red").WriteLine("{0} died, {1} won!", Focus.Name, Name);
             Utils.Endl();
             Utils.Cconsole.Color("Cyan").WriteLine("-----------------------------");
@@ -255,17 +253,14 @@ namespace ConsoleGame.entity
             Utils.Cconsole.Color("Blue").WriteLine("XP: {0}/{1}", EntityStats.Experiences + Focus.EntityStats.Experiences, NeededExperiences);
             Utils.Cconsole.Color("Blue").WriteLine("weapon: {0} ({1} damages)", Weapon.Name, Weapon.Damages);
             Utils.Cconsole.Color("Cyan").WriteLine("-----------------------------");
-            Utils.Endl();
-            Utils.Endl();
+            Utils.Endl(2);
         }
 
         public void LooseMessage()
         {
-            Utils.Endl();
-            Utils.Endl();
+            Utils.Endl(2);
             Utils.Cconsole.Color("Red").WriteLine("You died!");
-            Utils.Endl();
-            Utils.Endl();
+            Utils.Endl(2);
         }
     }
 }

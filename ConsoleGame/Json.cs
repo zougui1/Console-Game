@@ -10,7 +10,9 @@ using Newtonsoft.Json.Linq;
 using ConsoleGame.entity;
 using ConsoleGame.entity.classes;
 using ConsoleGame.entity.stats;
+using ConsoleGame.items;
 using ConsoleGame.items.stuff.handed.weapons;
+using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.location;
 using ConsoleGame.location.locationTypes;
@@ -30,13 +32,8 @@ namespace ConsoleGame
         private static string s_buildingsPath = s_dataPath + "/buildings.json";
         private static string s_NPCsPath = s_dataPath + "/NPCs.json";
         private static string s_armorsPath = s_dataPath + "/armors.json";
-
-        private static string s_locationNamespace = "ConsoleGame.location";
-        private static string s_locationTypesNamespace = "ConsoleGame.location.locationTypes";
-        private static string s_itemsNamespace = "ConsoleGame.items";
-        private static string s_handedNamespace = s_itemsNamespace + ".stuff.handed";
-        private static string s_weaponsNamespace = s_itemsNamespace + ".stuff.handed.weapons";
-        private static string s_buildingsNamespace = "ConsoleGame";
+        private static string s_itemsPath = s_dataPath + "/items.json";
+        private static string s_shieldsPath = s_dataPath + "/shields.json";
 
         public static void DataDir()
         {
@@ -67,12 +64,48 @@ namespace ConsoleGame
             }
         }
 
+        private static int GetAndParseId(JToken jToken)
+        {
+            return ParseId(jToken["id"]);
+        }
+
+        private static int ParseId(JToken id)
+        {
+            return int.Parse(id.ToString());
+        }
+
+        public static Item GetItem(int id)
+        {
+            JObject file = GetFile(s_itemsPath);
+            foreach(JToken item in file["data"])
+            {
+                if(GetAndParseId(item) == id)
+                {
+                    return item.ToObject<Item>();
+                }
+            }
+            return null;
+        }
+
+        public static Shield GetShield(int id)
+        {
+            JObject file = GetFile(s_shieldsPath);
+            foreach (JToken shield in file["data"])
+            {
+                if (GetAndParseId(shield) == id)
+                {
+                    return shield.ToObject<Shield>();
+                }
+            }
+            return null;
+        }
+
         public static Armor GetArmor(int id)
         {
             JObject file = GetFile(s_armorsPath);
             foreach(JToken armor in file["data"])
             {
-                if(int.Parse(armor["id"].ToString()) == id)
+                if(GetAndParseId(armor) == id)
                 {
                     switch (armor["Category"].ToString())
                     {
@@ -98,7 +131,7 @@ namespace ConsoleGame
             JObject file = GetFile(s_NPCsPath);
             foreach(JToken NPC in file["data"])
             {
-                if(int.Parse(NPC["id"].ToString()) == id)
+                if(GetAndParseId(NPC) == id)
                 {
                     return NPC.ToObject<NPC>();
                 }
@@ -111,7 +144,7 @@ namespace ConsoleGame
             JObject file = GetFile(s_buildingsPath);
             foreach(JToken building in file["data"])
             {
-                if(int.Parse(building["id"].ToString()) == id)
+                if(GetAndParseId(building) == id)
                 {
                     //TODO condition over the building type to retrieve it with the right class
                     switch (building["Type"].ToString())
@@ -179,7 +212,7 @@ namespace ConsoleGame
             
             foreach (JToken weapon in weapons["data"])
             {
-                if (int.Parse(weapon["id"].ToString()) == id)
+                if (GetAndParseId(weapon) == id)
                 {
                     return weapon.ToObject<Weapon>();
                 }
@@ -193,7 +226,7 @@ namespace ConsoleGame
             JObject file = GetFile(s_locationsPath);
             foreach(JToken location in file["data"])
             {
-                if(int.Parse(location["id"].ToString()) == id)
+                if(GetAndParseId(location) == id)
                 {
                     switch (location["Type"].ToString())
                     {

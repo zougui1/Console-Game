@@ -50,12 +50,13 @@ namespace ConsoleGame
         public CConsole Color(string color)
         {
             Console.ForegroundColor = (ConsoleColor)GetColor(color);
-            return new CConsole();
+            return this;
         }
+
         public CConsole Bg(string color)
         {
             Console.BackgroundColor = (ConsoleColor)GetColor(color);
-            return new CConsole();
+            return this;
         }
 
         public int GetColor(string color)
@@ -78,7 +79,7 @@ namespace ConsoleGame
         }
 
         #region WriteLines
-        public void WriteLine(float value, string color = "White")
+        public void WriteLine(float value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
@@ -171,7 +172,7 @@ namespace ConsoleGame
         #endregion
 
         #region Writes
-        public void Write(float value, string color = "White")
+        public void Write(float value)
         {
             Console.Write(value);
             Console.ResetColor();

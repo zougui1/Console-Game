@@ -10,12 +10,7 @@ namespace ConsoleGame
 {
     public static class Utils
     {
-        static private CConsole s_console = new CConsole();
-
-        static public CConsole Cconsole
-        {
-            get { return s_console; }
-        }
+        static public CConsole Cconsole { get; } = new CConsole();
         public static void Endl(int i = 1)
         {
             for(int j = 0; j < i; ++j)

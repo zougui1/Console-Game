@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace ConsoleGame.entity
+namespace ConsoleGame.entity.NPC
 {
-    public class NPC
+    public class Citizen : AbstractNPC
     {
-        public string Name { get; set; }
         public string Text { get; set; }
-        public string Type { get; set; }
 
-        public NPC()
-        {
-
-        }
+        public Citizen() : base()
+        { }
 
         public void Discussion()
         {
@@ -28,7 +24,5 @@ namespace ConsoleGame.entity
             }
             Utils.Endl();
         }
-
-
     }
 }
