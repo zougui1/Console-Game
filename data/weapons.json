@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "namespace": "Weapon",
+      "Damages": 4,
+      "Type": "Sword",
+      "Name": "Rusty sword",
+      "Description": ""
+    }
+  ]
+}

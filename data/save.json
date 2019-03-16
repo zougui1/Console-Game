@@ -1,0 +1,80 @@
+{
+  "Potions": 2,
+  "NeededExperiences": 14,
+  "Class": "Warrior",
+  "UpdatedStats": null,
+  "HasSpells": false,
+  "Coords": {
+    "X": -16,
+    "Y": -10
+  },
+  "Name": "zou",
+  "EntityStats": {
+    "InitHealth": 15,
+    "InitMana": 0,
+    "Level": 1,
+    "Experiences": 6,
+    "Branch": "warrior",
+    "MaxHealth": 15.0,
+    "Health": 9.0,
+    "MaxMana": 0.0,
+    "Mana": 0.0,
+    "Strength": 5.0,
+    "Resistance": 3.0,
+    "MagicalMight": 0.0,
+    "MagicalMending": 0.0,
+    "Agility": 2.0,
+    "Deftness": 2.0
+  },
+  "Defend": false,
+  "Weapon": {
+    "TwoHanded": false,
+    "Damages": 4,
+    "Stats": {
+      "MaxHealth": 0.0,
+      "Health": 0.0,
+      "MaxMana": 0.0,
+      "Mana": 0.0,
+      "Strength": 0.0,
+      "Resistance": 0.0,
+      "MagicalMight": 0.0,
+      "MagicalMending": 0.0,
+      "Agility": 0.0,
+      "Deftness": 0.0
+    },
+    "Type": "Sword",
+    "TypeDescription": null,
+    "Name": "Rusty sword",
+    "Description": ""
+  },
+  "Focus": null,
+  "DodgeChancePerUnit": 0.1,
+  "CriticalChancePerUnit": 0.15,
+  "Spells": [],
+  "Shield": null,
+  "Head": null,
+  "Torso": {
+    "Category": "Torso",
+    "Defense": 50,
+    "Equipable": [],
+    "Stats": {
+      "MaxHealth": 0.0,
+      "Health": 0.0,
+      "MaxMana": 0.0,
+      "Mana": 0.0,
+      "Strength": 0.0,
+      "Resistance": 0.0,
+      "MagicalMight": 0.0,
+      "MagicalMending": 0.0,
+      "Agility": 0.0,
+      "Deftness": 0.0
+    },
+    "Type": "Chestplate",
+    "TypeDescription": null,
+    "Name": "First chestplate",
+    "Description": null
+  },
+  "Arms": null,
+  "Legs": null,
+  "Feet": null
+}

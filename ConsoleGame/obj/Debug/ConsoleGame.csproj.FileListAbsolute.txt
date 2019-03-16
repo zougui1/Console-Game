@@ -1,0 +1,11 @@
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.exe.config
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.exe
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.pdb
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.csprojAssemblyReference.cache
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.csproj.CoreCompileInputs.cache
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.exe
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.pdb
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Debug\Newtonsoft.Json.dll
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Debug\Newtonsoft.Json.pdb
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Debug\Newtonsoft.Json.xml
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.csproj.CopyComplete

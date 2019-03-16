@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "Name": "Weapon shop",
+      "NPCs": [],
+      "IsLocked": false,
+      "Type": "WeaponShop",
+      "WeaponsId": [
+        0
+      ]
+    }
+  ]
+}

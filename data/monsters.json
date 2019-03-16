@@ -1,0 +1,18 @@
+{
+  "monsters": [
+    {
+      "id": 0,
+      "Name": "Slime",
+      "Health": 13,
+      "Mana": 0,
+      "Strength": 2,
+      "Resistance": 6,
+      "MagicalMight": 0,
+      "MagicalMending": 0,
+      "Agility": 2,
+      "Deftness": 1,
+      "Experiences": 3,
+      "Weapon": 0
+    }
+  ]
+}

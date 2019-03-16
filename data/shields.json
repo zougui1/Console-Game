@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "namespace": "Shield",
+      "Defense": 2,
+      "Type": "LightShield",
+      "Name": "small shield",
+      "Description": ""
+    }
+  ]
+}

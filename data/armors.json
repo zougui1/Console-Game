@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "Category": "Torso",
+      "Name": "First chestplate",
+      "Type": "Chestplate",
+      "Defense": 50
+    }
+  ]
+}
