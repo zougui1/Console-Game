@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using ConsoleGame.building;
+using ConsoleGame.entity.NPC;
 using ConsoleGame.misc.coords;
-using ConsoleGame.entity;
+using ConsoleGame.utils;
 
 namespace ConsoleGame.location
 {
@@ -12,22 +15,27 @@ namespace ConsoleGame.location
     {
         public string Name { get; protected set; }
         public Coords Coords { get; private set; }
-        public dynamic[] Buildings { get; protected set; }
+        public Building[] Buildings { get; protected set; }
         public int[] BuildingsId { get; set; }
-        public NPC[] NPCs { get; protected set; }
+        public Citizen[] Citizens { get; protected set; }
         public int[] NPCsId { get; set; }
         public string Type { get; protected set; }
+        public Church Church { get; protected set; }
+        public ArmorShop ArmorShop { get; set; }
+        public WeaponShop WeaponShop { get; set; }
+        public ItemShop ItemShop { get; set; }
 
-        public Location(string name, Coords coords, dynamic[] buildings)
+        public Location(string name, Coords coords, Building[] buildings)
         {
             Name = name;
             Coords = coords;
             Buildings = buildings;
+            Church = new Church();
         }
 
         public void GetBuildingsById()
         {
-            Buildings = new dynamic[BuildingsId.Length];
+            Buildings = new Building[BuildingsId.Length];
 
             for (int i = 0; i < BuildingsId.Length; ++i)
             {
@@ -38,11 +46,11 @@ namespace ConsoleGame.location
         public void GetNPCsById()
         {
             Utils.Cconsole.Color("Blue").WriteLine(NPCsId.Length);
-            NPCs = new NPC[NPCsId.Length];
+            Citizens = new Citizen[NPCsId.Length];
 
             for (int i = 0; i < NPCsId.Length; ++i)
             {
-                NPCs[i] = Json.GetNPC(NPCsId[i]);
+                Citizens[i] = (Citizen)Json.GetNPC(NPCsId[i]);
             }
         }
 
@@ -50,7 +58,7 @@ namespace ConsoleGame.location
         {
             for(int i = 0; i < Buildings.Length; ++i)
             {
-                Buildings[i].Init();
+               // Buildings[i].Init();
             }
         }
     }

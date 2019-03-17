@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using ConsoleGame.entity;
 using ConsoleGame.entity.classes;
-using ConsoleGame.location;
 using ConsoleGame.location.locationTypes;
+using ConsoleGame.utils;
 
 namespace ConsoleGame
 {
@@ -21,7 +22,7 @@ namespace ConsoleGame
         public static City CurrentCity { get; set; }
         public static Kingdom CurrentKingdom { get; set; }
         
-        public static int PercentOfMonster { get; set; } = 10;
+        public static int PercentOfMonster { get; set; } = 90;
 
         public static void Init()
         {
@@ -111,7 +112,7 @@ namespace ConsoleGame
         static private bool MoveOnce()
         {
             int number = RandomNumber.Between(0, 100);
-            if(number <= s_percentOfMonster)
+            if(number <= PercentOfMonster)
             {
                 TriggerMonster();
                 return true;

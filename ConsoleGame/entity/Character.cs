@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ConsoleGame.entity.stats;
+
 using ConsoleGame.entity.managers;
+using ConsoleGame.entity.stats;
+using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.misc;
 using ConsoleGame.misc.coords;
-using ConsoleGame.items.stuff.handed.weapons;
-using ConsoleGame.items.stuff.armor;
+using ConsoleGame.utils;
 
 namespace ConsoleGame.entity
 {
@@ -219,6 +220,7 @@ namespace ConsoleGame.entity
                 Utils.Endl();
             }
             Utils.Endl();
+            UpdatedStats = "";
         }
 
         public void AddExperiences()

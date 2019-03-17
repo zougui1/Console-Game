@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using ConsoleGame.entity.NPC;
 
 namespace ConsoleGame.building
 {
-    public class WeaponShop : Building
+    public class WeaponShop : Shop
     {
-        public WeaponMerchant WeaponMerchant { get; set; }
+        public WeaponMerchant Merchant { get; set; }
 
         public WeaponShop() : base()
         { }
 
+        public void init()
+        {
+            Merchant = (WeaponMerchant)Json.GetNPC(MerchantId);
+        }
+
         public void DisplayList()
         {
-            WeaponMerchant.DisplayList();
+            Merchant.DisplayList();
         }
     }
 }

@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using ConsoleGame.entity;
 using ConsoleGame.entity.classes;
 using ConsoleGame.entity.stats;
+using ConsoleGame.entity.NPC;
 using ConsoleGame.items;
 using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.items.stuff.handed.shields;
@@ -107,33 +108,31 @@ namespace ConsoleGame
             {
                 if(GetAndParseId(armor) == id)
                 {
-                    switch (armor["Category"].ToString())
-                    {
-                        case "Head":
-                            return armor.ToObject<Head>();
-                        case "Torso":
-                            return armor.ToObject<Torso>();
-                        case "Arm":
-                            return armor.ToObject<Arm>();
-                        case "Leg":
-                            return armor.ToObject<Leg>();
-                        case "Feet":
-                            return armor.ToObject<Feet>();
-                        default: return null;
-                    }
+                    return armor.ToObject<Armor>();
                 }
             }
             return null;
         }
 
-        public static NPC GetNPC(int id)
+        public static AbstractNPC GetNPC(int id)
         {
             JObject file = GetFile(s_NPCsPath);
             foreach(JToken NPC in file["data"])
             {
                 if(GetAndParseId(NPC) == id)
                 {
-                    return NPC.ToObject<NPC>();
+                    switch (NPC["Type"].ToString())
+                    {
+                        case "Citizen":
+                            return NPC.ToObject<Citizen>();
+                        case "ItemMerchant":
+                            return NPC.ToObject<ItemMerchant>();
+                        case "WeaponMerchant":
+                            return NPC.ToObject<WeaponMerchant>();
+                        case "ArmorMerchant":
+                            return NPC.ToObject<ArmorMerchant>();
+                        default: return null;
+                    }
                 }
             }
             return null;

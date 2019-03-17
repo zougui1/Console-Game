@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using ConsoleGame.entity.stats;
-using ConsoleGame.misc;
 using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.armor;
+using ConsoleGame.misc;
+using ConsoleGame.utils;
 
 namespace ConsoleGame
 {
@@ -22,11 +24,11 @@ namespace ConsoleGame
         public double CriticalChancePerUnit { get; private set; }
         public List<Spell> Spells { get; protected set; }
         public Shield Shield { get; protected set; }
-        public Head Head { get; protected set; }
-        public Torso Torso { get; protected set; }
-        public Arm Arms { get; protected set; }
-        public Leg Legs { get; protected set; }
-        public Feet Feet { get; protected set; }
+        public Armor Head { get; protected set; }
+        public Armor Torso { get; protected set; }
+        public Armor Arms { get; protected set; }
+        public Armor Legs { get; protected set; }
+        public Armor Feet { get; protected set; }
 
         public Entity(string name, Weapon weapon = null)
         {

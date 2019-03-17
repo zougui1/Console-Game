@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleGame.items;
+
 using ConsoleGame.entity.stats;
+using ConsoleGame.items;
 
 namespace ConsoleGame.items.stuff.handed.weapons
 {

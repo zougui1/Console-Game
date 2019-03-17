@@ -68,13 +68,19 @@
   <ItemGroup>
     <Compile Include="building\ArmorShop.cs" />
     <Compile Include="building\Building.cs" />
+    <Compile Include="building\Church.cs" />
     <Compile Include="building\ItemShop.cs" />
     <Compile Include="building\Shop.cs" />
     <Compile Include="building\WeaponShop.cs" />
     <Compile Include="CConsole.cs" />
     <Compile Include="entity\Character.cs" />
     <Compile Include="entity\classes\Classes.cs" />
-    <Compile Include="entity\NPC.cs" />
+    <Compile Include="entity\NPC\ArmorMerchant.cs" />
+    <Compile Include="entity\NPC\Citizen.cs" />
+    <Compile Include="entity\NPC\ItemMerchant.cs" />
+    <Compile Include="entity\NPC\AbstractNPC.cs" />
+    <Compile Include="entity\NPC\Priest.cs" />
+    <Compile Include="entity\NPC\WeaponMerchant.cs" />
     <Compile Include="entity\stats\InitStats.cs" />
     <Compile Include="items\stuff\armor\Armor.cs" />
     <Compile Include="items\stuff\handed\TwoHanded.cs" />
@@ -89,11 +95,6 @@
     <Compile Include="entity\managers\LevelingManager.cs" />
     <Compile Include="entity\stats\Stats.cs" />
     <Compile Include="items\Item.cs" />
-    <Compile Include="items\stuff\armor\Arm.cs" />
-    <Compile Include="items\stuff\armor\Feet.cs" />
-    <Compile Include="items\stuff\armor\Head.cs" />
-    <Compile Include="items\stuff\armor\Leg.cs" />
-    <Compile Include="items\stuff\armor\Torso.cs" />
     <Compile Include="items\stuff\handed\AbstractHanded.cs" />
     <Compile Include="items\stuff\handed\shields\Shield.cs" />
     <Compile Include="items\stuff\AbstractStuff.cs" />

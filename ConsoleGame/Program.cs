@@ -13,6 +13,7 @@ namespace ConsoleGame
         {
             //LocationList test = new LocationList();
             //Json.DataDir();
+            //Json.DataDir();
             //Json.GetWeapon(0);
             LocationList.SetLocations();
             Game.Init();

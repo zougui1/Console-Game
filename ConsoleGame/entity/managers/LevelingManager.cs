@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using ConsoleGame.entity.stats;
+using ConsoleGame.utils;
 
 namespace ConsoleGame.entity.managers
 {
@@ -16,6 +18,7 @@ namespace ConsoleGame.entity.managers
         private StatsUnit HealthUnit { get; set; }
         private StatsUnit ManaUnit { get; set; }
         private StatsUnit RestUnit { get; set; }
+        private StatsUnit ResistanceUnit { get; set; }
         private Character Character { get; set; }
 
         public LevelingManager(Character character)
@@ -25,6 +28,7 @@ namespace ConsoleGame.entity.managers
             HealthUnit = new StatsUnit(30, 40, 25, 8, unit: 1.5);
             ManaUnit = new StatsUnit(30, 40, 25, 8, unit: 1.35);
             RestUnit = new StatsUnit(24, 34, 25, 15);
+            ResistanceUnit = new StatsUnit(29, 39, 20, 10);
             Character = character;
         }
 
@@ -41,7 +45,7 @@ namespace ConsoleGame.entity.managers
             {
                 PropertyInfo property = warriorStats[i];
                 string statName = property.Name;
-                if(statName != "Experiences" && statName != "Level" && statName != "Branch")
+                if(statName != "Experiences" && statName != "Level" && statName != "Branch" && statName  != "MaxHealth" && statName != "MaxMana")
                 {
                     Utils.Cconsole.Color("Blue").WriteLine(property.GetValue(warrior).GetType());
                     double stat = (double)property.GetValue(warrior);
@@ -61,7 +65,7 @@ namespace ConsoleGame.entity.managers
 
                     updatedStats = (updatedStats == null) ? "" : updatedStats;
 
-                    updatedStats += $"{statName}:{(int)addStat},)";
+                    updatedStats += $"{statName}:{(int)addStat},";
                 }
             }
 
@@ -82,6 +86,10 @@ namespace ConsoleGame.entity.managers
             else if (statName == "Mana")
             {
                 concernedUnit = ManaUnit;
+            }
+            else if(statName == "Resistance")
+            {
+                concernedUnit = ResistanceUnit;
             }
             else
             {
