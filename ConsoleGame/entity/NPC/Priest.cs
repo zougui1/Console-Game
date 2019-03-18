@@ -8,9 +8,6 @@ namespace ConsoleGame.entity.NPC
 {
     public class Priest : AbstractNPC
     {
-        public Priest() : base()
-        { }
-
         public void Interaction()
         {
             Console.WriteLine("1. Confession (save)"); // save the party

@@ -8,7 +8,7 @@ using ConsoleGame.entity.stats;
 
 namespace ConsoleGame.items.stuff
 {
-    public abstract class AbstractStuff : Item
+    public abstract class AbstractEquipment : Item
     {
         public Stats Stats { get; set; }
         public string Type { get; set; }

@@ -11,14 +11,10 @@ namespace ConsoleGame
     {
         static void Main(string[] args)
         {
-            //LocationList test = new LocationList();
-            //Json.DataDir();
-            //Json.DataDir();
-            //Json.GetWeapon(0);
+            //Json.DataDir(); // uncomment before prod compilation
             LocationList.SetLocations();
             Game.Init();
             Console.ReadKey();
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app!
         }
     }
 }

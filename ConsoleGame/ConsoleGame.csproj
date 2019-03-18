@@ -107,7 +107,13 @@
     <Compile Include="Json.cs" />
     <Compile Include="RandomNumber.cs" />
     <Compile Include="entity\stats\StatsUnit.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="utils\Endl.cs" />
+    <Compile Include="utils\GetProperties.cs" />
+    <Compile Include="utils\InEnum.cs" />
+    <Compile Include="utils\TryParseConsoleCin.cs" />
+    <Compile Include="utils\Choices.cs" />
+    <Compile Include="utils\Caller.cs" />
+    <Compile Include="utils\CConsole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game.cs" />

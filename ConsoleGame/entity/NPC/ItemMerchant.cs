@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ConsoleGame.items;
+using ConsoleGame.utils;
 
 namespace ConsoleGame.entity.NPC
 {
@@ -12,9 +13,6 @@ namespace ConsoleGame.entity.NPC
     {
         public Item[] Items { get; set; }
         public int[] ItemsId { get; set; }
-
-        public ItemMerchant() : base()
-        { }
 
         public void GetItemsById()
         {

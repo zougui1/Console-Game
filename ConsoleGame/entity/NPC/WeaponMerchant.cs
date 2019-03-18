@@ -14,9 +14,6 @@ namespace ConsoleGame.entity.NPC
         public Weapon[] Weapons { get; set; }
         public int[] WeaponsId { get; set; }
 
-        public WeaponMerchant() : base()
-        { }
-
         public void GetWeaponsById()
         {
             Weapons = new Weapon[WeaponsId.Length];

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ConsoleGame.utils;
+
 namespace ConsoleGame.items.stuff.handed
 {
-    public abstract class AbstractHanded : AbstractStuff
+    public abstract class AbstractHanded : AbstractEquipment
     {
         public bool TwoHanded { get; set; }
         public int Damages { get; set; }

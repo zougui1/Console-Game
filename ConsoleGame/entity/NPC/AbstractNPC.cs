@@ -11,9 +11,5 @@ namespace ConsoleGame.entity.NPC
     {
         public string Name { get; set; }
         public string Type { get; set; }
-
-        public AbstractNPC()
-        { }
-        
     }
 }

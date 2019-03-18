@@ -3,7 +3,7 @@
     {
       "id": 0,
       "namespace": "Weapon",
-      "Damages": 4,
+      "Damages": 3,
       "Type": "Sword",
       "Name": "Rusty sword",
       "Description": ""

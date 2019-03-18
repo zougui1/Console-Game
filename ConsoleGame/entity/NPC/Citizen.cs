@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using ConsoleGame.utils;
+
 namespace ConsoleGame.entity.NPC
 {
     public class Citizen : AbstractNPC
     {
         public string Text { get; set; }
-
-        public Citizen() : base()
-        { }
 
         public void Discussion()
         {

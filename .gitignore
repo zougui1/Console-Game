@@ -2,3 +2,4 @@ packages
 bin
 .vs
 save.json
+obj

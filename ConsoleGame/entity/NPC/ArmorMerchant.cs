@@ -17,9 +17,6 @@ namespace ConsoleGame.entity.NPC
         public Shield[] Shields { get; set; } 
         public int[] ShieldsId { get; set; }
 
-        public ArmorMerchant() : base()
-        { }
-
         public void GetArmorsIdById()
         {
             Armors = new Armor[ArmorsId.Length];
