@@ -14,7 +14,7 @@ namespace ConsoleGame.items.stuff
         public string Type { get; set; }
         public string TypeDescription { get; set; }
 
-        public AbstractStuff(string name, string description) : base(name, description)
+        public AbstractEquipment(string name, string description) : base(name, description)
         {
             Stats = new Stats();
         }

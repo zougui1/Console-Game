@@ -82,8 +82,8 @@
     <Compile Include="entity\NPC\Priest.cs" />
     <Compile Include="entity\NPC\WeaponMerchant.cs" />
     <Compile Include="entity\stats\InitStats.cs" />
-    <Compile Include="items\stuff\armor\Armor.cs" />
-    <Compile Include="items\stuff\handed\TwoHanded.cs" />
+    <Compile Include="items\equipments\armor\Armor.cs" />
+    <Compile Include="items\equipments\handed\TwoHanded.cs" />
     <Compile Include="location\Location.cs" />
     <Compile Include="location\LocationList.cs" />
     <Compile Include="location\locationTypes\City.cs" />
@@ -95,10 +95,10 @@
     <Compile Include="entity\managers\LevelingManager.cs" />
     <Compile Include="entity\stats\Stats.cs" />
     <Compile Include="items\Item.cs" />
-    <Compile Include="items\stuff\handed\AbstractHanded.cs" />
-    <Compile Include="items\stuff\handed\shields\Shield.cs" />
-    <Compile Include="items\stuff\AbstractStuff.cs" />
-    <Compile Include="items\stuff\handed\weapons\Weapon.cs" />
+    <Compile Include="items\equipments\handed\AbstractHanded.cs" />
+    <Compile Include="items\equipments\handed\shields\Shield.cs" />
+    <Compile Include="items\equipments\AbstractEquipment.cs" />
+    <Compile Include="items\equipments\handed\weapons\Weapon.cs" />
     <Compile Include="misc\coords\MovableCoords.cs" />
     <Compile Include="misc\Spell.cs" />
     <Compile Include="entity\stats\EntityStats.cs" />
