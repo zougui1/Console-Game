@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using ConsoleGame.entity.stats;
+using ConsoleGame.json;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.entity.managers
@@ -34,7 +35,7 @@ namespace ConsoleGame.entity.managers
 
         public void LevelUp()
         {
-            Character.EntityStats.Level++;
+            ++Character.EntityStats.Level;
             string updatedStats = null;
 
             Stats warrior = Json.GetClassStats(Character.Class);
@@ -47,7 +48,6 @@ namespace ConsoleGame.entity.managers
                 string statName = property.Name;
                 if(statName != "Experiences" && statName != "Level" && statName != "Branch" && statName  != "MaxHealth" && statName != "MaxMana")
                 {
-                    Utils.Cconsole.Color("Blue").WriteLine(property.GetValue(warrior).GetType());
                     double stat = (double)property.GetValue(warrior);
 
                     PropertyInfo propertyInfo = type.GetProperty(statName);

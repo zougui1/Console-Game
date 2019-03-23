@@ -73,11 +73,6 @@ namespace ConsoleGame
             return 15;
         }
 
-        public object GetValue(object obj, string prop)
-        {
-            return obj.GetType().GetProperty(prop).GetValue(obj, null);
-        }
-
         #region WriteLines
         public void WriteLine(float value)
         {

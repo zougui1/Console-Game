@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 using ConsoleGame.entity;
 using ConsoleGame.entity.classes;
-using ConsoleGame.location.locationTypes;
+using ConsoleGame.json;
+using ConsoleGame.location;
 using ConsoleGame.utils;
 
 namespace ConsoleGame
@@ -16,12 +17,17 @@ namespace ConsoleGame
 
     public class Game
     {
+        /// <summary>
+        /// The User property represent the actual user of the game
+        /// </summary>
         public static Character User { get; set; }
-        public static string CurrentLocationType { get; set; }
-        public static Town CurrentTown { get; set; }
-        public static City CurrentCity { get; set; }
-        public static Kingdom CurrentKingdom { get; set; }
-        
+        /// <summary>
+        /// The CurrentLocation property represent the the current location 
+        /// </summary>
+        public static Location CurrentLocation { get; set; }
+        /// <summary>
+        /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
+        /// </summary>
         public static int PercentOfMonster { get; set; } = 90;
 
         public static void Init()
@@ -36,6 +42,9 @@ namespace ConsoleGame
             Utils.Endl();
         }
 
+        /// <summary>
+        /// MainMenu is to display the menu before the game start (new game or load a game)
+        /// </summary>
         public static void MainMenu()
         {
             Utils.Cconsole.Color("DarkGray").WriteLine("What do you want to do?");
@@ -45,6 +54,10 @@ namespace ConsoleGame
             Utils.Choices(choices, methods);
         }
 
+        /// <summary>
+        /// Loader is used to load and define the User property from a json object
+        /// </summary>
+        /// <param name="args">is unused but obligatory due to be used with the delegation Action</param>
         public static void Loader(object[] args)
         {
             User = Json.Load();
@@ -62,6 +75,10 @@ namespace ConsoleGame
             }
         }
 
+        /// <summary>
+        /// NewGame is used to create a Character with a name they have entered and define it in the User property
+        /// </summary>
+        /// <param name="args">is unused but obligatory due to be used with the delegation Action</param>
         public static void NewGame(object[] args)
         {
             Console.WriteLine("Enter a name.");
@@ -85,6 +102,10 @@ namespace ConsoleGame
             ChooseAction();
         }
 
+        /// <summary>
+        /// ChooseAction is used to let the user choose an action when in the nature
+        /// (move, rest)
+        /// </summary>
         public static void ChooseAction()
         {
             Utils.Endl();
@@ -95,37 +116,13 @@ namespace ConsoleGame
             Utils.Choices(actions, methods);
         }
 
-        public static void Moves(int movements)
-        {
-            for(int i = 0; i < movements; ++i)
-            {
-                if (MoveOnce())
-                {
-                    return;
-                }
-            }
-            Console.WriteLine("Nothing happened.");
-            Utils.Endl();
-            ChooseAction();
-        }
-
-        static private bool MoveOnce()
-        {
-            int number = RandomNumber.Between(0, 100);
-            if(number <= PercentOfMonster)
-            {
-                TriggerMonster();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        /// <summary>
+        /// TriggerMonster is used to create a monster and set the user's focus the newly created monster when the user has encountered a monster
+        /// </summary>
         public static void TriggerMonster()
         {
-            Monster monster = new Monster("Slime");
+            //Monster monster = new Monster("Slime");
+            Monster monster = Json.GetMonster(0);
             monster.Focus = User;
             Utils.Endl(2);
             Console.WriteLine("A {0} appears", monster.Name);
@@ -133,6 +130,12 @@ namespace ConsoleGame
             Battle(monster);
         }
 
+        /// <summary>
+        /// Battle is used for the battles between the user and the monsters
+        /// if the user win it display a win message and save the party into a json file (the save shouldn't be here)
+        /// if the user loose it displays a loose message and define the User property to null
+        /// </summary>
+        /// <param name="monster">The monster the user has to fight</param>
         public static void Battle(Monster monster)
         {
             while(User.IsAlive() && monster.IsAlive())
@@ -147,6 +150,7 @@ namespace ConsoleGame
             if (User.IsAlive())
             {
                 User.Win();
+                monster.Loots();
                 User.Focus = null;
                 Json.Save(User);
                 ChooseAction();
@@ -159,15 +163,12 @@ namespace ConsoleGame
             }
         }
 
-        public static void InCity()
+        /// <summary>
+        /// InLocation is used to call the actions menu available in the location
+        /// </summary>
+        public static void InLocation()
         {
-            switch (CurrentLocationType)
-            {
-                case "City":
-                    CurrentCity.Display();
-                    break;
-                default: break;
-            }
+            CurrentLocation.Display();
         }
     }
 }

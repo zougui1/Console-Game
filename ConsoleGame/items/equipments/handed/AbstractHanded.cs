@@ -10,6 +10,9 @@ namespace ConsoleGame.items.stuff.handed
 {
     public abstract class AbstractHanded : AbstractEquipment
     {
+        /// <summary>
+        /// TwoHanded is used to know if the equipment need two hands to be used
+        /// </summary>
         public bool TwoHanded { get; set; }
         public int Damages { get; set; }
 
@@ -23,9 +26,14 @@ namespace ConsoleGame.items.stuff.handed
         {
             Console.WriteLine("Weapon: {0} (damages: {1})", Name, Damages);
         }
+
+        /// <summary>
+        /// Init is used to initialize the equipment
+        /// - if the type of the equipment is a type that need two hands to be used, define the property TwoHanded to true
+        /// </summary>
         public void Init()
         {
-            if (Utils.InEnum(Type, typeof(TwoHanded)))
+            if (Utils.InEnum(Category, typeof(TwoHanded)))
             {
                 TwoHanded = true;
             }

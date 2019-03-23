@@ -8,6 +8,16 @@ namespace ConsoleGame.utils
 {
     public static partial class Utils
     {
+        /// <summary>
+        /// TryParseConsoleCin is used to get an entry from the user which is supposed to be an int and try to parse it
+        /// the method call itself until the try parse succeed
+        /// if the try parse succeed we return the parsed int
+        /// a parameter can be given (a range between 2 numbers)
+        /// </summary>
+        /// <param name="errorMessage">the message to display in the console if the parse fail</param>
+        /// <param name="parameter">parameter to add in for the return</param>
+        /// <param name="color">the color of the error message to display in the console</param>
+        /// <returns>return an int that the user entered</returns>
         public static int TryParseConsoleCin(string errorMessage = "", string parameter = "", string color = "White")
         {
             string input = Console.ReadLine();
@@ -35,8 +45,7 @@ namespace ConsoleGame.utils
             }
 
             Cconsole.Color(color).WriteLine(errorMessage);
-            TryParseConsoleCin(errorMessage, parameter, color);
-            return 0;
+            return TryParseConsoleCin(errorMessage, parameter, color);
         }
     }
 }

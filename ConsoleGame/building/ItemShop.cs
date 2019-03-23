@@ -15,11 +15,6 @@ namespace ConsoleGame.building
         public ItemShop() : base()
         { }
 
-        public void init()
-        {
-            Merchant = (ItemMerchant)Json.GetNPC(MerchantId);
-        }
-
         public void DisplayList()
         {
             Merchant.DisplayList();

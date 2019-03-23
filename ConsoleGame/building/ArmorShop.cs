@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ConsoleGame.entity.NPC;
+using ConsoleGame.json;
 
 namespace ConsoleGame.building
 {
@@ -14,11 +15,6 @@ namespace ConsoleGame.building
 
         public ArmorShop() : base()
         { }
-
-        public void init()
-        {
-            Merchant = (ArmorMerchant)Json.GetNPC(MerchantId);
-        }
 
         public void DisplayList()
         {

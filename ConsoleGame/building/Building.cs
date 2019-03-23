@@ -11,7 +11,7 @@ namespace ConsoleGame.building
         public string Name { get; set; }
         public List<dynamic> NPCs { get; set; }
         public bool IsLocked { get; set; }
-        public string Type { get; set; }
+        public string Category { get; set; }
 
         public Building()
         {

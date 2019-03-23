@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ConsoleGame.entity.managers;
 using ConsoleGame.entity.stats;
 using ConsoleGame.items.stuff.handed.weapons;
+using ConsoleGame.json;
 using ConsoleGame.misc;
 using ConsoleGame.misc.coords;
 using ConsoleGame.utils;

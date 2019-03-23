@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ConsoleGame.json;
 using ConsoleGame.location;
-using ConsoleGame.location.locationTypes;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.misc.coords
@@ -16,6 +16,10 @@ namespace ConsoleGame.misc.coords
         public MovableCoords(int x = 0, int y = 0) : base(x, y)
         { }
 
+        /// <summary>
+        /// NumberMove is used to let the user choose how many time they want to move
+        /// </summary>
+        /// <param name="args">the index 0 must contains the direction of the movements (must be of type Directions or int)</param>
         public void NumberMove(object[] args)
         {
             Utils.Cconsole.Color("DarkGray").WriteLine("How many time do you want to move? (1-100)");
@@ -25,6 +29,11 @@ namespace ConsoleGame.misc.coords
             Moves(movements, (int)args[0]);
         }
 
+        /// <summary>
+        /// Moves is used to move the user the amount of times its given and in the given direction
+        /// </summary>
+        /// <param name="movements">number of movements</param>
+        /// <param name="direction">the direction to move</param>
         public void Moves(int movements, int direction)
         {
             for (int i = 0; i < movements; ++i)
@@ -40,35 +49,27 @@ namespace ConsoleGame.misc.coords
             Game.ChooseAction();
         }
 
+        /// <summary>
+        /// Move is used to move the user, and can trigger some event
+        /// - if the user move to the coords of a location, then we retrieve the location from the json and set it as current location in the Game object
+        /// - can trigger a monster depending of the percent of chance to trigger one
+        /// </summary>
+        /// <param name="direction">the direction to move</param>
+        /// <returns>return true if an event has been triggered, otherwise false</returns>
         public bool Move(int direction)
         {
             Utils.Caller(this, "Move" + (Directions)direction);
 
             if (LocationList.LocationsDict.ContainsKey((X: X, Y: Y)))
             {
-                dynamic currentLocation = Json.GetLocation(LocationList.LocationsDict[(X: X, Y: Y)]);
-                currentLocation.GetBuildingsById();
-                currentLocation.GetNPCsById();
+                Location currentLocation = Json.GetLocation(LocationList.LocationsDict[(X: X, Y: Y)]);
                 currentLocation.InitAllBuildings();
 
-                switch (currentLocation.Type)
-                {
-                    case "Town":
-                        Game.CurrentTown = (Town)currentLocation;
-                        break;
-                    case "City":
-                        Game.CurrentCity = (City)currentLocation;
-                        break;
-                    case "Kingdom":
-                        Game.CurrentKingdom = (Kingdom)currentLocation;
-                        break;
-                    default: break;
-                }
+                Game.CurrentLocation = currentLocation;
                 
                 Console.WriteLine("You entered in \"{0}\"", currentLocation.Name);
-                Game.CurrentLocationType = currentLocation.Type;
 
-                Game.InCity();
+                Game.InLocation();
                 return true;
             }
 

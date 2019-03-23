@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ConsoleGame.items;
+using ConsoleGame.json;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.entity.NPC
@@ -12,16 +13,6 @@ namespace ConsoleGame.entity.NPC
     public class ItemMerchant : AbstractNPC
     {
         public Item[] Items { get; set; }
-        public int[] ItemsId { get; set; }
-
-        public void GetItemsById()
-        {
-            Items = new Item[ItemsId.Length];
-            for(int i = 0; i < ItemsId.Length; ++i)
-            {
-                Items[i] = Json.GetItem(ItemsId[i]);
-            }
-        }
 
         public void DisplayList()
         {

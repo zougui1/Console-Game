@@ -10,6 +10,7 @@ namespace ConsoleGame.items
     {
         public string Name { get; protected set; }
         public string Description { get; protected set; }
+        public int Gold { get; protected set; }
 
         public Item(string name, string description)
         {

@@ -10,6 +10,6 @@ namespace ConsoleGame.entity.NPC
     public class AbstractNPC
     {
         public string Name { get; set; }
-        public string Type { get; set; }
+        public string Category { get; set; }
     }
 }

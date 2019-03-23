@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.items.stuff.handed.shields;
+using ConsoleGame.json;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.entity.NPC
@@ -13,27 +14,7 @@ namespace ConsoleGame.entity.NPC
     public class ArmorMerchant : AbstractNPC
     {
         public Armor[] Armors { get; set; }
-        public int[] ArmorsId { get; set; }
-        public Shield[] Shields { get; set; } 
-        public int[] ShieldsId { get; set; }
-
-        public void GetArmorsIdById()
-        {
-            Armors = new Armor[ArmorsId.Length];
-            for (int i = 0; i < ArmorsId.Length; ++i)
-            {
-                Armors[i] = Json.GetArmor(ArmorsId[i]);
-            }
-        }
-
-        public void GetShieldsIdById()
-        {
-            Shields = new Shield[ShieldsId.Length];
-            for (int i = 0; i < ShieldsId.Length; ++i)
-            {
-                Shields[i] = Json.GetShield(ShieldsId[i]);
-            }
-        }
+        public Shield[] Shields { get; set; }
 
         public void DisplayList()
         {

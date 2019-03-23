@@ -9,6 +9,14 @@ namespace ConsoleGame.utils
 {
     public static partial class Utils
     {
+        /// <summary>
+        /// Choices is used to display all the given choices in the console, let the user which choice they choose, and call the method depending on what they choosed
+        /// </summary>
+        /// <param name="choices">contains the choices available</param>
+        /// <param name="actions">contains the methods to call once the user choosed</param>
+        /// <param name="args">the arguments to pass to the method to be called</param>
+        /// <param name="color">the color of the choices in the console</param>
+        /// <param name="parameter">contains the list of spells to cast, if defined</param>
         public static void Choices(string[] choices, Action[] actions, object[][] args = null, string color = "Gray", List<Spell> parameter = null)
         {
             for (int i = 0; i < choices.Length; ++i)

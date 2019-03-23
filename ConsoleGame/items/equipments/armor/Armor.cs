@@ -12,8 +12,14 @@ namespace ConsoleGame.items.stuff.armor
 {
     public class Armor : AbstractEquipment
     {
-        public string Category { get; protected set; }
+        /// <summary>
+        /// Category represent the category of the armor (head, torso, arm, leg, feet)
+        /// </summary>
+        public string SubCategory { get; protected set; }
         public int Defense { get; protected set; }
+        /// <summary>
+        /// Equipable is used to know which classes can wear this armor
+        /// </summary>
         public List<string> Equipable { get; protected set; }
 
         public Armor(string name, string description, int defense = 0) : base(name, description)

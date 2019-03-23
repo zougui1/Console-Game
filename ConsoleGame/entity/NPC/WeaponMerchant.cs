@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ConsoleGame.items.stuff.handed.weapons;
+using ConsoleGame.json;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.entity.NPC
@@ -12,16 +13,6 @@ namespace ConsoleGame.entity.NPC
     public class WeaponMerchant : AbstractNPC
     {
         public Weapon[] Weapons { get; set; }
-        public int[] WeaponsId { get; set; }
-
-        public void GetWeaponsById()
-        {
-            Weapons = new Weapon[WeaponsId.Length];
-            for (int i = 0; i < WeaponsId.Length; ++i)
-            {
-                Weapons[i] = Json.GetWeapon(WeaponsId[i]);
-            }
-        }
 
         public void DisplayList()
         {
