@@ -82,6 +82,7 @@
     <Compile Include="entity\NPC\Priest.cs" />
     <Compile Include="entity\NPC\WeaponMerchant.cs" />
     <Compile Include="entity\stats\InitStats.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="items\equipments\armor\Armor.cs" />
     <Compile Include="items\equipments\handed\TwoHanded.cs" />
     <Compile Include="json\main.cs" />
@@ -118,7 +119,7 @@
     <Compile Include="utils\CConsole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="GameStatement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

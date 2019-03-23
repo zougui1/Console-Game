@@ -30,11 +30,11 @@ namespace ConsoleGame.json
         /// it convert a Character (the user) into a json string and write it in a file
         /// </summary>
         /// <param name="user">The character to save into a json file</param>
-        public static void Save(Character user)
+        public static void Save(Game game)
         {
             Console.WriteLine("save");
-            string json = JsonConvert.SerializeObject(user, Formatting.Indented);
-            File.WriteAllText(s_savePath, json);
+            string json = JsonConvert.SerializeObject(game, Formatting.Indented);
+            File.WriteAllText(SavePath, json);
         }
 
         /// <summary>
@@ -42,15 +42,14 @@ namespace ConsoleGame.json
         /// it deserialize the json and create a Character object from it
         /// </summary>
         /// <returns>return a Character object if the deserialization succeed</returns>
-        public static Character Load()
+        public static Game Load()
         {
             try
             {
-                using (StreamReader file = File.OpenText(s_savePath))
+                using (StreamReader file = File.OpenText(SavePath))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    Character user = (Character)serializer.Deserialize(file, typeof(Character));
-                    return user;
+                    return (Game)serializer.Deserialize(file, typeof(Game));
                 }
             }
             catch (Exception e)
@@ -61,55 +60,55 @@ namespace ConsoleGame.json
 
         public static Item GetItem(int id)
         {
-            GetJTokenById(s_itemsPath, id, out JToken jToken);
+            GetJTokenById(ItemsPath, id, out JToken jToken);
             return ToObject<Item>(jToken);
         }
 
         public static Shield GetShield(int id)
         {
-            GetJTokenById(s_shieldsPath, id, out JToken jToken);
+            GetJTokenById(ShieldsPath, id, out JToken jToken);
             return ToObject<Shield>(jToken);
         }
 
         public static Armor GetHead(int id)
         {
-            GetJTokenById(s_headsPath, id, out JToken jToken);
+            GetJTokenById(HeadsPath, id, out JToken jToken);
             return ToObject<Armor>(jToken);
         }
 
         public static Armor GetTorso(int id)
         {
-            GetJTokenById(s_torsosPath, id, out JToken jToken);
+            GetJTokenById(TorsosPath, id, out JToken jToken);
             return ToObject<Armor>(jToken);
         }
 
         public static Armor GetArm(int id)
         {
-            GetJTokenById(s_armsPath, id, out JToken jToken);
+            GetJTokenById(ArmsPath, id, out JToken jToken);
             return ToObject<Armor>(jToken);
         }
 
         public static Armor GetLeg(int id)
         {
-            GetJTokenById(s_legsPath, id, out JToken jToken);
+            GetJTokenById(LegsPath, id, out JToken jToken);
             return ToObject<Armor>(jToken);
         }
 
         public static Armor GetFeet(int id)
         {
-            GetJTokenById(s_feetsPath, id, out JToken jToken);
+            GetJTokenById(FeetsPath, id, out JToken jToken);
             return ToObject<Armor>(jToken);
         }
 
         public static AbstractNPC GetNPC(int id)
         {
-            GetJTokenById(s_NPCsPath, id, out JToken jToken);
+            GetJTokenById(NPCsPath, id, out JToken jToken);
             return ToObject<Citizen>(jToken);
         }
         
         public static Building GetBuilding(int id)
         {
-            GetJTokenById(s_buildingsPath, id, out JToken jToken);
+            GetJTokenById(BuildingsPath, id, out JToken jToken);
             switch (jToken["type"].ToString())
             {
                 case "ArmorShop":
@@ -133,7 +132,7 @@ namespace ConsoleGame.json
         /// <returns>return the init stats of type InitStats</returns>
         public static InitStats GetInitStats(string className)
         {
-            GetJTokenByString(s_statsPath, className, "Class", out JToken jToken);
+            GetJTokenByString(StatsPath, className, "Class", out JToken jToken);
             return jToken.ToObject<InitStats>();
         }
 
@@ -144,25 +143,25 @@ namespace ConsoleGame.json
         /// <returns>return the stats of type Stats</returns>
         public static Stats GetClassStats(string className)
         {
-            GetJTokenByString(s_statsPath, className, "Class", out JToken jToken);
+            GetJTokenByString(StatsPath, className, "Class", out JToken jToken);
             return jToken.ToObject<Stats>();
         }
 
         public static Monster GetMonster(int id)
         {
-            GetJTokenById(s_monstersPath, id, out JToken jToken);
+            GetJTokenById(MonstersPath, id, out JToken jToken);
             return ToObject<Monster>(jToken);
         }
 
         public static Weapon GetWeapon(int id)
         {
-            GetJTokenById(s_weaponsPath, id, out JToken jToken);
+            GetJTokenById(WeaponsPath, id, out JToken jToken);
             return ToObject<Weapon>(jToken);
         }
 
         public static Location GetLocation(int id)
         {
-            GetJTokenById(s_locationsPath, id, out JToken jToken);
+            GetJTokenById(LocationsPath, id, out JToken jToken);
             return ToObject<Location>(jToken);
         }
 
@@ -172,7 +171,7 @@ namespace ConsoleGame.json
         /// <param name="LocationsDict">the dictionnary where we want for key a tuple of the locations's coords and for value their id</param>
         public static void GetLocations(IDictionary<(int X, int Y), int> LocationsDict)
         {
-            JObject file = GetFile(s_locationsPath);
+            JObject file = GetFile(LocationsPath);
 
             foreach (JToken location in file["data"])
             {

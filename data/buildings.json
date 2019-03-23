@@ -2,13 +2,11 @@
   "data": [
     {
       "id": 0,
+      "type": "WeaponShop",
       "Name": "Weapon shop",
       "NPCs": [],
       "IsLocked": false,
-      "Type": "WeaponShop",
-      "WeaponsId": [
-        0
-      ]
+      "Category": "WeaponShop"
     }
   ]
 }

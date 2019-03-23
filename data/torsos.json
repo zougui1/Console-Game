@@ -2,9 +2,10 @@
   "data": [
     {
       "id": 0,
+      "type": "Armor",
       "Category": "Torso",
       "Name": "First chestplate",
-      "Type": "Chestplate",
+      "SubCategory": "Chestplate",
       "Defense": 50
     }
   ]

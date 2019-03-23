@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "type": "Armor",
+      "Category": "Feet",
+      "Name": "First boots",
+      "SubCategory": "Boot",
+      "Defense": 50
+    }
+  ]
+}

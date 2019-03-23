@@ -222,7 +222,7 @@ namespace ConsoleGame
             Utils.Cconsole.Color("Green").WriteLine("After a little rest you recovered {0} health points", healthPoints);
             Utils.Cconsole.WriteLine("{0} has now {1} health points", Name, EntityStats.Health);
             Utils.Endl();
-            Game.ChooseAction();
+            GameStatement.Game.ChooseAction();
         }
 
         public void InstantHealth(int healthPoints)

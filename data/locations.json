@@ -2,17 +2,17 @@
   "data": [
     {
       "id": 0,
-      "namespace": "City",
-      "Type": "City",
+      "type": "Kingdom",
+      "Category": "Kingdom",
       "Name": "first city",
       "Coords": {
         "X": 0,
         "Y": -1
       },
-      "BuildingsId": [
+      "Buildings_id": [
         0
       ],
-      "NPCs_id": [
+      "Citizens_id": [
         0
       ]
     }

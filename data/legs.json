@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "type": "Armor",
+      "Category": "Leg",
+      "Name": "First legware",
+      "SubCategory": "Legware",
+      "Defense": 50
+    }
+  ]
+}

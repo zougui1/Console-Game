@@ -46,7 +46,7 @@ namespace ConsoleGame.utils
                     if (args != null)
                     {
 
-                        if(parameter != null)
+                        if (parameter != null)
                         {
                             newArgs[0] = args[action];
                             newArgs[1] = parameter[action];

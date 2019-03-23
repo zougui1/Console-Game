@@ -2,12 +2,12 @@ E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\ConsoleGame.exe.config
 E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\ConsoleGame.exe
 E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\ConsoleGame.pdb
 E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\Newtonsoft.Json.dll
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\System.ValueTuple.dll
 E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\Newtonsoft.Json.pdb
 E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\Newtonsoft.Json.xml
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\System.ValueTuple.xml
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.csprojAssemblyReference.cache
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.csproj.CoreCompileInputs.cache
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.csproj.CopyComplete
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.exe
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.pdb
-E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.csprojAssemblyReference.cache
-E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\System.ValueTuple.dll
-E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\System.ValueTuple.xml

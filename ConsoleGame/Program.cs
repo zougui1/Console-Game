@@ -9,15 +9,18 @@ using ConsoleGame.location;
 
 namespace ConsoleGame
 {
+    public delegate void Action(object[] args);
+
     class Program
     {
         static void Main(string[] args)
         {
-            //Json.DataDir(); // uncomment before prod compilation
             Json.Init();
             LocationList.SetLocations();
-            Game.Init();
+            GameStatement.Init();
             Console.ReadKey();
+
+            // make a non-static class for the game statement, which will be used to save the party
         }
 
     }

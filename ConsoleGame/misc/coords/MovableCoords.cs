@@ -46,7 +46,7 @@ namespace ConsoleGame.misc.coords
             ShowCoords();
             Console.WriteLine("Nothing happened.");
 
-            Game.ChooseAction();
+            GameStatement.Game.ChooseAction();
         }
 
         /// <summary>
@@ -65,18 +65,18 @@ namespace ConsoleGame.misc.coords
                 Location currentLocation = Json.GetLocation(LocationList.LocationsDict[(X: X, Y: Y)]);
                 currentLocation.InitAllBuildings();
 
-                Game.CurrentLocation = currentLocation;
+                GameStatement.Game.CurrentLocation = currentLocation;
                 
                 Console.WriteLine("You entered in \"{0}\"", currentLocation.Name);
 
-                Game.InLocation();
+                GameStatement.Game.InLocation();
                 return true;
             }
 
             int number = RandomNumber.Between(0, 100);
-            if (number <= Game.PercentOfMonster)
+            if (number <= GameStatement.Game.PercentOfMonster)
             {
-                Game.TriggerMonster();
+                GameStatement.Game.TriggerMonster();
                 return true;
             }
             else

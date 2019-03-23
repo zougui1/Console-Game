@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "type": "Armor",
+      "Category": "Arm",
+      "Name": "First arm",
+      "SubCategory": "Arm",
+      "Defense": 50
+    }
+  ]
+}

@@ -25,36 +25,36 @@ namespace ConsoleGame.json
 {
     public static partial class Json
     {
-        private static readonly string s_dataPath = "data";
+        private static string DataPath { get; } = "data";
 
-        private static readonly string s_savePath = s_dataPath + "/save.json";
-        private static readonly string s_monstersPath = s_dataPath + "/monsters.json";
-        private static readonly string s_weaponsPath = s_dataPath + "/weapons.json";
-        private static readonly string s_locationsPath = s_dataPath + "/locations.json";
-        private static readonly string s_statsPath = s_dataPath + "/stats.json";
-        private static readonly string s_buildingsPath = s_dataPath + "/buildings.json";
-        private static readonly string s_NPCsPath = s_dataPath + "/NPCs.json";
-        private static readonly string s_headsPath = s_dataPath + "/heads.json";
-        private static readonly string s_torsosPath = s_dataPath + "/torsos.json";
-        private static readonly string s_armsPath = s_dataPath + "/arms.json";
-        private static readonly string s_legsPath = s_dataPath + "/legs.json";
-        private static readonly string s_feetsPath = s_dataPath + "/feets.json";
-        private static readonly string s_itemsPath = s_dataPath + "/items.json";
-        private static readonly string s_shieldsPath = s_dataPath + "/shields.json";
-        private static IDictionary<string, string> s_pathsDictionnary = new Dictionary<string, string>();
+        private static string SavePath { get; } = DataPath + "/save.json";
+        private static string MonstersPath { get; } = DataPath + "/monsters.json";
+        private static string WeaponsPath { get; } = DataPath + "/weapons.json";
+        private static string LocationsPath { get; } = DataPath + "/locations.json";
+        private static string StatsPath { get; } = DataPath + "/stats.json";
+        private static string BuildingsPath { get; } = DataPath + "/buildings.json";
+        private static string NPCsPath { get; } = DataPath + "/NPCs.json";
+        private static string HeadsPath { get; } = DataPath + "/heads.json";
+        private static string TorsosPath { get; } = DataPath + "/torsos.json";
+        private static string ArmsPath { get; } = DataPath + "/arms.json";
+        private static string LegsPath { get; } = DataPath + "/legs.json";
+        private static string FeetsPath { get; } = DataPath + "/feets.json";
+        private static string ItemsPath { get; } = DataPath + "/items.json";
+        private static string ShieldsPath { get; } = DataPath + "/shields.json";
+        private static IDictionary<string, string> PathsDictionnary { get; } = new Dictionary<string, string>();
 
         public static void Init()
         {
-            s_pathsDictionnary.Add("Citizen", s_NPCsPath);
-            s_pathsDictionnary.Add("Weapon", s_weaponsPath);
-            s_pathsDictionnary.Add("Building", s_buildingsPath);
-            s_pathsDictionnary.Add("Head", s_headsPath);
-            s_pathsDictionnary.Add("Torso", s_torsosPath);
-            s_pathsDictionnary.Add("Arm", s_armsPath);
-            s_pathsDictionnary.Add("Leg", s_legsPath);
-            s_pathsDictionnary.Add("Feet", s_feetsPath);
-            s_pathsDictionnary.Add("Item", s_itemsPath);
-            s_pathsDictionnary.Add("Shield", s_shieldsPath);
+            PathsDictionnary.Add("Citizen", NPCsPath);
+            PathsDictionnary.Add("Weapon", WeaponsPath);
+            PathsDictionnary.Add("Building", BuildingsPath);
+            PathsDictionnary.Add("Head", HeadsPath);
+            PathsDictionnary.Add("Torso", TorsosPath);
+            PathsDictionnary.Add("Arm", ArmsPath);
+            PathsDictionnary.Add("Leg", LegsPath);
+            PathsDictionnary.Add("Feet", FeetsPath);
+            PathsDictionnary.Add("Item", ItemsPath);
+            PathsDictionnary.Add("Shield", ShieldsPath);
         }
 
         /// <summary>
@@ -133,7 +133,6 @@ namespace ConsoleGame.json
         public static T ToObject<T>(JToken jToken)
         {
             T result;
-            Utils.Cconsole.Color("Cyan").WriteLine(jToken);
             result = jToken.ToObject<T>();
 
             if(jToken["Citizens_id"] != null || jToken["Citizen_id"] != null)
@@ -193,9 +192,9 @@ namespace ConsoleGame.json
 
                     string filePath = "";
 
-                    if (s_pathsDictionnary.ContainsKey(singularCleanStr))
+                    if (PathsDictionnary.ContainsKey(singularCleanStr))
                     {
-                        filePath = s_pathsDictionnary[singularCleanStr];
+                        filePath = PathsDictionnary[singularCleanStr];
                     }
                     else
                     {

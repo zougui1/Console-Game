@@ -1,18 +1,38 @@
 {
-  "monsters": [
+  "data": [
     {
       "id": 0,
+      "Type": "Monster",
       "Name": "Slime",
-      "Health": 13,
-      "Mana": 0,
-      "Strength": 2,
-      "Resistance": 6,
-      "MagicalMight": 0,
-      "MagicalMending": 0,
-      "Agility": 2,
-      "Deftness": 1,
-      "Experiences": 3,
-      "Weapon": 0
+      "EntityStats": {
+        "Health": 13,
+        "Mana": 0,
+        "Strength": 2,
+        "Resistance": 6,
+        "MagicalMight": 0,
+        "MagicalMending": 0,
+        "Agility": 2,
+        "Deftness": 1,
+        "Experiences": 3
+      },
+      "Weapon_id": 0,
+      "LootsTable": [
+        {
+          "Percent": 10.0,
+          "Id": 0,
+          "DataType": "weapons"
+        },
+        {
+          "Percent": 50.0,
+          "Id": 0,
+          "DataType": "weapons"
+        },
+        {
+          "Percent": 100.0,
+          "Id": 0,
+          "DataType": "weapons"
+        }
+      ]
     }
   ]
 }

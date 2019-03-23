@@ -1,0 +1,12 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "type": "Armor",
+      "Category": "Head",
+      "Name": "First helmet",
+      "SubCategory": "Helmet",
+      "Defense": 50
+    }
+  ]
+}

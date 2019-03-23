@@ -2,9 +2,10 @@
   "data": [
     {
       "id": 0,
+      "type": "Weapon",
       "namespace": "Weapon",
       "Damages": 3,
-      "Type": "Sword",
+      "Category": "Sword",
       "Name": "Rusty sword",
       "Description": ""
     }

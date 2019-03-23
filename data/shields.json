@@ -2,9 +2,9 @@
   "data": [
     {
       "id": 0,
-      "namespace": "Shield",
+      "type": "Shield",
       "Defense": 2,
-      "Type": "LightShield",
+      "Category": "LightShield",
       "Name": "small shield",
       "Description": ""
     }
