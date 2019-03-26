@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGame.misc
 {
-    public class LootTable
+    public struct LootTable
     {
         public double Percent { get; set; }
         public int Id { get; set; }

@@ -8,7 +8,6 @@ namespace ConsoleGame.building
 {
     public class Shop : Building
     {
-
         public Shop() : base()
         { }
     }

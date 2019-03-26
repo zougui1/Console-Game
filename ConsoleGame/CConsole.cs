@@ -74,168 +74,206 @@ namespace ConsoleGame
         }
 
         #region WriteLines
-        public void WriteLine(float value)
+        public CConsole WriteLine(float value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(int value)
+        public CConsole WriteLine(int value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(uint value)
+        public CConsole WriteLine(uint value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(long value)
+        public CConsole WriteLine(long value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(ulong value)
+        public CConsole WriteLine(ulong value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(object value)
+        public CConsole WriteLine(object value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(string value)
+        public CConsole WriteLine(string value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(string format, object arg0)
+        public CConsole WriteLine(string format, object arg0)
         {
             Console.WriteLine(format, arg0);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(string format, object arg0, object arg1, object arg2)
+        public CConsole WriteLine(string format, object arg0, object arg1, object arg2)
         {
             Console.WriteLine(format, arg0, arg1, arg2);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(string format, object arg0, object arg1, object arg2, object arg3)
+        public CConsole WriteLine(string format, object arg0, object arg1, object arg2, object arg3)
         {
             Console.WriteLine(format, arg0, arg1, arg2, arg3);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(string format, params object[] arg)
+        public CConsole WriteLine(string format, params object[] arg)
         {
             Console.WriteLine(format, arg);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(char[] value, int index, int count)
+        public CConsole WriteLine(char[] value, int index, int count)
         {
             Console.WriteLine(value, index, count);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(decimal value)
+        public CConsole WriteLine(decimal value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(char[] buffer)
+        public CConsole WriteLine(char[] buffer)
         {
             Console.WriteLine(buffer);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(char value)
+        public CConsole WriteLine(char value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(bool value)
+        public CConsole WriteLine(bool value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(string format, object arg0, object arg1)
+        public CConsole WriteLine(string format, object arg0, object arg1)
         {
             Console.WriteLine(format, arg0, arg1);
             Console.ResetColor();
+            return this;
         }
-        public void WriteLine(double value)
+        public CConsole WriteLine(double value)
         {
             Console.WriteLine(value);
             Console.ResetColor();
+            return this;
         }
         #endregion
 
         #region Writes
-        public void Write(float value)
+        public CConsole Write(float value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(int value)
+        public CConsole Write(int value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(object value)
+        public CConsole Write(long value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(string value)
+        public CConsole Write(object value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(string format, object arg0)
+        public CConsole Write(string value)
+        {
+            Console.Write(value);
+            Console.ResetColor();
+            return this;
+        }
+        public CConsole Write(string format, object arg0)
         {
             Console.Write(format, arg0);
             Console.ResetColor();
+            return this;
         }
-        public void Write(string format, object arg0, object arg1, object arg2)
+        public CConsole Write(string format, object arg0, object arg1, object arg2)
         {
             Console.Write(format, arg0, arg1, arg2);
             Console.ResetColor();
+            return this;
         }
-        public void Write(string format, object arg0, object arg1, object arg2, object arg3)
+        public CConsole Write(string format, object arg0, object arg1, object arg2, object arg3)
         {
             Console.Write(format, arg0, arg1, arg2, arg3);
             Console.ResetColor();
+            return this;
         }
-        public void Write(string format, params object[] arg)
+        public CConsole Write(string format, params object[] arg)
         {
             Console.Write(format, arg);
             Console.ResetColor();
+            return this;
         }
-        public void Write(decimal value)
+        public CConsole Write(decimal value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(char[] buffer)
+        public CConsole Write(char[] buffer)
         {
             Console.WriteLine(buffer);
             Console.ResetColor();
+            return this;
         }
-        public void Write(char value)
+        public CConsole Write(char value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(bool value)
+        public CConsole Write(bool value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
-        public void Write(string format, object arg0, object arg1)
+        public CConsole Write(string format, object arg0, object arg1)
         {
             Console.Write(format, arg0, arg1);
             Console.ResetColor();
+            return this;
         }
-        public void Write(double value)
+        public CConsole Write(double value)
         {
             Console.Write(value);
             Console.ResetColor();
+            return this;
         }
         #endregion
     }

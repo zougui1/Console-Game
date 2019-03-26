@@ -16,7 +16,7 @@ namespace ConsoleGame.entity.stats
         public EntityStats() : base()
         {
             Level = 1;
-            Experiences = 0;
+            Experiences = 12;
             Branch = null;
         }
     }

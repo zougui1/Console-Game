@@ -52,8 +52,13 @@ namespace ConsoleGame.json
                     return (Game)serializer.Deserialize(file, typeof(Game));
                 }
             }
+            catch(FileNotFoundException e)
+            {
+                return null;
+            }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return null;
             }
         }
@@ -105,7 +110,7 @@ namespace ConsoleGame.json
             GetJTokenById(NPCsPath, id, out JToken jToken);
             return ToObject<Citizen>(jToken);
         }
-        
+
         public static Building GetBuilding(int id)
         {
             GetJTokenById(BuildingsPath, id, out JToken jToken);

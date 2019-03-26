@@ -106,7 +106,7 @@
     <Compile Include="entity\Monster.cs" />
     <Compile Include="json\getters.cs" />
     <Compile Include="RandomNumber.cs" />
-    <Compile Include="entity\stats\StatsUnit.cs" />
+    <Compile Include="entity\stats\StatUnits.cs" />
     <Compile Include="utils\GetLastNamespace.cs" />
     <Compile Include="utils\Endl.cs" />
     <Compile Include="utils\GetProperties.cs" />

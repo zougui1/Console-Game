@@ -26,7 +26,7 @@ namespace ConsoleGame.misc.coords
             string parameter = "range:1-100";
             int movements = 0;
             movements = Utils.TryParseConsoleCin("Please enter a valid number (between 1 and 100 included)", parameter, "DarkRed");
-            Moves(movements, (int)args[0]);
+            Moves(movements, (byte)args[0]);
         }
 
         /// <summary>

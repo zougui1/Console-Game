@@ -28,10 +28,8 @@ namespace ConsoleGame.utils
                 if (param[0] == "range")
                 {
                     string[] numbers = param[1].Split('-');
-                    int min;
-                    int max;
-                    int.TryParse(numbers[0], out min);
-                    int.TryParse(numbers[1], out max);
+                    int.TryParse(numbers[0], out int min);
+                    int.TryParse(numbers[1], out int max);
 
                     if (parsed >= min && parsed <= max)
                     {
@@ -43,7 +41,7 @@ namespace ConsoleGame.utils
                     return parsed;
                 }
             }
-
+            
             Cconsole.Color(color).WriteLine(errorMessage);
             return TryParseConsoleCin(errorMessage, parameter, color);
         }

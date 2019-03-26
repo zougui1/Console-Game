@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleGame.misc.coords
 {
-    public enum Directions
+    public enum Directions : byte
     {
-        Up = 0,
-        Left = 1,
-        Down = 2,
-        Right = 3
+        Up,
+        Left,
+        Down,
+        Right
     }
 }

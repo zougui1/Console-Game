@@ -14,22 +14,22 @@ namespace ConsoleGame.entity.managers
 {
     public class LevelingManager
     {
-        private StatsUnit StrengthMage { get; set; }
-        private StatsUnit DefAgi { get; set; }
-        private StatsUnit HealthUnit { get; set; }
-        private StatsUnit ManaUnit { get; set; }
-        private StatsUnit RestUnit { get; set; }
-        private StatsUnit ResistanceUnit { get; set; }
+        private StatUnits StrengthMage { get; set; }
+        private StatUnits DefAgi { get; set; }
+        private StatUnits HealthUnit { get; set; }
+        private StatUnits ManaUnit { get; set; }
+        private StatUnits RestUnit { get; set; }
+        private StatUnits ResistanceUnit { get; set; }
         private Character Character { get; set; }
 
         public LevelingManager(Character character)
         {
-            StrengthMage = new StatsUnit(5, 11, 75, 7);
-            DefAgi = new StatsUnit(30, 40, 25, 8, unit: 0.75);
-            HealthUnit = new StatsUnit(30, 40, 25, 8, unit: 1.5);
-            ManaUnit = new StatsUnit(30, 40, 25, 8, unit: 1.35);
-            RestUnit = new StatsUnit(24, 34, 25, 15);
-            ResistanceUnit = new StatsUnit(29, 39, 20, 10);
+            StrengthMage = new StatUnits(5, 11, 75, 7);
+            DefAgi = new StatUnits(30, 40, 25, 8, unit: 0.75);
+            HealthUnit = new StatUnits(30, 40, 25, 8, unit: 1.5);
+            ManaUnit = new StatUnits(30, 40, 25, 8, unit: 1.35);
+            RestUnit = new StatUnits(24, 34, 25, 15);
+            ResistanceUnit = new StatUnits(29, 39, 20, 10);
             Character = character;
         }
 
@@ -74,7 +74,7 @@ namespace ConsoleGame.entity.managers
 
         private int IncreaseStat(double stat, string statName)
         {
-            StatsUnit concernedUnit;
+            StatUnits concernedUnit;
             if (statName == "Deftness" || statName == "Agility")
             {
                 concernedUnit = DefAgi;
@@ -108,21 +108,42 @@ namespace ConsoleGame.entity.managers
             return (int)stat;
         }
 
-        private int RandomizeStat(StatsUnit units, int stat, string statName)
+        private int RandomizeStat(StatUnits units, int stat, string statName)
         {
-            int[] dataStatsVal;
+            /*int[] dataStatsVal;
             string[] dataStatsName;
             GetStatsUnits(units, out dataStatsVal, out dataStatsName);
 
             int[] sortedDataStatsVal;
             string[] sortedDataStatsName;
-            SortStatsUnits(dataStatsVal, dataStatsName, out sortedDataStatsVal, out sortedDataStatsName);
+            SortStatsUnits(dataStatsVal, dataStatsName, out sortedDataStatsVal, out sortedDataStatsName);*/
+            (int unit, string name)[] sortedUnits = units.Units.OrderBy(unit => unit.unit).ToArray();
 
             int random = RandomNumber.Between(0, 100);
             bool done = false;
             int percent = 0;
 
-            for (int i = 0; i < sortedDataStatsVal.Length; ++i)
+            for (int i = 0; i < sortedUnits.Length; ++i)
+            {
+                if (random <= (percent += sortedUnits[i].unit) && !done)
+                {
+                    string dataStatName = sortedUnits[i].name;
+                    done = true;
+                    Regex regex = new Regex(@"[0-9]");
+                    if (dataStatName.IndexOf("Minus") >= 0)
+                    {
+                        int number = int.Parse(regex.Match(dataStatName).Value);
+                        stat -= number;
+                    }
+                    else if (dataStatName.IndexOf("Plus") >= 0)
+                    {
+                        int number = int.Parse(regex.Match(dataStatName).Value);
+                        stat += number;
+                    }
+                }
+            }
+
+            /*for (int i = 0; i < sortedDataStatsVal.Length; ++i)
             {
                 if (random <= (percent += sortedDataStatsVal[i]) && !done)
                 {
@@ -140,11 +161,11 @@ namespace ConsoleGame.entity.managers
                         stat += number;
                     }
                 }
-            }
+            }*/
             return (stat >= 0) ? stat : 0;
         }
 
-        private void GetStatsUnits(StatsUnit units, out int[] dataStatsVal, out string[] dataStatsName)
+        /*private void GetStatsUnits(StatUnits units, out int[] dataStatsVal, out string[] dataStatsName)
         {
             Type type = units.GetType();
             PropertyInfo[] members = type.GetProperties();
@@ -177,6 +198,6 @@ namespace ConsoleGame.entity.managers
                 sortedDataStatsVal[i] = min;
                 sortedDataStatsName[i] = dataStatsName[minIndex];
             }
-        }
+        }*/
     }
 }
