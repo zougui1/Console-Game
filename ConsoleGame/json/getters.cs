@@ -13,6 +13,7 @@ using ConsoleGame.building;
 using ConsoleGame.entity;
 using ConsoleGame.entity.stats;
 using ConsoleGame.entity.NPC;
+using ConsoleGame.game;
 using ConsoleGame.items;
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.items.stuff.handed.shields;
@@ -27,12 +28,11 @@ namespace ConsoleGame.json
     {
         /// <summary>
         /// Save is used to save the party
-        /// it convert a Character (the user) into a json string and write it in a file
+        /// it convert the current Game into a json string and write it in a file
         /// </summary>
-        /// <param name="user">The character to save into a json file</param>
+        /// <param name="game">The party to save into a json file</param>
         public static void Save(Game game)
         {
-            Console.WriteLine("save");
             string json = JsonConvert.SerializeObject(game, Formatting.Indented);
             File.WriteAllText(SavePath, json);
         }
@@ -58,8 +58,7 @@ namespace ConsoleGame.json
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
-                return null;
+                throw e;
             }
         }
 
@@ -129,23 +128,13 @@ namespace ConsoleGame.json
                 default: return null;
             }
         }
-
-        /// <summary>
-        /// GetInitStats is used to get the init stats based on the given class's name
-        /// </summary>
-        /// <param name="className">the class's name we want to retrieve</param>
-        /// <returns>return the init stats of type InitStats</returns>
+        
         public static InitStats GetInitStats(string className)
         {
             GetJTokenByString(StatsPath, className, "Class", out JToken jToken);
             return jToken.ToObject<InitStats>();
         }
-
-        /// <summary>
-        /// GetInitStats is used to get the stats based on the given class's name
-        /// </summary>
-        /// <param name="className">the class's name we want to retrieve</param>
-        /// <returns>return the stats of type Stats</returns>
+        
         public static Stats GetClassStats(string className)
         {
             GetJTokenByString(StatsPath, className, "Class", out JToken jToken);
@@ -168,6 +157,38 @@ namespace ConsoleGame.json
         {
             GetJTokenById(LocationsPath, id, out JToken jToken);
             return ToObject<Location>(jToken);
+        }
+
+        public static Item GetRightItem(int id, string dataType)
+        {
+            JToken jToken;
+
+            switch (dataType)
+            {
+                case "weapons":
+                    GetJTokenById(WeaponsPath, id, out jToken);
+                    return ToObject<Weapon>(jToken);
+                case "heads":
+                    GetJTokenById(HeadsPath, id, out jToken);
+                    return ToObject<Armor>(jToken);
+                case "torsos":
+                    GetJTokenById(TorsosPath, id, out jToken);
+                    return ToObject<Armor>(jToken);
+                case "arms":
+                    GetJTokenById(ArmsPath, id, out jToken);
+                    return ToObject<Armor>(jToken);
+                case "legs":
+                    GetJTokenById(LegsPath, id, out jToken);
+                    return ToObject<Armor>(jToken);
+                case "feets":
+                    GetJTokenById(FeetsPath, id, out jToken);
+                    return ToObject<Armor>(jToken);
+                case "items":
+                    GetJTokenById(ItemsPath, id, out jToken);
+                    return ToObject<Item>(jToken);
+                default:
+                    throw new Exception($"The data-type \"{dataType}\" is not handled");
+            }
         }
 
         /// <summary>

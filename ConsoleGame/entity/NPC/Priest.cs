@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ConsoleGame.entity.NPC
 {
     public class Priest : AbstractNPC
     {
+        [JsonConstructor]
+        public Priest(string name, string category) : base(name, category)
+        { }
+
         public void Interaction()
         {
             Console.WriteLine("1. Confession (save)"); // save the party

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ConsoleGame.game;
 using ConsoleGame.json;
 using ConsoleGame.location;
 using ConsoleGame.utils;
@@ -26,6 +27,7 @@ namespace ConsoleGame.misc.coords
             string parameter = "range:1-100";
             int movements = 0;
             movements = Utils.TryParseConsoleCin("Please enter a valid number (between 1 and 100 included)", parameter, "DarkRed");
+            Utils.DeletePreviousLine();
             Moves(movements, (byte)args[0]);
         }
 
@@ -46,7 +48,7 @@ namespace ConsoleGame.misc.coords
             ShowCoords();
             Console.WriteLine("Nothing happened.");
 
-            GameStatement.Game.ChooseAction();
+            GameMenu.Game.User.ChooseAction();
         }
 
         /// <summary>
@@ -65,18 +67,18 @@ namespace ConsoleGame.misc.coords
                 Location currentLocation = Json.GetLocation(LocationList.LocationsDict[(X: X, Y: Y)]);
                 currentLocation.InitAllBuildings();
 
-                GameStatement.Game.CurrentLocation = currentLocation;
+                GameMenu.Game.CurrentLocation = currentLocation;
                 
                 Console.WriteLine("You entered in \"{0}\"", currentLocation.Name);
 
-                GameStatement.Game.InLocation();
+                GameMenu.Game.InLocation();
                 return true;
             }
 
             int number = RandomNumber.Between(0, 100);
-            if (number <= GameStatement.Game.PercentOfMonster)
+            if (number <= GameMenu.Game.PercentOfMonster)
             {
-                GameStatement.Game.TriggerMonster();
+                GameMenu.Game.TriggerMonster();
                 return true;
             }
             else

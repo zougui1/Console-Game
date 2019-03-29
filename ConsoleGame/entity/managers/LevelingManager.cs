@@ -38,7 +38,7 @@ namespace ConsoleGame.entity.managers
             ++Character.EntityStats.Level;
             string updatedStats = null;
 
-            Stats warrior = Json.GetClassStats(Character.Class);
+            Stats warrior = Json.GetClassStats(Character.ClassName.ToString());
             PropertyInfo[] warriorStats = Utils.GetProperties(warrior);
             Type type = Character.EntityStats.GetType();
 

@@ -17,7 +17,7 @@ namespace ConsoleGame.utils
         /// <param name="args">the arguments to pass to the method to be called</param>
         /// <param name="color">the color of the choices in the console</param>
         /// <param name="parameter">contains the list of spells to cast, if defined</param>
-        public static void Choices(string[] choices, Action[] actions, object[][] args = null, string color = "Gray", List<Spell> parameter = null)
+        public static void Choices(string[] choices, Action[] actions, object[][] args = null, string color = "Gray", List<Spell> parameter = null, int removeLines = 0)
         {
             for (int i = 0; i < choices.Length; ++i)
             {
@@ -31,8 +31,9 @@ namespace ConsoleGame.utils
 
             while (!rightAction)
             {
-                int action = TryParseConsoleCin("Please enter a valid number", color: "DarkRed");
+                int action = TryParseConsoleCin("You must enter a valid number", color: "DarkRed");
                 --action;
+                DeletePreviousLine(removeLines);
 
                 try
                 {
@@ -68,10 +69,13 @@ namespace ConsoleGame.utils
                     }
                     rightAction = true;
                 }
+                catch(IndexOutOfRangeException e)
+                {
+                    ErrorHandling("You must enter a number that match an action.", Console.CursorTop);
+                }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
-                    Cconsole.Color("DarkRed").WriteLine("Please enter a number that match an action.");
+                    throw e;
                 }
             }
         }

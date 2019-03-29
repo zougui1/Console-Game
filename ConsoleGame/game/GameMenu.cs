@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using ConsoleGame.entity;
@@ -10,11 +11,13 @@ using ConsoleGame.entity.classes;
 using ConsoleGame.json;
 using ConsoleGame.utils;
 
-namespace ConsoleGame
+namespace ConsoleGame.game
 {
-    public static class GameStatement
+    public static class GameMenu
     {
         public static Game Game { get; private set; }
+        public static byte Class { get; private set; }
+        public static string Name { get; private set; }
 
         public static void Init()
         {
@@ -57,7 +60,7 @@ namespace ConsoleGame
             }
             else
             {
-                Game.ChooseAction();
+                StartGame();
             }
         }
 
@@ -67,24 +70,58 @@ namespace ConsoleGame
         /// <param name="args">is unused but obligatory due to be used with the delegation Action</param>
         public static void NewGame(object[] args)
         {
+            ChooseClass();
+        }
+
+        public static void ChooseClass()
+        {
+            Utils.Endl();
+            Utils.Cconsole.Color("DarkGray").WriteLine("Choose a class");
+            string[] classes = Enum.GetNames(typeof(BeginClasses));
+            Action[] methods = new Action[classes.Length];
+            Utils.FillArray(methods, new Action(ChooseName));
+            object[][] args = Utils.FillEnumInNestedArray(typeof(BeginClasses));
+            Utils.Choices(classes, methods, args);
+        }
+
+        public static void ChooseName(object[] args)
+        {
+            Class = (byte)args[0];
+
+            Utils.Endl();
             Console.WriteLine("Enter a name.");
-            string name = "";
             bool validName = false;
 
             while (!validName)
             {
-                name = Console.ReadLine();
+                Name = Console.ReadLine();
 
-                if (name.Trim() != "")
+                if (Name.Trim() != "")
                 {
                     validName = true;
                     break;
                 }
                 Utils.Cconsole.Color("DarkRed").WriteLine("Enter a valid name.");
             }
-            
-            Game = new Game(new Character(name, ((Classes)0).ToString(), Json.GetWeapon(0)));
-            Game.ChooseAction();
+
+            CreateParty();
+        }
+
+        public static void CreateParty()
+        {
+            Character character = new Character(Name, ((BeginClasses)Class), Json.GetWeapon(0));
+            User user = new User(character);
+            Game = new Game(user);
+            StartGame();
+        }
+
+        public static void StartGame()
+        {
+            Utils.Cconsole.Color("Green").WriteLine("The game is starting...");
+            Thread.Sleep(1000);
+            Console.Clear();
+
+            Game.Start();
         }
     }
 }

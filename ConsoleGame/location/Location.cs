@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 using ConsoleGame.building;
 using ConsoleGame.entity.NPC;
@@ -14,7 +15,7 @@ namespace ConsoleGame.location
 {
     public class Location
     {
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
         /// <summary>
         /// Coords represent the position of the location in the map
         /// </summary>
@@ -22,30 +23,48 @@ namespace ConsoleGame.location
         /// <summary>
         /// Buildings represent an array of the buildings in the location
         /// </summary>
-        public Building[] Buildings { get; protected set; }
+        public Building[] Buildings { get; private set; }
         /// <summary>
         /// Citizens represent an array of the citizens in the location
         /// </summary>
-        public Citizen[] Citizens { get; protected set; }
+        public Citizen[] Citizens { get; private set; }
         /// <summary>
         /// Type represent the type of the location (town, city, kingdom)
         /// </summary>
-        public string Category { get; protected set; }
-        public Church Church { get; protected set; }
-        public ArmorShop ArmorShop { get; set; }
-        public WeaponShop WeaponShop { get; set; }
-        public ItemShop ItemShop { get; set; }
+        public string Category { get; private set; }
+        public Church Church { get; private set; }
+        public ArmorShop ArmorShop { get; private set; }
+        public WeaponShop WeaponShop { get; private set; }
+        public ItemShop ItemShop { get; private set; }
         /// <summary>
         /// Castle represent the castle in the kingdom (if it is)
         /// </summary>
-        public dynamic Castle { get; protected set; }
+        // TODO
+        // public dynamic Castle { get; private set; }
 
         public Location(string name, Coords coords, Building[] buildings)
         {
             Name = name;
             Coords = coords;
             Buildings = buildings;
-            Church = new Church();
+            Church = new Church(new List<AbstractNPC>(), false, "ttt", new Priest("priest", "priest"));
+        }
+
+        [JsonConstructor]
+        public Location(
+            string name, Coords coords, Building[] buildings, Citizen[] citizens,
+            string category, Church church, ArmorShop armorShop, WeaponShop weaponShop, ItemShop itemShop
+        )
+        {
+            Name = name;
+            Coords = coords;
+            Buildings = buildings;
+            Citizens = citizens;
+            Category = category;
+            Church = church;
+            ArmorShop = armorShop;
+            WeaponShop = weaponShop;
+            ItemShop = itemShop;
         }
 
         public void InitAllBuildings()
@@ -55,7 +74,7 @@ namespace ConsoleGame.location
                // Buildings[i].Init();
             }
         }
-
+        
         public void Display()
         {
             Citizens[0].Discussion();

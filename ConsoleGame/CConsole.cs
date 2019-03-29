@@ -8,69 +8,26 @@ namespace ConsoleGame
 {
     public class CConsole
     {
-        private string[] m_colorNames =
-        {
-            "Black",
-            "DarkBlue",
-            "DarkGreen",
-            "DarkCyan",
-            "DarkRed",
-            "DarkMagenta",
-            "DarkYellow",
-            "Gray",
-            "DarkGray",
-            "Blue",
-            "Green",
-            "Cyan",
-            "Red",
-            "Magenta",
-            "Yellow",
-            "White"
-        };
-        private int[] m_colors =
-        {
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15
-        };
-
         public CConsole Color(string color)
         {
-            Console.ForegroundColor = (ConsoleColor)GetColor(color);
+            Console.ForegroundColor = GetColor(color);
             return this;
         }
 
         public CConsole Bg(string color)
         {
-            Console.BackgroundColor = (ConsoleColor)GetColor(color);
+            Console.BackgroundColor = GetColor(color);
             return this;
         }
 
-        public int GetColor(string color)
+        public ConsoleColor GetColor(string color)
         {
-            int i;
-            for(i = 0; i < m_colorNames.Length; ++i)
+            if(color == "Grey")
             {
-                if(m_colorNames[i] == color)
-                {
-                    return m_colors[i];
-                }
+                color = "Gray";
             }
 
-            return 15;
+            return (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color);
         }
 
         #region WriteLines

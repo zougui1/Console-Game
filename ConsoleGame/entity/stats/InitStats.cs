@@ -12,15 +12,12 @@ namespace ConsoleGame.entity.stats
         public int InitHealth { get; set; }
         public int InitMana { get; set; }
 
-        public InitStats() : base()
-        { }
-
         public void Init()
         {
-            MaxHealth = InitHealth;
             Health = InitHealth;
-            MaxMana = InitMana;
+            MaxHealth = InitHealth;
             Mana = InitMana;
+            MaxMana = InitMana;
         }
     }
 }

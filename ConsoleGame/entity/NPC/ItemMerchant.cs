@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 using ConsoleGame.items;
 using ConsoleGame.json;
@@ -12,7 +13,13 @@ namespace ConsoleGame.entity.NPC
 {
     public class ItemMerchant : AbstractNPC
     {
-        public Item[] Items { get; set; }
+        public Item[] Items { get; private set; }
+
+        [JsonConstructor]
+        public ItemMerchant(string name, string category, Item[] items) : base(name, category)
+        {
+            Items = items;
+        }
 
         public void DisplayList()
         {

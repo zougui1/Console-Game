@@ -10,40 +10,33 @@ using ConsoleGame.json;
 using ConsoleGame.location;
 using ConsoleGame.utils;
 
-namespace ConsoleGame
+namespace ConsoleGame.game
 {
     public class Game
     {
         /// <summary>
         /// The User property represent the actual user of the game
         /// </summary>
-        public Character User { get; set; }
+        public User User { get; private set; }
         /// <summary>
         /// The CurrentLocation property represent the the current location 
         /// </summary>
         public Location CurrentLocation { get; set; }
+        public GameStatement Statement { get; set; }
         /// <summary>
         /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
         /// </summary>
         public int PercentOfMonster { get; set; } = 90;
 
-        public Game(Character user)
+        public Game(User user)
         {
             User = user;
+            Statement = GameStatement.Wilderness;
         }
 
-        /// <summary>
-        /// ChooseAction is used to let the user choose an action when in the nature
-        /// (move, rest)
-        /// </summary>
-        public void ChooseAction()
+        public void Start()
         {
-            Utils.Endl();
-            Utils.Cconsole.Color("DarkGray").WriteLine("What do you want to do?");
-
-            string[] actions = { "Move", "Rest" };
-            Action[] methods = { new Action(User.ChooseDirection), new Action(User.Rest) };
-            Utils.Choices(actions, methods);
+            User.ChooseAction();
         }
 
         /// <summary>
@@ -53,11 +46,18 @@ namespace ConsoleGame
         {
             //Monster monster = new Monster("Slime");
             Monster monster = Json.GetMonster(0);
-            monster.Focus = User;
+            monster.Focus = User.Characters[0];
+            User.Characters[0].Focus = monster;
             Utils.Endl(2);
             Console.WriteLine("A {0} appears", monster.Name);
-            User.Focus = monster;
-            Battle(monster);
+            User.MonstersInBattle = new List<Monster>() { monster };
+
+            Utils.SetTimeoutSync(() =>
+            {
+                Console.Clear();
+            }, 1000);
+            
+            Battle();
         }
 
         /// <summary>
@@ -65,30 +65,34 @@ namespace ConsoleGame
         /// if the user win it display a win message and save the party into a json file (the save shouldn't be here)
         /// if the user loose it displays a loose message and define the User property to null
         /// </summary>
-        /// <param name="monster">The monster the user has to fight</param>
-        public void Battle(Monster monster)
+        public void Battle()
         {
-            while(User.IsAlive() && monster.IsAlive())
+            Statement = GameStatement.Battle;
+            List<Entity> battleOrder = new List<Entity>();
+            // we add all the characters and all the monsters into the battleOrder list
+            battleOrder.AddRange(User.Characters);
+            battleOrder.AddRange(User.MonstersInBattle);
+            // we order by desc the list depending on the agility, the entity with the most agility can do an action first
+            battleOrder = battleOrder.OrderByDescending(entity => entity.EntityStats.Agility).ToList();
+
+            while (User.IsTeamAlive() && User.IsEnemyAlive())
             {
-                User.ChooseAction();
-                if(monster.IsAlive())
+                battleOrder.ForEach(entity =>
                 {
-                    monster.Attack(User);
-                }
+                    if (entity.IsAlive())
+                    {
+                        entity.ChooseAction();
+                    }
+                });
+                Utils.Endl();
+                Utils.FillLine('-');
             }
             
-            if (User.IsAlive())
-            {
-                User.Win();
-                monster.Loots();
-                User.Focus = null;
+            if (User.BattleEnd()){
                 Json.Save(this);
-                ChooseAction();
             }
-            else if(monster.IsAlive())
+            else
             {
-                User.LooseMessage();
-                monster.Focus = null;
                 User = null;
             }
         }

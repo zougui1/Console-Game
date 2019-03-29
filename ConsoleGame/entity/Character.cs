@@ -5,13 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
+using ConsoleGame.entity.classes;
 using ConsoleGame.entity.managers;
 using ConsoleGame.entity.stats;
+using ConsoleGame.items.stuff.armor;
+using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.json;
 using ConsoleGame.misc;
-using ConsoleGame.misc.coords;
+using ConsoleGame.misc.inventory;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.entity
@@ -20,30 +24,55 @@ namespace ConsoleGame.entity
     {
         public int Potions { get; protected set; }
         public int NeededExperiences { get; protected set; }
-        public string Class { get; protected set; }
+        public Classes ClassName { get; protected set; }
         protected LevelingManager LevelingManager { get; set; }
         public string UpdatedStats { get; set; }
         public bool HasSpells { get; protected set; }
-        public MovableCoords Coords { get; protected set; }
+        public Inventory Inventory { get; protected set; }
 
-        public Character(string name, string className, Weapon weapon) : base(name, weapon)
+        public Character(string name, BeginClasses className, Weapon weapon) : base(name, weapon)
         {
             Potions = 2;
             NeededExperiences = 14;
-            Class = className;
+            ClassName = (Classes)className;
             LevelingManager = new LevelingManager(this);
-            HasSpells = false;
-            Coords = new MovableCoords();
-            InitStats initStats = Json.GetInitStats(className);
+            InitStats initStats = Json.GetInitStats(className.ToString());
+            Inventory = new Inventory(16);
 
             initStats.Init();
             EntityStats = initStats;
+
+            switch (className)
+            {
+                case BeginClasses.Mage:
+                case BeginClasses.Priest:
+                case BeginClasses.Thief:
+                    HasSpells = true;
+                    break;
+                default:
+                    HasSpells = false;
+                    break;
+            }
         }
-        
-        public void ChooseAction()
+
+        [JsonConstructor]
+        public Character(
+            string name, EntityStats entityStats, Weapon weapon, List<Spell> spells,
+            Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet,
+            int neededExperiences, byte className, bool hasSpells, Inventory inventory
+        ) : base(name, entityStats, weapon, spells, shield, head, torso, arms, legs, feet)
         {
-            Console.WriteLine(Environment.NewLine);
-            int i = 0;
+            NeededExperiences = neededExperiences;
+            ClassName = (Classes)className;
+            HasSpells = hasSpells;
+            Inventory = inventory;
+
+            LevelingManager = new LevelingManager(this);
+        }
+
+        public override void ChooseAction()
+        {
+            Utils.Endl(2);
             Utils.Cconsole.Color("DarkGray").WriteLine("Do an action:");
 
             Entity[] target = { Focus };
@@ -51,27 +80,40 @@ namespace ConsoleGame.entity
             Action[] methods = new Action[4] { new Action(Attack), new Action(Defending), new Action(DrinkHealthPotion), new Action(ChooseSpell) };
             object[][] args = { target, null, null, target };
 
+            int lineNumber = 6;
+
             if (Potions > 0)
             {
                 actions[2] = $"Drink a potion ({Potions})";
+                ++lineNumber;
             }
 
             if (HasSpells)
             {
                 actions[3] = $"Spells (mana: {EntityStats.Mana}/{EntityStats.MaxMana})";
+                ++lineNumber;
             }
 
-            Utils.Choices(actions, methods, args);
+            Utils.Choices(actions, methods, args, removeLines: lineNumber);
         }
 
         public void ChooseSpell(object[] args)
         {
-            Entity[] target = (Entity[])args[0];
+            if(Spells.Count == 0)
+            {
+                Utils.Cconsole.Color("Red").WriteLine("You do not have any spell.");
+                ChooseAction();
+                return;
+            }
+
+            Entity target = (Entity)args[0];
             Action method = new Action(Magical);
 
             string[] actions = ListSpells();
-            Action[] methods = { method, method, method, method, method, method, method, method, method, method };
-            object[][] allArgs = { target, target, target, target, target, target, target, target, target, target };
+            Action[] methods = new Action[actions.Length];
+            Utils.FillArray(methods, method);
+            object[][] allArgs = new object[actions.Length][];
+            Utils.FillArray(allArgs, new Entity[] { target }, true);
 
             Utils.Choices(actions, methods, allArgs, parameter: Spells);
         }
@@ -131,21 +173,6 @@ namespace ConsoleGame.entity
                 Utils.Cconsole.Color("Green").WriteLine("{0} drink a potion and has now {1} health points.", Name, EntityStats.Health);
                 Utils.Cconsole.WriteLine("{0} has {1} potions left", Name, Potions);
             }
-        }
-
-        public void ChooseDirection(object[] args)
-        {
-            Utils.Endl();
-            Action method = new Action(Coords.NumberMove);
-            string[] actions = { "Up", "Left", "Down", "Right" };
-            Action[] methods = { method, method, method, method };
-            object[][] actionArgs = {
-                new object[] { Directions.Up },
-                new object[] { Directions.Left },
-                new object[] { Directions.Down },
-                new object[] { Directions.Right }
-            };
-            Utils.Choices(actions, methods, actionArgs);
         }
 
         public void GetAllStats()
@@ -224,9 +251,17 @@ namespace ConsoleGame.entity
             UpdatedStats = "";
         }
 
-        public void AddExperiences()
+        public void AddExperiencesIfAlive(int experiences)
         {
-            EntityStats.Experiences += Focus.EntityStats.Experiences;
+            if (IsAlive())
+            {
+                AddExperiences(experiences);
+            }
+        }
+
+        public void AddExperiences(int experiences)
+        {
+            EntityStats.Experiences += experiences;
             if(EntityStats.Experiences >= NeededExperiences)
             {
                 EntityStats.Experiences -= NeededExperiences;
@@ -237,33 +272,6 @@ namespace ConsoleGame.entity
                 Utils.Endl();
                 GetAllStats();
             }
-        }
-
-        public void Win()
-        {
-            WinMessage();
-            AddExperiences();
-        }
-
-        public void WinMessage()
-        {
-            Utils.Endl(2);
-            Utils.Cconsole.Color("Red").WriteLine("{0} died, {1} won!", Focus.Name, Name);
-            Utils.Endl();
-            Utils.Cconsole.Color("Cyan").WriteLine("-----------------------------");
-            Utils.Cconsole.Color("Blue").WriteLine("name: {0}", Name);
-            Utils.Cconsole.Color("Blue").WriteLine("health: {0}/{1}", EntityStats.Health, EntityStats.MaxHealth);
-            Utils.Cconsole.Color("Blue").WriteLine("XP: {0}/{1}", EntityStats.Experiences + Focus.EntityStats.Experiences, NeededExperiences);
-            Utils.Cconsole.Color("Blue").WriteLine("weapon: {0} ({1} damages)", Weapon.Name, Weapon.Damages);
-            Utils.Cconsole.Color("Cyan").WriteLine("-----------------------------");
-            Utils.Endl(2);
-        }
-
-        public void LooseMessage()
-        {
-            Utils.Endl(2);
-            Utils.Cconsole.Color("Red").WriteLine("You died!");
-            Utils.Endl(2);
         }
     }
 }

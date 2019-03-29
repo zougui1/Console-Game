@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 using ConsoleGame.utils;
 
@@ -11,7 +12,13 @@ namespace ConsoleGame.entity.NPC
 {
     public class Citizen : AbstractNPC
     {
-        public string Text { get; set; }
+        public string Text { get; private set; }
+
+        [JsonConstructor]
+        public Citizen(string name, string category, string text) : base(name, category)
+        {
+            Text = text;
+        }
 
         public void Discussion()
         {

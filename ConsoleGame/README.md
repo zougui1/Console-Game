@@ -62,3 +62,6 @@ be available after some quests are done
 	* medium
 	* large
 * chimera wings (teleport to a known place)
+
+
+* inventory with categories

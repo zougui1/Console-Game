@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ConsoleGame.entity.NPC;
+
 namespace ConsoleGame.building
 {
     public class Shop : Building
     {
-        public Shop() : base()
+        public Shop(List<AbstractNPC> npcs, bool isLocked, string category) : base(npcs, isLocked, category)
         { }
     }
 }

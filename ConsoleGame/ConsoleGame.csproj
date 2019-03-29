@@ -74,6 +74,7 @@
     <Compile Include="building\WeaponShop.cs" />
     <Compile Include="CConsole.cs" />
     <Compile Include="entity\Character.cs" />
+    <Compile Include="entity\classes\BeginClasses.cs" />
     <Compile Include="entity\classes\Classes.cs" />
     <Compile Include="entity\NPC\ArmorMerchant.cs" />
     <Compile Include="entity\NPC\Citizen.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="entity\NPC\Priest.cs" />
     <Compile Include="entity\NPC\WeaponMerchant.cs" />
     <Compile Include="entity\stats\InitStats.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="game\Actions.cs" />
+    <Compile Include="game\Game.cs" />
+    <Compile Include="game\GameStatement.cs" />
     <Compile Include="items\equipments\armor\Armor.cs" />
     <Compile Include="items\equipments\handed\TwoHanded.cs" />
     <Compile Include="json\main.cs" />
@@ -99,14 +102,22 @@
     <Compile Include="items\equipments\AbstractEquipment.cs" />
     <Compile Include="items\equipments\handed\weapons\Weapon.cs" />
     <Compile Include="misc\coords\MovableCoords.cs" />
+    <Compile Include="misc\inventory\Inventory.cs" />
     <Compile Include="misc\LootTable.cs" />
     <Compile Include="misc\Spell.cs" />
     <Compile Include="entity\stats\EntityStats.cs" />
-    <Compile Include="entity\stats\MonsterStats.cs" />
     <Compile Include="entity\Monster.cs" />
     <Compile Include="json\getters.cs" />
     <Compile Include="RandomNumber.cs" />
     <Compile Include="entity\stats\StatUnits.cs" />
+    <Compile Include="game\User.cs" />
+    <Compile Include="utils\ErrorHandling.cs" />
+    <Compile Include="utils\ConsoleClearer.cs" />
+    <Compile Include="utils\DeletePreviousLine.cs" />
+    <Compile Include="utils\FillEnumInNestedArray.cs" />
+    <Compile Include="utils\FillArray.cs" />
+    <Compile Include="utils\FillLine.cs" />
+    <Compile Include="utils\SetTimeout.cs" />
     <Compile Include="utils\GetLastNamespace.cs" />
     <Compile Include="utils\Endl.cs" />
     <Compile Include="utils\GetProperties.cs" />
@@ -119,7 +130,7 @@
     <Compile Include="utils\CConsole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameStatement.cs" />
+    <Compile Include="game\GameMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

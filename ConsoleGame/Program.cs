@@ -6,8 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
+using ConsoleGame.game;
 using ConsoleGame.json;
 using ConsoleGame.location;
+
+using ConsoleGame.misc.inventory;
+using ConsoleGame.items.stuff.handed.weapons;
 
 namespace ConsoleGame
 {
@@ -15,17 +19,17 @@ namespace ConsoleGame
 
     class Program
     {
-        //[DllImport("User32.dll", EntryPoint = "MessageBox")]
-        //static extern int MessageDialog(int hWnd, string msg, string caption, int msgType);
 
         [STAThread]
         static void Main(string[] args)
         {
-            //MessageDialog(0, "MessageDialog Called", "DllImport test", 0);
             Json.Init();
             LocationList.SetLocations();
-            GameStatement.Init();
+            GameMenu.Init();
             Console.ReadKey();
         }
     }
 }
+
+
+

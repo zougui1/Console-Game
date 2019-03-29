@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.items.stuff.handed.shields;
@@ -13,8 +14,15 @@ namespace ConsoleGame.entity.NPC
 {
     public class ArmorMerchant : AbstractNPC
     {
-        public Armor[] Armors { get; set; }
-        public Shield[] Shields { get; set; }
+        public Armor[] Armors { get; private set; }
+        public Shield[] Shields { get; private set; }
+
+        [JsonConstructor]
+        public ArmorMerchant(string name, string category, Armor[] armors, Shield[] shields) : base(name, category)
+        {
+            Armors = armors;
+            Shields = shields;
+        }
 
         public void DisplayList()
         {

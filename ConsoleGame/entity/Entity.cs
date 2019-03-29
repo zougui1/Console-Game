@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 using ConsoleGame.entity.stats;
 using ConsoleGame.items.stuff.handed.weapons;
@@ -15,11 +16,11 @@ namespace ConsoleGame
 {
     public class Entity
     {
-        public string Name { get; set; }
-        public EntityStats EntityStats { get; set; }
+        public string Name { get; protected set; }
+        public EntityStats EntityStats { get; protected set; }
         public bool Defend { get; protected set; }
         public Weapon Weapon { get; protected set; }
-        public dynamic Focus { get; set; }
+        public Entity Focus { get; set; }
         public double DodgeChancePerUnit { get; private set; }
         public double CriticalChancePerUnit { get; private set; }
         public List<Spell> Spells { get; protected set; }
@@ -45,10 +46,49 @@ namespace ConsoleGame
             CriticalChancePerUnit = 0.15;
             Spells = new List<Spell>();
         }
+        
+        public Entity(
+            string name, InitStats entityStats, Weapon weapon, List<Spell> spells,
+            Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet
+        )
+        {
+            Name = name;
+            EntityStats = entityStats;
+            Weapon = weapon;
+            Spells = spells;
+            Shield = shield;
+            Head = head;
+            Torso = torso;
+            Arms = arms;
+            Legs = legs;
+            Feet = feet;
+        }
+        
+        public Entity(
+            string name, EntityStats entityStats, Weapon weapon, List<Spell> spells,
+            Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet
+        )
+        {
+            Name = name;
+            EntityStats = entityStats;
+            Weapon = weapon;
+            Spells = spells;
+            Shield = shield;
+            Head = head;
+            Torso = torso;
+            Arms = arms;
+            Legs = legs;
+            Feet = feet;
+        }
 
         public bool IsAlive()
         {
             return EntityStats.Health > 0;
+        }
+
+        public virtual void ChooseAction()
+        {
+            Attack(Focus);
         }
 
         public int GetTotalDefense()
@@ -149,7 +189,6 @@ namespace ConsoleGame
 
         public void AttackMessage(Entity target, int damages, Spell spell = null, bool isCritical = false)
         {
-            Utils.Endl();
             if (spell != null)
             {
                 MagicalMessage(target, damages, spell, isCritical);
@@ -212,17 +251,6 @@ namespace ConsoleGame
         {
             Utils.Cconsole.Color("DarkMagenta").WriteLine("{0} is defending", Name);
             Defend = true;
-        }
-
-        public void Rest(object[] args = null)
-        {
-            int healthPoints = RandomNumber.Between(1, (int)EntityStats.MaxHealth / 4);
-            InstantHealth(healthPoints);
-            Utils.Endl();
-            Utils.Cconsole.Color("Green").WriteLine("After a little rest you recovered {0} health points", healthPoints);
-            Utils.Cconsole.WriteLine("{0} has now {1} health points", Name, EntityStats.Health);
-            Utils.Endl();
-            GameStatement.Game.ChooseAction();
         }
 
         public void InstantHealth(int healthPoints)

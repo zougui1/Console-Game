@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleGame.utils
@@ -18,9 +19,11 @@ namespace ConsoleGame.utils
         /// <param name="parameter">parameter to add in for the return</param>
         /// <param name="color">the color of the error message to display in the console</param>
         /// <returns>return an int that the user entered</returns>
-        public static int TryParseConsoleCin(string errorMessage = "", string parameter = "", string color = "White")
+        public static int TryParseConsoleCin(string errorMessage = "", string parameter = "", string color = "DarkRed")
         {
             string input = Console.ReadLine();
+            Thread.Sleep(300);
+            DeletePreviousLine(1);
             int parsed;
             if (int.TryParse(input, out parsed))
             {
@@ -42,7 +45,8 @@ namespace ConsoleGame.utils
                 }
             }
             
-            Cconsole.Color(color).WriteLine(errorMessage);
+            //Cconsole.Color(color).WriteLine(errorMessage);
+            ErrorHandling(errorMessage, Console.CursorTop, color);
             return TryParseConsoleCin(errorMessage, parameter, color);
         }
     }
