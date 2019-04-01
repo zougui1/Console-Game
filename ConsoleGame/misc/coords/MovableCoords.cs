@@ -21,14 +21,15 @@ namespace ConsoleGame.misc.coords
         /// NumberMove is used to let the user choose how many time they want to move
         /// </summary>
         /// <param name="args">the index 0 must contains the direction of the movements (must be of type Directions or int)</param>
-        public void NumberMove(object[] args)
+        public void NumberMove(Directions direction)
         {
+            Utils.Endl();
             Utils.Cconsole.Color("DarkGray").WriteLine("How many time do you want to move? (1-100)");
             string parameter = "range:1-100";
             int movements = 0;
             movements = Utils.TryParseConsoleCin("Please enter a valid number (between 1 and 100 included)", parameter, "DarkRed");
             Utils.DeletePreviousLine();
-            Moves(movements, (byte)args[0]);
+            Moves(movements, direction);
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace ConsoleGame.misc.coords
         /// </summary>
         /// <param name="movements">number of movements</param>
         /// <param name="direction">the direction to move</param>
-        public void Moves(int movements, int direction)
+        public void Moves(int movements, Directions direction)
         {
             for (int i = 0; i < movements; ++i)
             {
@@ -58,9 +59,9 @@ namespace ConsoleGame.misc.coords
         /// </summary>
         /// <param name="direction">the direction to move</param>
         /// <returns>return true if an event has been triggered, otherwise false</returns>
-        public bool Move(int direction)
+        public bool Move(Directions direction)
         {
-            Utils.Caller(this, "Move" + (Directions)direction);
+            Utils.Caller(this, "Move" + direction);
 
             if (LocationList.LocationsDict.ContainsKey((X: X, Y: Y)))
             {

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ConsoleGame.UI.menus;
+
 using ConsoleGame.utils;
 
 namespace ConsoleGame.game
@@ -16,12 +18,11 @@ namespace ConsoleGame.game
         /// </summary>
         public static void Wilderness(User user)
         {
-            Utils.Endl();
-            Utils.Cconsole.Color("DarkGray").WriteLine("What do you want to do?");
-
-            string[] actions = { "Move", "Rest", "Inventory" };
-            Action[] methods = { new Action(user.ChooseDirection), new Action(user.Rest), new Action(user.Inventory.Display) };
-            Utils.Choices(actions, methods);
+            Menu<System.Action, object> menu = new Menu<System.Action, object>("What do you want to do?")
+                .AddChoice("Move", new TAction<object>(user.ChooseDirection))
+                .AddChoice("Rest", new TAction<object>(user.Rest))
+                .AddChoice("Inventory", new TAction<object>(user.Inventory.Display));
+            menu.Choose();
             user.ChooseAction();
         }
     }

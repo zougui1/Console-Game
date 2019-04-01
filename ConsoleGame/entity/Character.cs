@@ -16,6 +16,7 @@ using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.json;
 using ConsoleGame.misc;
 using ConsoleGame.misc.inventory;
+using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.entity
@@ -48,6 +49,7 @@ namespace ConsoleGame.entity
                 case BeginClasses.Priest:
                 case BeginClasses.Thief:
                     HasSpells = true;
+                    Spells.Add(new Spell("Fireball", 3, 6, "attack"));
                     break;
                 default:
                     HasSpells = false;
@@ -72,32 +74,30 @@ namespace ConsoleGame.entity
 
         public override void ChooseAction()
         {
-            Utils.Endl(2);
-            Utils.Cconsole.Color("DarkGray").WriteLine("Do an action:");
+            Menu<TAction<Entity>, Entity> menu = new Menu<TAction<Entity>, Entity>("Do an action:")
+                .AddChoice("Attack", new TAction<Entity>(Attack), Focus)
+                .AddChoice("Defend", new TAction<Entity>(Defending), null);
 
-            Entity[] target = { Focus };
-            string[] actions = new string[4] { "Attack", "Defend", null, null };
-            Action[] methods = new Action[4] { new Action(Attack), new Action(Defending), new Action(DrinkHealthPotion), new Action(ChooseSpell) };
-            object[][] args = { target, null, null, target };
-
-            int lineNumber = 6;
+            int lineNumber = 4;
 
             if (Potions > 0)
             {
-                actions[2] = $"Drink a potion ({Potions})";
+                menu.AddChoice($"Drink a potion ({Potions})", new TAction<Entity>(DrinkHealthPotion), null);
                 ++lineNumber;
             }
 
             if (HasSpells)
             {
-                actions[3] = $"Spells (mana: {EntityStats.Mana}/{EntityStats.MaxMana})";
+                menu.AddChoice($"Spells (mana: {EntityStats.Mana}/{EntityStats.MaxMana})", new TAction<Entity>(ChooseSpell), Focus);
                 ++lineNumber;
             }
 
-            Utils.Choices(actions, methods, args, removeLines: lineNumber);
+            menu.RemoveLines = lineNumber;
+            Utils.Endl(2);
+            menu.Choose();
         }
 
-        public void ChooseSpell(object[] args)
+        public void ChooseSpell(Entity target)
         {
             if(Spells.Count == 0)
             {
@@ -106,24 +106,24 @@ namespace ConsoleGame.entity
                 return;
             }
 
-            Entity target = (Entity)args[0];
-            Action method = new Action(Magical);
+            List<string> choices = ListSpells().ToList();
+            
+            List<TAction<object[]>> methods = new List<TAction<object[]>>();
+            choices.ForEach(x => methods.Add(new TAction<object[]>(Magical)));
+            
+            List<object[]> args = new List<object[]>();
+            Spells.ForEach(spell => args.Add(new object[] { Focus, spell }));
 
-            string[] actions = ListSpells();
-            Action[] methods = new Action[actions.Length];
-            Utils.FillArray(methods, method);
-            object[][] allArgs = new object[actions.Length][];
-            Utils.FillArray(allArgs, new Entity[] { target }, true);
-
-            Utils.Choices(actions, methods, allArgs, parameter: Spells);
+            Menu<TAction<object[]>, object[]> menu = new Menu<TAction<object[]>, object[]>("", Spells.Count + 1)
+                .AddChoices(choices)
+                .AddActions(methods)
+                .AddArgs(args);
+            menu.Choose();
         }
 
         public void Magical(object[] args)
         {
-            /*
-             * the character cast it no matter how many mana it has, fix it
-             */
-            Entity target = ((Entity[])args[0])[0];
+            Entity target = (Entity)args[0];
             Spell spell = (Spell)args[1];
 
             if (EntityStats.Mana < spell.RequiredMana)
@@ -164,7 +164,7 @@ namespace ConsoleGame.entity
             return spellList;
         }
 
-        public void DrinkHealthPotion(object[] args)
+        public void DrinkHealthPotion(Entity args)
         {
             if (Potions > 0)
             {

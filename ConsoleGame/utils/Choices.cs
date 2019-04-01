@@ -17,7 +17,7 @@ namespace ConsoleGame.utils
         /// <param name="args">the arguments to pass to the method to be called</param>
         /// <param name="color">the color of the choices in the console</param>
         /// <param name="parameter">contains the list of spells to cast, if defined</param>
-        public static void Choices(string[] choices, Action[] actions, object[][] args = null, string color = "Gray", List<Spell> parameter = null, int removeLines = 0)
+        /*public static void Choices(string[] choices, Action[] actions, object[][] args = null, string color = "Gray", List<Spell> parameter = null, int removeLines = 0)
         {
             for (int i = 0; i < choices.Length; ++i)
             {
@@ -71,13 +71,14 @@ namespace ConsoleGame.utils
                 }
                 catch(IndexOutOfRangeException e)
                 {
-                    ErrorHandling("You must enter a number that match an action.", Console.CursorTop);
+                    ErrorHandling("You must enter a number that match an action.", choices.Length + 2);
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    Console.WriteLine(e.ToString());
+                    //throw e;
                 }
             }
-        }
+        }*/
     }
 }

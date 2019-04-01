@@ -17,6 +17,8 @@ namespace ConsoleGame.utils
             SetTimeout(() =>
             {
                 int newCursorPosition = Console.CursorTop;
+                newCursorPosition = ((newCursorPosition - cursorPosition) > 2) ? newCursorPosition : cursorPosition;
+
                 Console.SetCursorPosition(0, cursorPosition);
                 FillLine();
                 Console.SetCursorPosition(0, newCursorPosition);

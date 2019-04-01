@@ -189,6 +189,7 @@ namespace ConsoleGame
 
         public void AttackMessage(Entity target, int damages, Spell spell = null, bool isCritical = false)
         {
+            Console.CursorLeft = 0;
             if (spell != null)
             {
                 MagicalMessage(target, damages, spell, isCritical);
@@ -247,7 +248,7 @@ namespace ConsoleGame
             }
         }
 
-        public void Defending(object[] args)
+        public void Defending(Entity args)
         {
             Utils.Cconsole.Color("DarkMagenta").WriteLine("{0} is defending", Name);
             Defend = true;

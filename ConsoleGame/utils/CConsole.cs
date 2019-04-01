@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ConsoleGame.cConsole;
+
 namespace ConsoleGame.utils
 {
     public static partial class Utils

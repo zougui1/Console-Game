@@ -9,6 +9,7 @@ using ConsoleGame.entity;
 using ConsoleGame.items;
 using ConsoleGame.misc.coords;
 using ConsoleGame.misc.inventory;
+using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.game
@@ -43,7 +44,6 @@ namespace ConsoleGame.game
 
         public void ChooseAction()
         {
-            Console.WriteLine("class: {0}", Characters[0].ClassName);
             if (IsTeamAlive())
             {
                 switch (GameMenu.Game.Statement)
@@ -55,22 +55,20 @@ namespace ConsoleGame.game
             }
         }
         
-        public void ChooseDirection(object[] args)
+        public void ChooseDirection(object args)
         {
             Utils.Endl();
-            Action method = new Action(Coords.NumberMove);
-            string[] actions = { "Up", "Left", "Down", "Right" };
-            Action[] methods = { method, method, method, method };
-            object[][] actionArgs = {
-                new object[] { Directions.Up },
-                new object[] { Directions.Left },
-                new object[] { Directions.Down },
-                new object[] { Directions.Right }
-            };
-            Utils.Choices(actions, methods, actionArgs);
+            TAction<Directions> method = new TAction<Directions>(Coords.NumberMove);
+
+            Menu<TAction<Directions>, Directions> menu = new Menu<TAction<Directions>, Directions>("")
+                .AddChoice("Up", method, Directions.Up)
+                .AddChoice("Left", method, Directions.Left)
+                .AddChoice("Down", method, Directions.Down)
+                .AddChoice("Right", method, Directions.Right);
+            menu.Choose();
         }
 
-        public void Rest(object[] args = null)
+        public void Rest(object args = null)
         {
             Utils.Endl(2);
             Characters.ForEach(character =>

@@ -19,13 +19,16 @@ namespace ConsoleGame.utils
         /// <param name="parameter">parameter to add in for the return</param>
         /// <param name="color">the color of the error message to display in the console</param>
         /// <returns>return an int that the user entered</returns>
-        public static int TryParseConsoleCin(string errorMessage = "", string parameter = "", string color = "DarkRed")
+        public static int TryParseConsoleCin(string errorMessage = "", string parameter = "", string color = "DarkRed", int? cursorTop = null)
         {
+            cursorTop = cursorTop ?? Console.CursorTop;
+
             string input = Console.ReadLine();
+            //string input = Console.ReadKey().Key.ToString();
             Thread.Sleep(300);
-            DeletePreviousLine(1);
-            int parsed;
-            if (int.TryParse(input, out parsed))
+            //DeletePreviousLine(1);
+
+            if (int.TryParse(input, out int parsed))
             {
                 string[] param = parameter.Split(':');
                 if (param[0] == "range")
@@ -46,8 +49,8 @@ namespace ConsoleGame.utils
             }
             
             //Cconsole.Color(color).WriteLine(errorMessage);
-            ErrorHandling(errorMessage, Console.CursorTop, color);
-            return TryParseConsoleCin(errorMessage, parameter, color);
+            ErrorHandling(errorMessage, (int)cursorTop, color);
+            return TryParseConsoleCin(errorMessage, parameter, color, cursorTop);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ConsoleGame.entity;
 using ConsoleGame.entity.classes;
 using ConsoleGame.json;
+using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.game
@@ -16,7 +17,7 @@ namespace ConsoleGame.game
     public static class GameMenu
     {
         public static Game Game { get; private set; }
-        public static byte Class { get; private set; }
+        public static BeginClasses Class { get; private set; }
         public static string Name { get; private set; }
 
         public static void Init()
@@ -36,18 +37,17 @@ namespace ConsoleGame.game
         /// </summary>
         public static void MainMenu()
         {
-            Utils.Cconsole.Color("DarkGray").WriteLine("What do you want to do?");
-
-            string[] choices = { "Start a new game", "Load a game" };
-            Action[] methods = { new Action(NewGame), new Action(Loader) };
-            Utils.Choices(choices, methods);
+            Menu<Action, object> menu = new Menu<Action, object>("What do you want to do?")
+                .AddChoice("Start a new game", new TAction<object>(NewGame))
+                .AddChoice("Load a game", new TAction<object>(Loader));
+            menu.Choose();
         }
 
         /// <summary>
         /// Loader is used to load and define the User property from a json object
         /// </summary>
         /// <param name="args">is unused but obligatory due to be used with the delegation Action</param>
-        public static void Loader(object[] args)
+        public static void Loader(object args)
         {
             Game = Json.Load();
 
@@ -68,7 +68,7 @@ namespace ConsoleGame.game
         /// NewGame is used to create a Character with a name they have entered and define it in the User property
         /// </summary>
         /// <param name="args">is unused but obligatory due to be used with the delegation Action</param>
-        public static void NewGame(object[] args)
+        public static void NewGame(object args)
         {
             ChooseClass();
         }
@@ -76,17 +76,24 @@ namespace ConsoleGame.game
         public static void ChooseClass()
         {
             Utils.Endl();
-            Utils.Cconsole.Color("DarkGray").WriteLine("Choose a class");
-            string[] classes = Enum.GetNames(typeof(BeginClasses));
-            Action[] methods = new Action[classes.Length];
-            Utils.FillArray(methods, new Action(ChooseName));
-            object[][] args = Utils.FillEnumInNestedArray(typeof(BeginClasses));
-            Utils.Choices(classes, methods, args);
+
+            List<string> classes = Enum.GetNames(typeof(BeginClasses)).ToList();
+
+            List<TAction<BeginClasses>> methods = new List<TAction<BeginClasses>>();
+            classes.ForEach(x => methods.Add(new TAction<BeginClasses>(ChooseName)));
+
+            BeginClasses[] args = (BeginClasses[])Enum.GetValues(typeof(BeginClasses));
+
+            Menu<TAction<BeginClasses>, BeginClasses> menu = new Menu<TAction<BeginClasses>, BeginClasses>("Choose a class")
+                .AddChoices(classes)
+                .AddActions(methods)
+                .AddArgs(args.ToList());
+            menu.Choose();
         }
 
-        public static void ChooseName(object[] args)
+        public static void ChooseName(BeginClasses args)
         {
-            Class = (byte)args[0];
+            Class = args;
 
             Utils.Endl();
             Console.WriteLine("Enter a name.");
@@ -109,7 +116,7 @@ namespace ConsoleGame.game
 
         public static void CreateParty()
         {
-            Character character = new Character(Name, ((BeginClasses)Class), Json.GetWeapon(0));
+            Character character = new Character(Name, Class, Json.GetWeapon(0));
             User user = new User(character);
             Game = new Game(user);
             StartGame();
