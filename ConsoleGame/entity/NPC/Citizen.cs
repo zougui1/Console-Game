@@ -20,7 +20,7 @@ namespace ConsoleGame.entity.NPC
             Text = text;
         }
 
-        public void Discussion()
+        public void Discussion(object arg = null)
         {
             Utils.Endl();
             for (int i = 0; i < Text.Length; ++i)

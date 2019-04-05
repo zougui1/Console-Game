@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using ConsoleGame.entity.NPC;
+using ConsoleGame.game;
 
 namespace ConsoleGame.building
 {
@@ -17,6 +18,12 @@ namespace ConsoleGame.building
         public Church(List<AbstractNPC> npcs, bool isLocked, string category, Priest priest) : base(npcs, isLocked, category)
         {
             Priest = priest;
+        }
+
+        public override void Enter(object arg = null)
+        {
+            GameMenu.Game.Statement = GameStatement.InBuilding;
+            GameMenu.Game.CurrentBuilding.SetCurrentBuilding(this);
         }
     }
 }

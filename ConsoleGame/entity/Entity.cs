@@ -189,7 +189,6 @@ namespace ConsoleGame
 
         public void AttackMessage(Entity target, int damages, Spell spell = null, bool isCritical = false)
         {
-            Console.CursorLeft = 0;
             if (spell != null)
             {
                 MagicalMessage(target, damages, spell, isCritical);

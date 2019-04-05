@@ -8,7 +8,9 @@ namespace ConsoleGame.game
 {
     public enum GameStatement : sbyte
     {
-        Wilderness = 0,
-        Battle = 1,
+        Wilderness,
+        Battle,
+        InLocation,
+        InBuilding
     }
 }

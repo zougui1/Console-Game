@@ -62,8 +62,8 @@ namespace ConsoleGame.UI.lists
         private void PaginationInit()
         {
             DefaultKeyPress = new DefaultKeyPress(DefaultKeyPressAction);
-            PageChanged += new BasicEventHandler(ChangePageHandler);
-            PaginationExited += new BasicEventHandler(() => EventDestructor(0, List.Count - 1));
+            PageChanged += new Action(ChangePageHandler);
+            PaginationExited += new Action(() => EventDestructor(0, List.Count - 1));
         }
 
         /// <summary>

@@ -41,6 +41,7 @@ namespace ConsoleGame.json
         private static string FeetsPath { get; } = DataPath + "/feets.json";
         private static string ItemsPath { get; } = DataPath + "/items.json";
         private static string ShieldsPath { get; } = DataPath + "/shields.json";
+        private static string ZonesPath { get; } = DataPath + "/zones.json";
         private static IDictionary<string, string> PathsDictionnary { get; } = new Dictionary<string, string>();
 
         public static void Init()

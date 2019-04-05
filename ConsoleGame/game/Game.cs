@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
+using ConsoleGame.building;
 using ConsoleGame.entity;
 using ConsoleGame.json;
 using ConsoleGame.location;
+using ConsoleGame.misc.map;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.game
@@ -22,16 +25,31 @@ namespace ConsoleGame.game
         /// The CurrentLocation property represent the the current location 
         /// </summary>
         public Location CurrentLocation { get; set; }
+        /// <summary>
+        /// The CurrentBuilding property represent the the current building 
+        /// </summary>
+        public CurrentBuilding CurrentBuilding { get; private set; }
         public GameStatement Statement { get; set; }
         /// <summary>
         /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
         /// </summary>
-        public int PercentOfMonster { get; set; } = 90;
+        public int PercentOfMonster { get; set; } = 20;
+        public Map Map { get; private set; }
 
         public Game(User user)
         {
             User = user;
             Statement = GameStatement.Wilderness;
+            CurrentBuilding = new CurrentBuilding();
+            Map = new Map(Json.GetZone(0));
+        }
+
+        [JsonConstructor]
+        public Game(User user, CurrentBuilding currentBuilding, Map map)
+        {
+            User = user;
+            CurrentBuilding = currentBuilding;
+            Map = map;
         }
 
         public void Start()
@@ -42,10 +60,10 @@ namespace ConsoleGame.game
         /// <summary>
         /// TriggerMonster is used to create a monster and set the user's focus the newly created monster when the user has encountered a monster
         /// </summary>
-        public void TriggerMonster()
+        public void TriggerMonster(int monsterId)
         {
             //Monster monster = new Monster("Slime");
-            Monster monster = Json.GetMonster(0);
+            Monster monster = Json.GetMonster(monsterId);
             monster.Focus = User.Characters[0];
             User.Characters[0].Focus = monster;
             Utils.Endl(2);
@@ -100,9 +118,9 @@ namespace ConsoleGame.game
         /// <summary>
         /// InLocation is used to call the actions menu available in the location
         /// </summary>
-        public void InLocation()
+        /*public void InLocation()
         {
             CurrentLocation.Display();
-        }
+        }*/
     }
 }

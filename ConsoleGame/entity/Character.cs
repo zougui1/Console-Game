@@ -93,7 +93,7 @@ namespace ConsoleGame.entity
             }
 
             menu.RemoveLines = lineNumber;
-            Utils.Endl(2);
+            Utils.Endl();
             menu.Choose();
         }
 

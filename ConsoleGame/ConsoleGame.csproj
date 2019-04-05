@@ -75,7 +75,6 @@
     <Compile Include="cConsole\Console-overrides\WriteLine.cs" />
     <Compile Include="cConsole\Console-overrides\Write.cs" />
     <Compile Include="cConsole\CConsole.cs" />
-    <Compile Include="cConsole\Position.cs" />
     <Compile Include="entity\Character.cs" />
     <Compile Include="entity\classes\BeginClasses.cs" />
     <Compile Include="entity\classes\Classes.cs" />
@@ -87,6 +86,7 @@
     <Compile Include="entity\NPC\WeaponMerchant.cs" />
     <Compile Include="entity\stats\InitStats.cs" />
     <Compile Include="game\Actions.cs" />
+    <Compile Include="game\CurrentBuilding.cs" />
     <Compile Include="game\Game.cs" />
     <Compile Include="game\GameStatement.cs" />
     <Compile Include="items\equipments\armor\Armor.cs" />
@@ -107,6 +107,10 @@
     <Compile Include="misc\coords\MovableCoords.cs" />
     <Compile Include="misc\inventory\Inventory.cs" />
     <Compile Include="misc\LootTable.cs" />
+    <Compile Include="misc\map\Map.cs" />
+    <Compile Include="misc\map\Spawning.cs" />
+    <Compile Include="misc\map\Zone.cs" />
+    <Compile Include="misc\Rect.cs" />
     <Compile Include="misc\Spell.cs" />
     <Compile Include="entity\stats\EntityStats.cs" />
     <Compile Include="entity\Monster.cs" />
@@ -133,7 +137,6 @@
     <Compile Include="utils\ParseIntArray.cs" />
     <Compile Include="utils\Setter.cs" />
     <Compile Include="utils\TryParseConsoleCin.cs" />
-    <Compile Include="utils\Choices.cs" />
     <Compile Include="utils\Caller.cs" />
     <Compile Include="utils\CConsole.cs" />
     <Compile Include="Program.cs" />

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ConsoleGame.entity.NPC;
+using ConsoleGame.game;
 
 namespace ConsoleGame.building
 {
@@ -19,6 +20,12 @@ namespace ConsoleGame.building
             NPCs = npcs;
             IsLocked = isLocked;
             Category = category;
+        }
+
+        public virtual void Enter(object arg = null)
+        {
+            GameMenu.Game.Statement = GameStatement.InBuilding;
+            GameMenu.Game.CurrentBuilding.SetCurrentBuilding(this);
         }
     }
 }

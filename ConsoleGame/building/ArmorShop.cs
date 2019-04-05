@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using ConsoleGame.entity.NPC;
+using ConsoleGame.game;
 using ConsoleGame.json;
 
 namespace ConsoleGame.building
@@ -23,6 +24,12 @@ namespace ConsoleGame.building
         public void DisplayList()
         {
             Merchant.DisplayList();
+        }
+
+        public override void Enter(object arg = null)
+        {
+            GameMenu.Game.Statement = GameStatement.InBuilding;
+            GameMenu.Game.CurrentBuilding.SetCurrentBuilding(this);
         }
     }
 }

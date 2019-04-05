@@ -18,13 +18,17 @@ namespace ConsoleGame.UI.menus
         public string ChoicesColor { get; set; } = "Gray";
         public string QuestionColor { get; set; } = "DarkGray";
         public string ErrorColor { get; set; } = "DarkRed";
+        public int ChoosedAction { get; private set; }
+        public int ActionIndex { get; private set; }
+        public string ChoosedActionMessage { get; set; } = "(action: 0)";
+        public string ChoosedActionColor { get; set; } = "Gray";
         public bool RightAction { get; private set; } = false;
         public int FirstLinePositionTop { get; private set; }
         public int ErrorPositionTop { get; private set; }
         // TODO, parameter should be of a generic type
         public bool parameter { get; set; } = false;
 
-        public Menu(string question, int removeLines = 0)
+        public Menu(string question, int removeLines = 1)
         {
             Question = question;
             Choices = new List<string>();
@@ -92,16 +96,18 @@ namespace ConsoleGame.UI.menus
 
         protected void DisplayChoices()
         {
+            if((Question?.Length ?? 0) > 0)
+            {
+                ChoosedActionMessage = $" {ChoosedActionMessage}";
+            }
+
+            Utils.Cconsole.Color(QuestionColor).Write(Question).Color(ChoosedActionColor).WriteLine(ChoosedActionMessage);
             for(int i = 0; i < Choices.Count; ++i)
             {
                 if(Choices[i] != null)
                 {
                     string choice = $"{i + 1}. {Choices[i]}";
                     Utils.Cconsole.Color(ChoicesColor).Write(choice);
-                    if(i == 0)
-                    {
-                        Utils.Cconsole.Write(" (action: 0)");
-                    }
                     Utils.Endl();
                 }
             }
@@ -111,20 +117,20 @@ namespace ConsoleGame.UI.menus
         {
             while (!RightAction)
             {
-                int ActionIndex = Utils.TryParseConsoleCin("You must enter a valid number", color: ErrorColor, cursorTop: ErrorPositionTop);
-                --ActionIndex;
-                TryAction(ActionIndex);
+                ChoosedAction = Utils.TryParseConsoleCin("You must enter a valid number", color: ErrorColor, cursorTop: ErrorPositionTop);
+                Utils.DeletePreviousLine(RemoveLines);
+                ActionIndex = ChoosedAction - 1;
+                TryAction();
             }
         }
 
-        protected void TryAction(int ActionIndex)
+        protected void TryAction()
         {
             try
             {
                 ThrowIfNull(Choices[ActionIndex], $"the choice at index \"{ActionIndex}\" must not be null");
-
-                Utils.DeletePreviousLine(RemoveLines);
-                Utils.Cconsole.Absolute().Top(FirstLinePositionTop).Offset(Choices[0].Length + 13).Write("{0})", ActionIndex + 1);
+                
+                Utils.Cconsole.Absolute().Top(FirstLinePositionTop).Offset((Question?.Length ?? 0) + ChoosedActionMessage.Length - 2).Color(ChoosedActionColor).WriteLine("{0})", ChoosedAction);
 
                 if (Args.Count <= ActionIndex)
                 {

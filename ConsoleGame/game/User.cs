@@ -51,6 +51,9 @@ namespace ConsoleGame.game
                     case GameStatement.Wilderness:
                         Actions.Wilderness(this);
                         break;
+                    case GameStatement.InLocation:
+                        Actions.InLocation(this);
+                        break;
                 }
             }
         }

@@ -13,11 +13,11 @@ namespace ConsoleGame.UI
         /// <summary>
         /// PageChanged is triggered when the page of the pagination changed
         /// </summary>
-        public event BasicEventHandler PageChanged;
+        public event Action PageChanged;
         /// <summary>
         /// PaginationExited is triggered when the user quit the pagination 
         /// </summary>
-        public event BasicEventHandler PaginationExited;
+        public event Action PaginationExited;
 
         /// <summary>
         /// ListCount represent the number of elements we want to paginate over
@@ -170,7 +170,7 @@ namespace ConsoleGame.UI
                         else
                         {
                             string text = Console.ReadLine();
-                            Utils.Cconsole.Color("Cyan").WriteLine(key.KeyChar + text);
+                            Utils.Cconsole.Color("Cyan").Write(key.KeyChar + text);
                         }
                         break;
                 }

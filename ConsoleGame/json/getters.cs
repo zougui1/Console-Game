@@ -20,6 +20,7 @@ using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.location;
 using ConsoleGame.misc;
+using ConsoleGame.misc.map;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.json
@@ -210,6 +211,42 @@ namespace ConsoleGame.json
 
                 LocationsDict.Add(coords, id);
             }
+        }
+
+        public static Zone GetZone(int id)
+        {
+            GetJTokenById(ZonesPath, id, out JToken jToken);
+            return ToObject<Zone>(jToken);
+        }
+
+        public static Zone GetCurrentZone(User user, Zone currentZone)
+        {
+            JObject file = GetFile(ZonesPath);
+
+            foreach(JToken zone in file["data"])
+            {
+                int id = int.Parse(zone["id"].ToString());
+
+                if(id != currentZone.Id)
+                {
+                    JToken coords = zone["Coords"];
+                    JToken rect = zone["Rect"];
+
+                    int x = int.Parse(coords["X"].ToString());
+                    int y = int.Parse(coords["Y"].ToString());
+                    int width = int.Parse(rect["Width"].ToString());
+                    int height = int.Parse(rect["Height"].ToString());
+                    
+                    // seems to work, should test with more zones
+                    if ((user.Coords.X >= x && user.Coords.X <= (x + width)) && (user.Coords.Y >= y && user.Coords.Y <= (y + height)))
+                    {
+                        return ToObject<Zone>(zone);
+                    }
+                }
+            }
+
+            Console.WriteLine("out");
+            return currentZone;
         }
     }
 }

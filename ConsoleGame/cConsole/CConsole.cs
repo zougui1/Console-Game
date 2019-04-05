@@ -56,7 +56,6 @@ namespace ConsoleGame.cConsole
             if (!MultiProp)
             {
                 Console.ResetColor();
-                Stopwatch.Reset();
                 LeftProp = false;
                 RightProp = false;
                 CharOffsetProp = 0;
@@ -166,7 +165,14 @@ namespace ConsoleGame.cConsole
         public CConsole TimerStop()
         {
             Stopwatch.Stop();
-            Absolute().Right().Top(Console.WindowHeight - 1).Color("Cyan").WriteLine("{0:ss}", Stopwatch.Elapsed);
+            int cursorLeft = Console.CursorLeft;
+            int cursorTop = Console.CursorTop;
+
+            Absolute().Right().Top(Console.WindowHeight - 1).Color("Cyan").Write("{0}", Stopwatch.Elapsed);
+            Stopwatch.Reset();
+
+            Console.CursorTop = 0;
+            Console.SetCursorPosition(cursorLeft, cursorTop);
             return this;
         }
 

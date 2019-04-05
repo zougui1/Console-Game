@@ -62,7 +62,6 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public void DisplayText()
         {
-            CursorTop = Console.CursorTop;
             Utils.Cconsole.Color(Color).Write(Item.ToString());
         }
 

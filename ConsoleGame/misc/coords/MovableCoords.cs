@@ -69,17 +69,23 @@ namespace ConsoleGame.misc.coords
                 currentLocation.InitAllBuildings();
 
                 GameMenu.Game.CurrentLocation = currentLocation;
+                GameMenu.Game.Statement = GameStatement.InLocation;
                 
-                Console.WriteLine("You entered in \"{0}\"", currentLocation.Name);
+                Utils.Cconsole
+                    .Color("Cyan").Write("You entered in \"")
+                    .Color("DarkCyan").Write(currentLocation.Name)
+                    .Color("Cyan").WriteLine("\"");
 
-                GameMenu.Game.InLocation();
+                GameMenu.Game.User.ChooseAction();
                 return true;
             }
+
+            GameMenu.Game.Map.ChangeZoneIfNeeded(GameMenu.Game.User);
 
             int number = RandomNumber.Between(0, 100);
             if (number <= GameMenu.Game.PercentOfMonster)
             {
-                GameMenu.Game.TriggerMonster();
+                GameMenu.Game.Map.CurrentZone.TriggerRightMonster();
                 return true;
             }
             else
