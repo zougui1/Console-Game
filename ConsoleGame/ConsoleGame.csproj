@@ -82,6 +82,7 @@
     <Compile Include="entity\NPC\Citizen.cs" />
     <Compile Include="entity\NPC\ItemMerchant.cs" />
     <Compile Include="entity\NPC\AbstractNPC.cs" />
+    <Compile Include="entity\NPC\Merchant.cs" />
     <Compile Include="entity\NPC\Priest.cs" />
     <Compile Include="entity\NPC\WeaponMerchant.cs" />
     <Compile Include="entity\stats\InitStats.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="RandomNumber.cs" />
     <Compile Include="entity\stats\StatUnits.cs" />
     <Compile Include="game\User.cs" />
+    <Compile Include="UI\header\Header.cs" />
     <Compile Include="UI\lists\Listing.cs" />
     <Compile Include="UI\lists\ListItem.cs" />
     <Compile Include="UI\lists\SelectionList.cs" />

@@ -24,7 +24,7 @@ namespace ConsoleGame.entity.NPC
         public void DisplayList()
         {
             Utils.Endl();
-            for (int i = 0; i < Weapons.Length; ++i)
+            for (int i = 0; i < Weapons?.Length; ++i)
             {
                 Weapon weapon = Weapons[i];
 

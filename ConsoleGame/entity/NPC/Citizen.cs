@@ -22,13 +22,32 @@ namespace ConsoleGame.entity.NPC
 
         public void Discussion(object arg = null)
         {
+            int timeout = 25;
+
             Utils.Endl();
-            for (int i = 0; i < Text.Length; ++i)
+            Utils.SetTimeout(() =>
             {
-                Console.Write(Text[i]);
-                Thread.Sleep(25);
+                while (Console.ReadKey(true).Key != ConsoleKey.Enter) ;
+                timeout = 0;
+            }, 0);
+
+            for (int i = 0; i < Text.Length; i++)
+            {
+                Utils.SetTimeoutSync(() => Console.Write(Text[i]), timeout);
             }
             Utils.Endl();
+
+            bool exitDiscussion = false;
+
+            while(!exitDiscussion)
+            {
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.Enter:
+                        exitDiscussion = true;
+                        break;
+                }
+            }
         }
     }
 }

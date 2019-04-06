@@ -42,6 +42,8 @@ namespace ConsoleGame.json
         private static string ItemsPath { get; } = DataPath + "/items.json";
         private static string ShieldsPath { get; } = DataPath + "/shields.json";
         private static string ZonesPath { get; } = DataPath + "/zones.json";
+        private static string MerchantsPath { get; } = DataPath + "/merchants.json";
+        private static string ShopsPath { get; } = DataPath + "/shops.json";
         private static IDictionary<string, string> PathsDictionnary { get; } = new Dictionary<string, string>();
 
         public static void Init()
@@ -56,6 +58,12 @@ namespace ConsoleGame.json
             PathsDictionnary.Add("Feet", FeetsPath);
             PathsDictionnary.Add("Item", ItemsPath);
             PathsDictionnary.Add("Shield", ShieldsPath);
+            PathsDictionnary.Add("ArmorShop", ShopsPath);
+            PathsDictionnary.Add("WeaponShop", ShopsPath);
+            PathsDictionnary.Add("ItemShop", ShopsPath);
+            PathsDictionnary.Add("WeaponMerchant", MerchantsPath);
+            PathsDictionnary.Add("ArmorMerchant", MerchantsPath);
+            PathsDictionnary.Add("ItemMerchant", MerchantsPath);
         }
 
         /// <summary>
@@ -141,7 +149,7 @@ namespace ConsoleGame.json
                 GetNestedObject<Citizen>(jToken, result);
             }
 
-            if (jToken["Weapon_id"] != null)
+            if (jToken["Weapon_id"] != null || jToken["Weapons_id"] != null)
             {
                 GetNestedObject<Weapon>(jToken, result);
             }
@@ -165,7 +173,42 @@ namespace ConsoleGame.json
             {
                 GetNestedObject<Shield>(jToken, result);
             }
-            
+
+            if (jToken["WeaponShop_id"] != null)
+            {
+                GetNestedObject<WeaponShop>(jToken, result);
+            }
+
+            if (jToken["ArmorShop_id"] != null)
+            {
+                GetNestedObject<ArmorShop>(jToken, result);
+            }
+
+            if (jToken["ItemShop_id"] != null)
+            {
+                GetNestedObject<ItemShop>(jToken, result);
+            }
+
+            if (jToken["Church_id"] != null)
+            {
+                GetNestedObject<Church>(jToken, result);
+            }
+
+            if (jToken["WeaponMerchant_id"] != null)
+            {
+                GetNestedObject<WeaponMerchant>(jToken, result);
+            }
+
+            if (jToken["ArmorMerchant_id"] != null)
+            {
+                GetNestedObject<ArmorMerchant>(jToken, result);
+            }
+
+            if (jToken["ItemMerchant_id"] != null)
+            {
+                GetNestedObject<ItemMerchant>(jToken, result);
+            }
+
             return result;
         }
 

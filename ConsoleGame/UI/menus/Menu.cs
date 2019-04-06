@@ -89,7 +89,7 @@ namespace ConsoleGame.UI.menus
         public void Choose()
         {
             FirstLinePositionTop = Console.CursorTop;
-            ErrorPositionTop = Console.CursorTop + Choices.Count;
+            ErrorPositionTop = Console.CursorTop + Choices.Count + 1;
             DisplayChoices();
             GetAction();
         }

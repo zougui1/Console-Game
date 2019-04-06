@@ -9,6 +9,7 @@ using ConsoleGame.entity;
 using ConsoleGame.items;
 using ConsoleGame.misc.coords;
 using ConsoleGame.misc.inventory;
+using ConsoleGame.UI.header;
 using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
 
@@ -20,6 +21,7 @@ namespace ConsoleGame.game
         public MovableCoords Coords { get; set; }
         public List<Monster> MonstersInBattle { get; set; }
         public Inventory Inventory { get; set; }
+        public int Gold { get; set; } = 0;
 
         public User()
         {
@@ -36,14 +38,21 @@ namespace ConsoleGame.game
         }
 
         [JsonConstructor]
-        public User(List<Character> characters, MovableCoords coords)
+        public User(List<Character> characters, MovableCoords coords, int gold)
         {
             Characters = characters;
             Coords = coords;
+            Gold = gold;
         }
 
         public void ChooseAction()
         {
+            if(Console.CursorTop >= Console.WindowHeight - 15)
+            {
+                Utils.SetTimeoutSync(() => Console.Clear(), 100);
+            }
+
+            Header.Render();
             if (IsTeamAlive())
             {
                 switch (GameMenu.Game.Statement)
@@ -53,6 +62,9 @@ namespace ConsoleGame.game
                         break;
                     case GameStatement.InLocation:
                         Actions.InLocation(this);
+                        break;
+                    case GameStatement.InBuilding:
+                        Actions.InBuilding(this);
                         break;
                 }
             }

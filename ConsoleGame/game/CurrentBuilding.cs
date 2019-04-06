@@ -35,6 +35,32 @@ namespace ConsoleGame.game
             ItemShop = itemShop;
         }
 
+        public Building GetRightBuilding()
+        {
+            if (Building != null)
+            {
+                return Building;
+            }
+            else if (Church != null)
+            {
+                return Church;
+            }
+            else if (ArmorShop != null)
+            {
+                return ArmorShop;
+            }
+            else if (WeaponShop != null)
+            {
+                return WeaponShop;
+            }
+            else if (ItemShop != null)
+            {
+                return ItemShop;
+            }
+
+            return null;
+        }
+
         public string GetCurrentBuilding()
         {
             if(Building != null)

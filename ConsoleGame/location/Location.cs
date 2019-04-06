@@ -47,7 +47,7 @@ namespace ConsoleGame.location
             Name = name;
             Coords = coords;
             Buildings = buildings;
-            Church = new Church(new List<AbstractNPC>(), false, "ttt", new Priest("priest", "priest"));
+            //Church = new Church(new Citizen[2], false, "ttt", new Priest("priest", "priest"));
         }
 
         [JsonConstructor]
@@ -65,19 +65,6 @@ namespace ConsoleGame.location
             ArmorShop = armorShop;
             WeaponShop = weaponShop;
             ItemShop = itemShop;
-        }
-
-        public void InitAllBuildings()
-        {
-            for(int i = 0; i < Buildings.Length; ++i)
-            {
-               // Buildings[i].Init();
-            }
-        }
-        
-        public void Display()
-        {
-            Citizens[0].Discussion();
         }
     }
 }

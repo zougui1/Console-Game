@@ -11,7 +11,7 @@ namespace ConsoleGame.utils
 {
     public static partial class Utils
     {
-        public static void SetTimeout(System.Action action, int millisecondsTimeout)
+        public static void SetTimeout(Action action, int millisecondsTimeout = 0)
         {
             Task.Factory.StartNew(() =>
             {
@@ -20,7 +20,7 @@ namespace ConsoleGame.utils
             });
         }
 
-        public static void SetTimeoutSync(System.Action action, int millisecondsTimeout)
+        public static void SetTimeoutSync(Action action, int millisecondsTimeout = 1000)
         {
             Thread.Sleep(millisecondsTimeout);
             action();

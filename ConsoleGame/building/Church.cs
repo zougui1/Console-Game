@@ -15,7 +15,7 @@ namespace ConsoleGame.building
         public Priest Priest { get; private set; }
 
         [JsonConstructor]
-        public Church(List<AbstractNPC> npcs, bool isLocked, string category, Priest priest) : base(npcs, isLocked, category)
+        public Church(Citizen[] citizens, bool isLocked, string category, Priest priest) : base(citizens, isLocked, category)
         {
             Priest = priest;
         }
@@ -24,6 +24,11 @@ namespace ConsoleGame.building
         {
             GameMenu.Game.Statement = GameStatement.InBuilding;
             GameMenu.Game.CurrentBuilding.SetCurrentBuilding(this);
+        }
+
+        public void PriestInteraction(object arg = null)
+        {
+            Priest.Interaction();
         }
     }
 }

@@ -66,7 +66,6 @@ namespace ConsoleGame.misc.coords
             if (LocationList.LocationsDict.ContainsKey((X: X, Y: Y)))
             {
                 Location currentLocation = Json.GetLocation(LocationList.LocationsDict[(X: X, Y: Y)]);
-                currentLocation.InitAllBuildings();
 
                 GameMenu.Game.CurrentLocation = currentLocation;
                 GameMenu.Game.Statement = GameStatement.InLocation;

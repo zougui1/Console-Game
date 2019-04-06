@@ -12,17 +12,17 @@ namespace ConsoleGame.building
 {
     public class WeaponShop : Shop
     {
-        public WeaponMerchant Merchant { get; private set; }
+        public WeaponMerchant WeaponMerchant { get; private set; }
 
         [JsonConstructor]
-        public WeaponShop(List<AbstractNPC> npcs, bool isLocked, string category, WeaponMerchant merchant) : base(npcs, isLocked, category)
+        public WeaponShop(Citizen[] citizens, bool isLocked, string category, WeaponMerchant weaponMerchant) : base(citizens, isLocked, category)
         {
-            Merchant = merchant;
+            WeaponMerchant = weaponMerchant;
         }
 
-        public void DisplayList()
+        public void DisplayList(object arg = null)
         {
-            Merchant.DisplayList();
+            WeaponMerchant.DisplayList();
         }
 
         public override void Enter(object arg = null)

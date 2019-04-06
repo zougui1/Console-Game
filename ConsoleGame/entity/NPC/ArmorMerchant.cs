@@ -24,7 +24,7 @@ namespace ConsoleGame.entity.NPC
             Shields = shields;
         }
 
-        public void DisplayList()
+        public void DisplayList(object arg = null)
         {
             Utils.Endl();
             DisplayArmors();

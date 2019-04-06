@@ -182,6 +182,7 @@ namespace ConsoleGame.cConsole
         /// <param name="multiCall">receive a CConsole object as argument</param>
         public CConsole Multi(Func<CConsole, CConsole> multiCall)
         {
+            InitialTop = Console.CursorTop;
             multiCall(new CConsole(true));
             return this;
         }

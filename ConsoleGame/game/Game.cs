@@ -11,6 +11,7 @@ using ConsoleGame.entity;
 using ConsoleGame.json;
 using ConsoleGame.location;
 using ConsoleGame.misc.map;
+using ConsoleGame.UI.header;
 using ConsoleGame.utils;
 
 namespace ConsoleGame.game
@@ -33,7 +34,7 @@ namespace ConsoleGame.game
         /// <summary>
         /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
         /// </summary>
-        public int PercentOfMonster { get; set; } = 20;
+        public int PercentOfMonster { get; set; } = 10;
         public Map Map { get; private set; }
 
         public Game(User user)

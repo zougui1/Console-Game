@@ -10,7 +10,7 @@ namespace ConsoleGame.building
 {
     public class Shop : Building
     {
-        public Shop(List<AbstractNPC> npcs, bool isLocked, string category) : base(npcs, isLocked, category)
+        public Shop(Citizen[] citizens, bool isLocked, string category) : base(citizens, isLocked, category)
         { }
     }
 }
