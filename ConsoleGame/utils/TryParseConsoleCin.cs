@@ -24,9 +24,6 @@ namespace ConsoleGame.utils
             cursorTop = cursorTop ?? Console.CursorTop;
 
             string input = Console.ReadLine();
-            //string input = Console.ReadKey().Key.ToString();
-            Thread.Sleep(300);
-            //DeletePreviousLine(1);
 
             if (int.TryParse(input, out int parsed))
             {

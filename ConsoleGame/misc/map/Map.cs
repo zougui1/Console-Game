@@ -44,16 +44,17 @@ namespace ConsoleGame.misc.map
 
             if (CurrentZone != newZone)
             {
-                Utils.Cconsole.Color("Red").WriteLine("---------------------------")
+                /*Utils.Cconsole.Color("Red").WriteLine("---------------------------")
                     .Multi(console => console.Color("Cyan")
                         .WriteLine("X: {0}", newZone.Coords.X)
                         .WriteLine("Y: {0}", newZone.Coords.Y)
                         .WriteLine("Width: {0}", newZone.Rect.Width)
                         .WriteLine("Height: {0}", newZone.Rect.Height)
                     )
-                    .Color("Red").WriteLine("---------------------------");
+                    .Color("Red").WriteLine("---------------------------");*/
+
+                CurrentZone = newZone;
             }
-            CurrentZone = newZone;
         }
     }
 }

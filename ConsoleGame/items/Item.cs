@@ -14,6 +14,8 @@ namespace ConsoleGame.items
         public string Description { get; protected set; }
         public int Coins { get; protected set; }
         public StringBuilder ListItemText { get; protected set; } = new StringBuilder();
+        public bool IsHeal { get; set; } = false;
+        public int Restore { get; set; } = 0;
 
         public Item(string name, string description, int coins = 0)
         {

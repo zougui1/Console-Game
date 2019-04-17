@@ -31,7 +31,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -46,6 +46,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -123,8 +132,10 @@
     <Compile Include="UI\lists\Listing.cs" />
     <Compile Include="UI\lists\ListItem.cs" />
     <Compile Include="UI\lists\SelectionList.cs" />
+    <Compile Include="UI\menus\ListingChoice.cs" />
     <Compile Include="UI\menus\Menu.cs" />
     <Compile Include="UI\Pagination.cs" />
+    <Compile Include="utils\classes\TryParseUserInput.cs" />
     <Compile Include="utils\ErrorHandling.cs" />
     <Compile Include="utils\ConsoleClearer.cs" />
     <Compile Include="utils\DeletePreviousLine.cs" />
@@ -148,6 +159,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

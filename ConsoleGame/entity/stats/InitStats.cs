@@ -12,7 +12,7 @@ namespace ConsoleGame.entity.stats
         public int InitHealth { get; set; }
         public int InitMana { get; set; }
 
-        public void Init()
+        public override void Init()
         {
             Health = InitHealth;
             MaxHealth = InitHealth;

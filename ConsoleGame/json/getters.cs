@@ -244,8 +244,7 @@ namespace ConsoleGame.json
                     }
                 }
             }
-
-            Console.WriteLine("out");
+            
             return currentZone;
         }
     }

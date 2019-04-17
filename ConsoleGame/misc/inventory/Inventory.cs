@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 using ConsoleGame.items;
 using ConsoleGame.items.stuff.handed.weapons;
@@ -27,6 +28,12 @@ namespace ConsoleGame.misc.inventory
         public Inventory(int slots)
         {
             Items = new Item[slots];
+        }
+
+        [JsonConstructor]
+        public Inventory(Item[] items)
+        {
+            Items = items;
         }
 
         // for tests only

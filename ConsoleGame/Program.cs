@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 using ConsoleGame.game;
 using ConsoleGame.json;
@@ -35,7 +36,7 @@ namespace ConsoleGame
             /*Inventory inv = new Inventory();
             inv.AddItem(50);
             inv.Display();*/
-            
+
             Json.Init();
             LocationList.SetLocations();
             GameMenu.Init();

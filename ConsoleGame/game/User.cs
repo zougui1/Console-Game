@@ -90,7 +90,7 @@ namespace ConsoleGame.game
             {
                 double maxHealth = character.EntityStats.MaxHealth;
                 int healthPoints = RandomNumber.Between((int)maxHealth / 8, (int)maxHealth / 4);
-                character.InstantHealth(healthPoints);
+                character.Regen(healthPoints);
                 Utils.Cconsole.Color("Green").WriteLine("After a little rest you recovered {0} health points", healthPoints);
                 Utils.Cconsole.WriteLine("{0} has now {1} health points", character.Name, character.EntityStats.Health);
                 Utils.Endl();
@@ -124,12 +124,20 @@ namespace ConsoleGame.game
         public void Win()
         {
             int totalXP = 0;
-            MonstersInBattle.ForEach(monster => totalXP += monster.EntityStats.Experiences);
-            WinMessage(totalXP);
+            int totalGold = 0;
+
+            MonstersInBattle.ForEach(monster => {
+                totalXP += monster.EntityStats.Experiences;
+                totalGold += monster.Gold;
+            });
+
+            WinMessage(totalXP, totalGold);
+
+            Gold += totalGold;
             Characters.ForEach(character => character.AddExperiencesIfAlive(totalXP));
         }
 
-        public void WinMessage(int experiences)
+        public void WinMessage(int experiences, int gold)
         {
             Utils.Endl(2);
             if(MonstersInBattle.Count > 1)
@@ -144,11 +152,11 @@ namespace ConsoleGame.game
             Utils.Endl();
             if(Characters.Count > 1)
             {
-                Utils.Cconsole.Color("Green").WriteLine("The whole team has earned {0} experiences", experiences);
+                Utils.Cconsole.Color("Green").WriteLine("The whole team has earned {0} experiences and {1} GP", experiences, gold);
             }
             else
             {
-                Utils.Cconsole.Color("Green").WriteLine("{0} has earned {1} experiences", Characters[0].Name, experiences);
+                Utils.Cconsole.Color("Green").WriteLine("{0} has earned {1} experiences and {2} GP", Characters[0].Name, experiences, gold);
             }
             Utils.Endl(2);
         }
@@ -158,6 +166,36 @@ namespace ConsoleGame.game
             Utils.Endl(2);
             Utils.Cconsole.Color("Red").WriteLine("You died!");
             Utils.Endl(2);
+        }
+
+        public int CharactersAliveCount()
+        {
+            return Characters.Where(c => c.IsAlive()).ToList().Count;
+        }
+
+        public int MonstersAliveCount()
+        {
+            return MonstersInBattle.Where(m => m.IsAlive()).ToList().Count;
+        }
+
+        public Character FirstCharacterAlive()
+        {
+            return Characters.First(c => c.IsAlive());
+        }
+
+        public Monster FirstMonsterAlive()
+        {
+            return MonstersInBattle.First(c => c.IsAlive());
+        }
+
+        public List<Character> AllCharactersAlive()
+        {
+            return Characters.FindAll(c => c.IsAlive());
+        }
+
+        public List<Monster> AllMonstersAlive()
+        {
+            return MonstersInBattle.FindAll(m => m.IsAlive());
         }
 
         public bool IsTeamAlive()

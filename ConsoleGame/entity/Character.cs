@@ -169,7 +169,7 @@ namespace ConsoleGame.entity
             if (Potions > 0)
             {
                 --Potions;
-                InstantHealth(8);
+                Regen(8);
                 Utils.Cconsole.Color("Green").WriteLine("{0} drink a potion and has now {1} health points.", Name, EntityStats.Health);
                 Utils.Cconsole.WriteLine("{0} has {1} potions left", Name, Potions);
             }

@@ -40,7 +40,7 @@ namespace ConsoleGame.game
             Menu<Action, User> menu = new Menu<Action, User>("What do you want to do?")
                 .AddChoice($"Talk to a citizen ({location.Citizens.Length})", new TAction<User>(ChooseCitizen), user)
                 .AddChoice($"Enter in a building ({buildingCount})", new TAction<User>(ChooseBuilding), user)
-                .AddChoice($"Quit \"{location.Name}\"", new TAction<User>(User => {
+                .AddChoice($"Exit \"{location.Name}\"", new TAction<User>(User => {
                     GameMenu.Game.Statement = GameStatement.Wilderness;
                     user.Coords.MoveDown();
                 }));
@@ -52,32 +52,35 @@ namespace ConsoleGame.game
         public static void InBuilding(User user)
         {
             Building building = GameMenu.Game.CurrentBuilding.GetRightBuilding();
-            Menu<Action, object> menu = new Menu<Action, object>("With which citizen do you want to talk?");
+            Menu<Action, object> menu = new Menu<Action, object>("What do you want to do?");
 
-            if((WeaponShop)building != null)
+            if(building.Category == "WeaponShop")
             {
                 menu.AddChoice("Talk to the weapon merchant", ((WeaponShop)building).DisplayList);
             }
-            else if ((ArmorShop)building != null)
+            else if (building.Category == "ArmorShop")
             {
                 menu.AddChoice("Talk to the armor merchant", ((ArmorShop)building).DisplayList);
             }
-            else if((ItemShop)building != null)
+            else if(building.Category == "ItemShop")
             {
                 menu.AddChoice("Talk to the item merchant", ((ItemShop)building).DisplayList);
             }
-            else if((Church)building != null)
+            else if(building.Category == "Church")
             {
                 menu.AddChoice("Talk to the priest", ((Church)building).PriestInteraction);
             }
 
-            for(int i = 0; i < building.Citizens.Length; i++)
+            if(building.Citizens != null)
             {
-                Citizen citizen = building.Citizens[i];
-                menu.AddChoice($"Talk to {citizen.Name} ({citizen.Category})", new TAction<object>(citizen.Discussion));
+                for (int i = 0; i < building.Citizens.Length; i++)
+                {
+                    Citizen citizen = building.Citizens[i];
+                    menu.AddChoice($"Talk to {citizen.Name} ({citizen.Category})", new TAction<object>(citizen.Discussion));
+                }
             }
             
-            menu.AddChoice("none", new TAction<object>(BackToInLocation));
+            menu.AddChoice("Exit", new TAction<object>(BackToInLocation));
 
             Utils.Endl();
             menu.Choose();

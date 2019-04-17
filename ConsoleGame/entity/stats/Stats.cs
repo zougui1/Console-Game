@@ -38,9 +38,21 @@ namespace ConsoleGame.entity.stats
             Strength = strength;
             Resistance = resistance;
             MagicalMight = magicalMight;
-            MagicalMending = MagicalMending;
+            MagicalMending = magicalMending;
             Agility = agility;
             Deftness = deftness;
+        }
+
+        public void Deconstruct(out double strength, out double magicalMight)
+        {
+            strength = Strength;
+            magicalMight = MagicalMight;
+        }
+
+        public virtual void Init()
+        {
+            MaxHealth = Health;
+            MaxMana = Mana;
         }
     }
 }

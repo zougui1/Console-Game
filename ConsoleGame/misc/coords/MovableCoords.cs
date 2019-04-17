@@ -46,7 +46,6 @@ namespace ConsoleGame.misc.coords
                     return;
                 }
             }
-            ShowCoords();
             Console.WriteLine("Nothing happened.");
 
             GameMenu.Game.User.ChooseAction();

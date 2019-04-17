@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ConsoleGame.utils;
+using ConsoleGame.utils.classes;
 
 namespace ConsoleGame.UI.menus
 {
@@ -25,6 +26,7 @@ namespace ConsoleGame.UI.menus
         public bool RightAction { get; private set; } = false;
         public int FirstLinePositionTop { get; private set; }
         public int ErrorPositionTop { get; private set; }
+        public TryParseUserInput Parser { get; set; } = new TryParseUserInput("You must enter a valid number");
         // TODO, parameter should be of a generic type
         public bool parameter { get; set; } = false;
 
@@ -90,6 +92,10 @@ namespace ConsoleGame.UI.menus
         {
             FirstLinePositionTop = Console.CursorTop;
             ErrorPositionTop = Console.CursorTop + Choices.Count + 1;
+
+            Parser.ErrorTopPosition = ErrorPositionTop;
+            Parser.ErrorColor = ErrorColor;
+
             DisplayChoices();
             GetAction();
         }
@@ -117,7 +123,8 @@ namespace ConsoleGame.UI.menus
         {
             while (!RightAction)
             {
-                ChoosedAction = Utils.TryParseConsoleCin("You must enter a valid number", color: ErrorColor, cursorTop: ErrorPositionTop);
+                ChoosedAction = Parser.While();
+                //ChoosedAction = Utils.TryParseConsoleCin("You must enter a valid number", color: ErrorColor, cursorTop: ErrorPositionTop);
                 Utils.DeletePreviousLine(RemoveLines);
                 ActionIndex = ChoosedAction - 1;
                 TryAction();

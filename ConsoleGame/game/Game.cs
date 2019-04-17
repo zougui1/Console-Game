@@ -34,7 +34,7 @@ namespace ConsoleGame.game
         /// <summary>
         /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
         /// </summary>
-        public int PercentOfMonster { get; set; } = 10;
+        public int PercentOfMonster { get; set; } = 50;
         public Map Map { get; private set; }
 
         public Game(User user)
@@ -65,6 +65,7 @@ namespace ConsoleGame.game
         {
             //Monster monster = new Monster("Slime");
             Monster monster = Json.GetMonster(monsterId);
+            monster.EntityStats.Init();
             monster.Focus = User.Characters[0];
             User.Characters[0].Focus = monster;
             Utils.Endl(2);
@@ -81,7 +82,7 @@ namespace ConsoleGame.game
 
         /// <summary>
         /// Battle is used for the battles between the user and the monsters
-        /// if the user win it display a win message and save the party into a json file (the save shouldn't be here)
+        /// if the user win it display a win message
         /// if the user loose it displays a loose message and define the User property to null
         /// </summary>
         public void Battle()
@@ -107,21 +108,10 @@ namespace ConsoleGame.game
                 Utils.FillLine('-');
             }
             
-            if (User.BattleEnd()){
-                Json.Save(this);
-            }
-            else
+            if (!User.BattleEnd())
             {
                 User = null;
             }
         }
-
-        /// <summary>
-        /// InLocation is used to call the actions menu available in the location
-        /// </summary>
-        /*public void InLocation()
-        {
-            CurrentLocation.Display();
-        }*/
     }
 }

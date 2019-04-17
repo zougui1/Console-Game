@@ -11,3 +11,8 @@ E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.csproj.CoreC
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.csproj.CopyComplete
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.exe
 E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.pdb
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\ConsoleGame.exe.manifest
+E:\programmation\C#\ConsoleGame\ConsoleGame\bin\Release\ConsoleGame.application
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.TrustInfo.xml
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.exe.manifest
+E:\programmation\C#\ConsoleGame\ConsoleGame\obj\Release\ConsoleGame.application

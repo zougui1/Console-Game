@@ -44,6 +44,8 @@ namespace ConsoleGame.json
         private static string ZonesPath { get; } = DataPath + "/zones.json";
         private static string MerchantsPath { get; } = DataPath + "/merchants.json";
         private static string ShopsPath { get; } = DataPath + "/shops.json";
+        private static string ChurchesPath { get; } = DataPath + "/churches.json";
+        private static string PriestsPath { get; } = DataPath + "/priests.json";
         private static IDictionary<string, string> PathsDictionnary { get; } = new Dictionary<string, string>();
 
         public static void Init()
@@ -64,6 +66,8 @@ namespace ConsoleGame.json
             PathsDictionnary.Add("WeaponMerchant", MerchantsPath);
             PathsDictionnary.Add("ArmorMerchant", MerchantsPath);
             PathsDictionnary.Add("ItemMerchant", MerchantsPath);
+            PathsDictionnary.Add("Church", ChurchesPath);
+            PathsDictionnary.Add("Priest", PriestsPath);
         }
 
         /// <summary>
@@ -207,6 +211,16 @@ namespace ConsoleGame.json
             if (jToken["ItemMerchant_id"] != null)
             {
                 GetNestedObject<ItemMerchant>(jToken, result);
+            }
+
+            if (jToken["Church_id"] != null)
+            {
+                GetNestedObject<Church>(jToken, result);
+            }
+
+            if (jToken["Priest_id"] != null)
+            {
+                GetNestedObject<Priest>(jToken, result);
             }
 
             return result;

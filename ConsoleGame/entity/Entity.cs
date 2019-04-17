@@ -137,26 +137,32 @@ namespace ConsoleGame
             Physical((Entity)args[0]);
         }
 
-        public void Physical(Entity target)
+        public double GetDamages(Entity target)
         {
             double weaponDamages = 0;
-            if(Weapon != null)
+            if (Weapon != null)
             {
                 weaponDamages = Weapon.Damages;
             }
 
             double damages = EntityStats.Strength + (weaponDamages * 0.9) - (int)(target.EntityStats.Resistance + (target.GetTotalDefense() * 0.9));
+
+            Random rand = new Random();
+            int randomInt = RandomNumber.Between(8, 12);
+            double random = (randomInt / 10) + rand.NextDouble();
+
+            return damages *= random;
+        }
+
+        public void Physical(Entity target)
+        {
+            double damages = GetDamages(target);
             InflictDamage(target, damages);
         }
 
         public void InflictDamage(Entity target, double damages, Spell spell = null)
         {
-            Random rand = new Random();
-            int randomInt = RandomNumber.Between(8, 12);
-            double random = (randomInt / 10) + rand.NextDouble();
             bool isCritical = false;
-
-            damages *= random;
 
             if(target.Defend)
             {
@@ -234,8 +240,8 @@ namespace ConsoleGame
 
         public void Dodge(Entity target)
         {
-            Utils.Cconsole.Color("Grey").WriteLine("{0} attack {1}", Name, target.Name);
-            Utils.Cconsole.Color("Cyan").WriteLine("But {0} dodge", target.Name);
+            Utils.Cconsole.Color("Grey").WriteLine("{0} attack {1}\t", Name, target.Name);
+            Utils.Cconsole.Color("Cyan").WriteLine("But {0} dodge\t", target.Name);
         }
 
         public void ReceiveDamages(int damages)
@@ -253,7 +259,7 @@ namespace ConsoleGame
             Defend = true;
         }
 
-        public void InstantHealth(int healthPoints)
+        public void Regen(int healthPoints)
         {
             EntityStats.Health += healthPoints;
             if(EntityStats.Health > EntityStats.MaxHealth)
