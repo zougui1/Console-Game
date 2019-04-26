@@ -3,3 +3,6 @@ bin
 .vs
 save.json
 obj
+/ConsoleGame/obj
+Release
+Debug
