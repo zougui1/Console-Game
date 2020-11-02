@@ -1,14 +1,10 @@
-﻿using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-using ConsoleGame.entity.stats;
+﻿using ConsoleGame.entity.stats;
 using ConsoleGame.json;
 using ConsoleGame.utils;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ConsoleGame.entity.managers
 {
@@ -46,7 +42,7 @@ namespace ConsoleGame.entity.managers
             {
                 PropertyInfo property = warriorStats[i];
                 string statName = property.Name;
-                if(statName != "Experiences" && statName != "Level" && statName != "Branch" && statName  != "MaxHealth" && statName != "MaxMana")
+                if (statName != "Experiences" && statName != "Level" && statName != "Branch" && statName != "MaxHealth" && statName != "MaxMana")
                 {
                     double stat = (double)property.GetValue(warrior);
 
@@ -87,7 +83,7 @@ namespace ConsoleGame.entity.managers
             {
                 concernedUnit = ManaUnit;
             }
-            else if(statName == "Resistance")
+            else if (statName == "Resistance")
             {
                 concernedUnit = ResistanceUnit;
             }

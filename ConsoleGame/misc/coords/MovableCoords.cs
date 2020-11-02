@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.game;
+﻿using ConsoleGame.game;
 using ConsoleGame.json;
 using ConsoleGame.location;
 using ConsoleGame.utils;
+using System;
 
 namespace ConsoleGame.misc.coords
 {
@@ -68,7 +63,7 @@ namespace ConsoleGame.misc.coords
 
                 GameMenu.Game.CurrentLocation = currentLocation;
                 GameMenu.Game.Statement = GameStatement.InLocation;
-                
+
                 Utils.Cconsole
                     .Color("Cyan").Write("You entered in \"")
                     .Color("DarkCyan").Write(currentLocation.Name)

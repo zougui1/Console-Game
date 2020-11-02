@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.utils;
+﻿using System.Collections.Generic;
 
 namespace ConsoleGame.UI.lists
 {
@@ -74,7 +68,7 @@ namespace ConsoleGame.UI.lists
         /// <param name="action">action to trigger</param>
         private void PaginateAction(int min, int max, ItemListing<TList> action)
         {
-            for(int i = min; i < max; ++i)
+            for (int i = min; i < max; ++i)
             {
                 action(List[i]);
             }

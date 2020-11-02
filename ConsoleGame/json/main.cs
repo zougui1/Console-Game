@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using ConsoleGame.building;
-using ConsoleGame.entity;
-using ConsoleGame.entity.stats;
+﻿using ConsoleGame.building;
 using ConsoleGame.entity.NPC;
 using ConsoleGame.items;
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.handed.weapons;
-using ConsoleGame.location;
-using ConsoleGame.misc;
 using ConsoleGame.utils;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace ConsoleGame.json
 {
@@ -148,7 +138,7 @@ namespace ConsoleGame.json
             T result;
             result = jToken.ToObject<T>();
 
-            if(jToken["Citizens_id"] != null || jToken["Citizen_id"] != null)
+            if (jToken["Citizens_id"] != null || jToken["Citizen_id"] != null)
             {
                 GetNestedObject<Citizen>(jToken, result);
             }
@@ -234,13 +224,13 @@ namespace ConsoleGame.json
         /// <param name="result">result is the parsed object that contain the nested ones</param>
         public static void GetNestedObject<T>(JToken jToken, dynamic result)
         {
-            foreach(JToken nestedJToken in jToken)
+            foreach (JToken nestedJToken in jToken)
             {
                 string current = nestedJToken.ToString();
                 int indexId = current.IndexOf("_id");
                 string lastNamespace = Utils.GetLastNamespace(typeof(T).ToString());
 
-                if(indexId >= 0 && current.IndexOf(lastNamespace) >= 0)
+                if (indexId >= 0 && current.IndexOf(lastNamespace) >= 0)
                 {
                     string dirtyStr = current.Substring(0, indexId);
                     string cleanStr = dirtyStr.Substring(1, dirtyStr.Length - 1);
@@ -275,7 +265,7 @@ namespace ConsoleGame.json
                     {
                         int id = int.Parse(jToken[$"{cleanStr}_id"].ToString());
                         T nestedObject;
-                        
+
                         GetJTokenById(filePath, id, out JToken subJToken);
                         nestedObject = ToObject<T>(subJToken);
 

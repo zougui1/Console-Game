@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.building;
+﻿using ConsoleGame.building;
 using ConsoleGame.entity.NPC;
-using ConsoleGame.json;
 using ConsoleGame.misc.coords;
-using ConsoleGame.utils;
+using Newtonsoft.Json;
 
 namespace ConsoleGame.location
 {

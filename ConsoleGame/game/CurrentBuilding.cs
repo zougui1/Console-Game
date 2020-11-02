@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ConsoleGame.building;
 using Newtonsoft.Json;
-
-using ConsoleGame.building;
 
 namespace ConsoleGame.game
 {
@@ -63,7 +57,7 @@ namespace ConsoleGame.game
 
         public string GetCurrentBuilding()
         {
-            if(Building != null)
+            if (Building != null)
             {
                 return "Building";
             }

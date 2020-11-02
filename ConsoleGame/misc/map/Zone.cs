@@ -1,12 +1,9 @@
-﻿using System;
+﻿using ConsoleGame.game;
+using ConsoleGame.misc.coords;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.game;
-using ConsoleGame.misc.coords;
 
 namespace ConsoleGame.misc.map
 {
@@ -33,11 +30,11 @@ namespace ConsoleGame.misc.map
             double percent = 0;
             double random = RandomNumber.Between(0, 100) + new Random().NextDouble();
 
-            for(int i = 0; i < Spawnings.Count; ++i)
+            for (int i = 0; i < Spawnings.Count; ++i)
             {
                 Spawning spawning = Spawnings[i];
 
-                if(random <= (percent += spawning.Percent))
+                if (random <= (percent += spawning.Percent))
                 {
                     GameMenu.Game.TriggerMonster(spawning.MonsterId);
                     return;

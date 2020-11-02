@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ConsoleGame.utils
 {
@@ -44,7 +39,7 @@ namespace ConsoleGame.utils
                     return parsed;
                 }
             }
-            
+
             //Cconsole.Color(color).WriteLine(errorMessage);
             ErrorHandling(errorMessage, (int)cursorTop, color);
             return TryParseConsoleCin(errorMessage, parameter, color, cursorTop);

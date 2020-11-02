@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.utils;
 
 namespace ConsoleGame.UI.lists
 {
@@ -14,7 +9,6 @@ namespace ConsoleGame.UI.lists
         /// LineChanged is triggered when the CurrentCursorTop change (essentially when up and down arrow keys are pressed)
         /// </summary>
         public event LineChangedHandler LineChanged;
-
         /// <summary>
         /// InitEventAction represent the action to link the List's objects with the event
         /// </summary>
@@ -31,6 +25,7 @@ namespace ConsoleGame.UI.lists
         /// CurrentCursorTop represent the current top position of the cursor
         /// </summary>
         public int CurrentCursorTop { get; protected set; } = 0;
+        public int CurrentPosition { get; protected set; } = 0;
 
         public SelectionList(IList<TList> list, ItemListing<TList> action, int itemsPerPage = 10)
             : base(list, action, itemsPerPage)
@@ -72,14 +67,13 @@ namespace ConsoleGame.UI.lists
         /// <param name="key">the pressed key</param>
         private void DefaultKeyPressAction(ConsoleKeyInfo key)
         {
-            Utils.Cconsole.Color("Cyan").WriteLine(key.Key);
             int min, max;
 
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
                     Console.Clear();
-                    LineChanged((CurrentCursorTop - 1) >= 0 ? --CurrentCursorTop : 0);
+                    LineChanged((CurrentCursorTop - 1) > 0 ? --CurrentCursorTop : 0);
                     (min, max) = GetMinAndMaxIndex();
                     Footer(min, max);
                     break;
@@ -97,6 +91,7 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public void ChangePageHandler()
         {
+            CurrentPosition = 0;
             if (Page > 1)
             {
                 EventDestructor(Page - 1);
@@ -108,17 +103,17 @@ namespace ConsoleGame.UI.lists
             {
                 if (i % 2 == 0)
                 {
-                    InitListItem(List[i], Console.CursorTop, ColorEven);
+                    InitListItem(List[i], CurrentPosition++, ColorEven);
                 }
                 else
                 {
-                    InitListItem(List[i], Console.CursorTop, ColorOdd);
+                    InitListItem(List[i], CurrentPosition++, ColorOdd);
                 }
 
                 InitEventAction(List[i]);
             }
 
-            if(Page < LastPage)
+            if (Page < LastPage)
             {
                 EventDestructor(Page + 1);
             }

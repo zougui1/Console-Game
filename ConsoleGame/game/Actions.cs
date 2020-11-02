@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.building;
+﻿using ConsoleGame.building;
 using ConsoleGame.entity.NPC;
 using ConsoleGame.location;
 using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
+using System;
 
 namespace ConsoleGame.game
 {
@@ -40,7 +35,8 @@ namespace ConsoleGame.game
             Menu<Action, User> menu = new Menu<Action, User>("What do you want to do?")
                 .AddChoice($"Talk to a citizen ({location.Citizens.Length})", new TAction<User>(ChooseCitizen), user)
                 .AddChoice($"Enter in a building ({buildingCount})", new TAction<User>(ChooseBuilding), user)
-                .AddChoice($"Exit \"{location.Name}\"", new TAction<User>(User => {
+                .AddChoice($"Exit \"{location.Name}\"", new TAction<User>(User =>
+                {
                     GameMenu.Game.Statement = GameStatement.Wilderness;
                     user.Coords.MoveDown();
                 }));
@@ -54,7 +50,7 @@ namespace ConsoleGame.game
             Building building = GameMenu.Game.CurrentBuilding.GetRightBuilding();
             Menu<Action, object> menu = new Menu<Action, object>("What do you want to do?");
 
-            if(building.Category == "WeaponShop")
+            if (building.Category == "WeaponShop")
             {
                 menu.AddChoice("Talk to the weapon merchant", ((WeaponShop)building).DisplayList);
             }
@@ -62,16 +58,16 @@ namespace ConsoleGame.game
             {
                 menu.AddChoice("Talk to the armor merchant", ((ArmorShop)building).DisplayList);
             }
-            else if(building.Category == "ItemShop")
+            else if (building.Category == "ItemShop")
             {
                 menu.AddChoice("Talk to the item merchant", ((ItemShop)building).DisplayList);
             }
-            else if(building.Category == "Church")
+            else if (building.Category == "Church")
             {
                 menu.AddChoice("Talk to the priest", ((Church)building).PriestInteraction);
             }
 
-            if(building.Citizens != null)
+            if (building.Citizens != null)
             {
                 for (int i = 0; i < building.Citizens.Length; i++)
                 {
@@ -79,7 +75,7 @@ namespace ConsoleGame.game
                     menu.AddChoice($"Talk to {citizen.Name} ({citizen.Category})", new TAction<object>(citizen.Discussion));
                 }
             }
-            
+
             menu.AddChoice("Exit", new TAction<object>(BackToInLocation));
 
             Utils.Endl();
@@ -92,7 +88,7 @@ namespace ConsoleGame.game
             Location location = GameMenu.Game.CurrentLocation;
             Menu<Action, object> menu = new Menu<Action, object>("With which citizen do you want to talk?");
 
-            for(int i = 0; i < location.Citizens.Length; i++)
+            for (int i = 0; i < location.Citizens.Length; i++)
             {
                 Citizen citizen = location.Citizens[i];
 

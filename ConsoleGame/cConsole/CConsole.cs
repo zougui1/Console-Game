@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGame.cConsole
 {
@@ -62,11 +59,11 @@ namespace ConsoleGame.cConsole
                 AbsoluteProp = false;
                 OffsetProp = -1;
 
-                if(TopProp >= 0)
+                if (TopProp >= 0)
                 {
                     Console.SetCursorPosition(Console.CursorLeft, InitialTop);
                 }
-                
+
                 InitialTop = 0;
                 TopProp = -1;
             }
@@ -189,11 +186,11 @@ namespace ConsoleGame.cConsole
 
         private ConsoleColor GetColor(string color)
         {
-            if(color == "Grey")
+            if (color == "Grey")
             {
                 color = "Gray";
             }
-            else if(color == "DarkGrey")
+            else if (color == "DarkGrey")
             {
                 color = "DarkGray";
             }
@@ -207,7 +204,7 @@ namespace ConsoleGame.cConsole
 
             int offset = CharOffsetProp;
 
-            if(LeftProp || RightProp)
+            if (LeftProp || RightProp)
             {
                 if (RightProp)
                 {
@@ -241,7 +238,7 @@ namespace ConsoleGame.cConsole
             int offsetLeft = OffsetProp > 0 ? OffsetProp : 0;
             int offsetTop = TopProp >= 0 ? TopProp : Console.CursorTop;
 
-            if(AbsoluteProp)
+            if (AbsoluteProp)
             {
                 if (RightProp && OffsetProp >= 0)
                 {

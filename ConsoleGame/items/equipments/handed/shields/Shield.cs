@@ -1,11 +1,5 @@
-﻿using System;
+﻿using ConsoleGame.entity.stats;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.entity.stats;
-using ConsoleGame.utils;
 
 namespace ConsoleGame.items.stuff.handed.shields
 {

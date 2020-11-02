@@ -1,13 +1,4 @@
-﻿using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.entity.classes;
+﻿using ConsoleGame.entity.classes;
 using ConsoleGame.entity.managers;
 using ConsoleGame.entity.stats;
 using ConsoleGame.items.stuff.armor;
@@ -18,6 +9,12 @@ using ConsoleGame.misc;
 using ConsoleGame.misc.inventory;
 using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ConsoleGame.entity
 {
@@ -99,7 +96,7 @@ namespace ConsoleGame.entity
 
         public void ChooseSpell(Entity target)
         {
-            if(Spells.Count == 0)
+            if (Spells.Count == 0)
             {
                 Utils.Cconsole.Color("Red").WriteLine("You do not have any spell.");
                 ChooseAction();
@@ -107,10 +104,10 @@ namespace ConsoleGame.entity
             }
 
             List<string> choices = ListSpells().ToList();
-            
+
             List<TAction<object[]>> methods = new List<TAction<object[]>>();
             choices.ForEach(x => methods.Add(new TAction<object[]>(Magical)));
-            
+
             List<object[]> args = new List<object[]>();
             Spells.ForEach(spell => args.Add(new object[] { Focus, spell }));
 
@@ -134,10 +131,7 @@ namespace ConsoleGame.entity
                 return;
             }
 
-            EntityStats.Mana -= spell.RequiredMana;
-
-            double damages = EntityStats.MagicalMight + (spell.Power * 0.95) - (int)(target.EntityStats.Resistance + (target.GetTotalDefense() * 0.8));
-            InflictDamage(target, damages, spell);
+            MagicalAttack(target, spell);
         }
 
         public string[] ListSpells()
@@ -145,11 +139,11 @@ namespace ConsoleGame.entity
             string[] spellList = new string[Spells.Count];
             int index = 0;
 
-            for(int i = 0; i < Spells.Count; ++i)
+            for (int i = 0; i < Spells.Count; ++i)
             {
                 Spell spell = Spells[i];
 
-                if(spell == null)
+                if (spell == null)
                 {
                     continue;
                 }
@@ -181,7 +175,7 @@ namespace ConsoleGame.entity
             PropertyInfo[] warriorStats = Utils.GetProperties(warrior);
             Type type = EntityStats.GetType();
 
-            for(int i = 0; i < warriorStats.Length; ++i)
+            for (int i = 0; i < warriorStats.Length; ++i)
             {
                 PropertyInfo property = warriorStats[i];
                 string statName = property.Name;
@@ -194,14 +188,14 @@ namespace ConsoleGame.entity
                 PropertyInfo propertyInfo = type.GetProperty(statName);
                 Console.Write(statName.PadRight(20));
 
-                if(statName == "Experiences")
+                if (statName == "Experiences")
                 {
                     Console.Write("  ");
                 }
-                else if(statName == "Level")
+                else if (statName == "Level")
                 {
                     int previousLevel = EntityStats.Level - 1;
-                    if(previousLevel < 10)
+                    if (previousLevel < 10)
                     {
                         Console.Write(" {0}  ".PadRight(3), previousLevel);
                     }
@@ -212,7 +206,7 @@ namespace ConsoleGame.entity
                     Console.Write("->".PadRight(5));
                 }
 
-                if(UpdatedStats.IndexOf(statName) >= 0)
+                if (UpdatedStats.IndexOf(statName) >= 0)
                 {
                     Regex regex = new Regex(statName + ":" + "[0-9]+,");
                     string match = regex.Match(UpdatedStats).ToString();
@@ -232,7 +226,7 @@ namespace ConsoleGame.entity
                     Console.Write("{0}".PadLeft(10), propertyInfo.GetValue(EntityStats));
                 }
 
-                if(statName == "Experiences")
+                if (statName == "Experiences")
                 {
                     Console.Write("/{0}", NeededExperiences);
                 }
@@ -262,7 +256,7 @@ namespace ConsoleGame.entity
         public void AddExperiences(int experiences)
         {
             EntityStats.Experiences += experiences;
-            if(EntityStats.Experiences >= NeededExperiences)
+            if (EntityStats.Experiences >= NeededExperiences)
             {
                 EntityStats.Experiences -= NeededExperiences;
                 NeededExperiences *= 2;

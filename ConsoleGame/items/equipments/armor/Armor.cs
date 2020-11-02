@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ConsoleGame.entity.stats;
 using Newtonsoft.Json;
-
-using ConsoleGame.entity.stats;
-using ConsoleGame.utils;
+using System.Collections.Generic;
 /*
  * puts the datas in a json file, the Equipable in an array and delete all the derivated armors
  */

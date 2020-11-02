@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.entity.stats;
+﻿using ConsoleGame.entity.stats;
 using ConsoleGame.utils;
+using System.Collections.Generic;
 
 namespace ConsoleGame.items.stuff.handed
 {

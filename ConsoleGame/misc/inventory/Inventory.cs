@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.items;
-using ConsoleGame.items.stuff.handed.weapons;
-using ConsoleGame.json;
-using ConsoleGame.UI;
+﻿using ConsoleGame.items;
 using ConsoleGame.UI.lists;
 using ConsoleGame.utils;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleGame.misc.inventory
 {
@@ -57,7 +50,7 @@ namespace ConsoleGame.misc.inventory
 
         public void Display(object args = null)
         {
-            if(Items.Count > 0)
+            if (Items.Count > 0)
             {
                 Paginate();
             }

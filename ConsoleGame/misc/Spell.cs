@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleGame.misc
+﻿namespace ConsoleGame.misc
 {
     public class Spell
     {
@@ -23,14 +17,14 @@ namespace ConsoleGame.misc
         /// <summary>
         /// Type represent the type of the spell (attack, heal)
         /// </summary>
-        public string Type { get; protected set; }
+        public string Category { get; protected set; }
 
-        public Spell(string name, int requiredMana, int power, string type)
+        public Spell(string name, int requiredMana, int power, string category)
         {
             Name = name;
             RequiredMana = requiredMana;
             Power = power;
-            Type = type;
+            Category = category;
         }
     }
 }

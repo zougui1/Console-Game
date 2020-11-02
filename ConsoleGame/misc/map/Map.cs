@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.game;
+﻿using ConsoleGame.game;
 using ConsoleGame.json;
-using ConsoleGame.utils;
+using Newtonsoft.Json;
 
 namespace ConsoleGame.misc.map
 {

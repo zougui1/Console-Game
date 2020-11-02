@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.utils;
-
-namespace ConsoleGame.UI.menus
+﻿namespace ConsoleGame.UI.menus
 {
     public class ListingChoices<TAction, TArgs> : Pagination
     {
@@ -36,7 +28,7 @@ namespace ConsoleGame.UI.menus
         {
             // doesn't work, to solve it just use the DefaultKeyPressAction property of Pagination
             // to do so, just transform Utils.TryParseConsoleCin into an object
-            
+
             int count = max - min;
 
             int argsCount = count;

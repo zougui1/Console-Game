@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.utils;
+﻿using ConsoleGame.utils;
 using ConsoleGame.utils.classes;
+using System;
+using System.Collections.Generic;
 
 namespace ConsoleGame.UI.menus
 {
@@ -102,15 +98,15 @@ namespace ConsoleGame.UI.menus
 
         protected void DisplayChoices()
         {
-            if((Question?.Length ?? 0) > 0)
+            if ((Question?.Length ?? 0) > 0)
             {
                 ChoosedActionMessage = $" {ChoosedActionMessage}";
             }
 
             Utils.Cconsole.Color(QuestionColor).Write(Question).Color(ChoosedActionColor).WriteLine(ChoosedActionMessage);
-            for(int i = 0; i < Choices.Count; ++i)
+            for (int i = 0; i < Choices.Count; ++i)
             {
-                if(Choices[i] != null)
+                if (Choices[i] != null)
                 {
                     string choice = $"{i + 1}. {Choices[i]}";
                     Utils.Cconsole.Color(ChoicesColor).Write(choice);
@@ -136,7 +132,7 @@ namespace ConsoleGame.UI.menus
             try
             {
                 ThrowIfNull(Choices[ActionIndex], $"the choice at index \"{ActionIndex}\" must not be null");
-                
+
                 Utils.Cconsole.Absolute().Top(FirstLinePositionTop).Offset((Question?.Length ?? 0) + ChoosedActionMessage.Length - 2).Color(ChoosedActionColor).WriteLine("{0})", ChoosedAction);
 
                 if (Args.Count <= ActionIndex)
@@ -148,7 +144,7 @@ namespace ConsoleGame.UI.menus
                 {
                     Actions[ActionIndex](Args[ActionIndex]);
                 }
-                
+
                 RightAction = true;
             }
             catch (IndexOutOfRangeException e)
@@ -164,7 +160,7 @@ namespace ConsoleGame.UI.menus
 
         protected void ThrowIfNull(object element, string message)
         {
-            if(element == null)
+            if (element == null)
             {
                 throw new Exception(message);
             }

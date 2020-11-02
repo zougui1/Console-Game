@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.entity.stats;
-using ConsoleGame.items.stuff.handed.weapons;
-using ConsoleGame.items.stuff.handed.shields;
+﻿using ConsoleGame.entity.stats;
 using ConsoleGame.items.stuff.armor;
+using ConsoleGame.items.stuff.handed.shields;
+using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.misc;
 using ConsoleGame.utils;
+using System;
+using System.Collections.Generic;
 
 namespace ConsoleGame
 {
@@ -36,7 +31,7 @@ namespace ConsoleGame
             Name = name;
             Defend = false;
 
-            if(weapon != null)
+            if (weapon != null)
             {
                 weapon.Init();
             }
@@ -46,7 +41,7 @@ namespace ConsoleGame
             CriticalChancePerUnit = 0.15;
             Spells = new List<Spell>();
         }
-        
+
         public Entity(
             string name, InitStats entityStats, Weapon weapon, List<Spell> spells,
             Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet
@@ -63,7 +58,7 @@ namespace ConsoleGame
             Legs = legs;
             Feet = feet;
         }
-        
+
         public Entity(
             string name, EntityStats entityStats, Weapon weapon, List<Spell> spells,
             Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet
@@ -146,12 +141,21 @@ namespace ConsoleGame
             }
 
             double damages = EntityStats.Strength + (weaponDamages * 0.9) - (int)(target.EntityStats.Resistance + (target.GetTotalDefense() * 0.9));
+            return damages * DamagesRandomizer();
+        }
 
+        public double GetMagicalDamages(Spell spell, Entity target)
+        {
+            double damages = EntityStats.MagicalMight + (spell.Power * 0.95) - (int)(target.EntityStats.Resistance + (target.GetTotalDefense() * 0.8));
+            return damages * DamagesRandomizer();
+        }
+
+        private double DamagesRandomizer()
+        {
             Random rand = new Random();
             int randomInt = RandomNumber.Between(8, 12);
             double random = (randomInt / 10) + rand.NextDouble();
-
-            return damages *= random;
+            return random;
         }
 
         public void Physical(Entity target)
@@ -160,17 +164,24 @@ namespace ConsoleGame
             InflictDamage(target, damages);
         }
 
+        public void MagicalAttack(Entity target, Spell spell)
+        {
+            EntityStats.Mana -= spell.RequiredMana;
+            double damages = GetMagicalDamages(spell, target);
+            InflictDamage(target, damages, spell);
+        }
+
         public void InflictDamage(Entity target, double damages, Spell spell = null)
         {
             bool isCritical = false;
 
-            if(target.Defend)
+            if (target.Defend)
             {
                 damages *= 0.75;
             }
 
             int dodgeChance = RandomNumber.Between(0, 100);
-            if(dodgeChance <= (target.EntityStats.Agility * DodgeChancePerUnit))
+            if (dodgeChance <= (target.EntityStats.Agility * DodgeChancePerUnit))
             {
                 Dodge(target);
                 return;
@@ -247,22 +258,33 @@ namespace ConsoleGame
         public void ReceiveDamages(int damages)
         {
             EntityStats.Health -= damages;
-            if(EntityStats.Health < 0)
+            if (EntityStats.Health < 0)
             {
                 EntityStats.Health = 0;
             }
         }
 
-        public void Defending(Entity args)
+        public void Defending(Entity args = null)
         {
             Utils.Cconsole.Color("DarkMagenta").WriteLine("{0} is defending", Name);
             Defend = true;
         }
 
+        public double GetHealingPoints(Spell spell)
+        {
+            double damages = EntityStats.MagicalMending + (spell.Power * 0.95);
+            return damages * DamagesRandomizer();
+        }
+
+        public void CastHealingSpell(Spell spell)
+        {
+            Regen((int)GetHealingPoints(spell));
+        }
+
         public void Regen(int healthPoints)
         {
             EntityStats.Health += healthPoints;
-            if(EntityStats.Health > EntityStats.MaxHealth)
+            if (EntityStats.Health > EntityStats.MaxHealth)
             {
                 EntityStats.Health = EntityStats.MaxHealth;
             }

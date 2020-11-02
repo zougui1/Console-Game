@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using ConsoleGame.utils;
 using Newtonsoft.Json;
-
-using ConsoleGame.utils;
+using System;
 
 namespace ConsoleGame.entity.NPC
 {
@@ -39,7 +33,7 @@ namespace ConsoleGame.entity.NPC
 
             bool exitDiscussion = false;
 
-            while(!exitDiscussion)
+            while (!exitDiscussion)
             {
                 switch (Console.ReadKey().Key)
                 {

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.items.stuff.handed.weapons;
-using ConsoleGame.json;
+﻿using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.utils;
+using Newtonsoft.Json;
+using System;
 
 namespace ConsoleGame.entity.NPC
 {

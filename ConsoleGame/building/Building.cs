@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using ConsoleGame.entity.NPC;
 using ConsoleGame.game;
 
@@ -14,7 +9,7 @@ namespace ConsoleGame.building
         public Citizen[] Citizens { get; set; }
         public bool IsLocked { get; private set; }
         public string Category { get; private set; }
-        
+
         public Building(Citizen[] citizens, bool isLocked, string category)
         {
             Citizens = citizens;

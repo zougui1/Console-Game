@@ -1,18 +1,12 @@
-﻿using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.building;
-using ConsoleGame.entity;
+﻿using ConsoleGame.entity;
 using ConsoleGame.json;
 using ConsoleGame.location;
 using ConsoleGame.misc.map;
-using ConsoleGame.UI.header;
 using ConsoleGame.utils;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleGame.game
 {
@@ -34,7 +28,7 @@ namespace ConsoleGame.game
         /// <summary>
         /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
         /// </summary>
-        public int PercentOfMonster { get; set; } = 50;
+        public int PercentOfMonster { get; set; } = 0;
         public Map Map { get; private set; }
 
         public Game(User user)
@@ -76,7 +70,7 @@ namespace ConsoleGame.game
             {
                 Console.Clear();
             }, 1000);
-            
+
             Battle();
         }
 
@@ -107,7 +101,7 @@ namespace ConsoleGame.game
                 Utils.Endl();
                 Utils.FillLine('-');
             }
-            
+
             if (!User.BattleEnd())
             {
                 User = null;

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-using ConsoleGame.entity;
+﻿using ConsoleGame.entity;
 using ConsoleGame.entity.classes;
 using ConsoleGame.json;
 using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace ConsoleGame.game
 {
@@ -51,7 +47,7 @@ namespace ConsoleGame.game
         {
             Game = Json.Load();
 
-            if(Game?.User == null)
+            if (Game?.User == null)
             {
                 Utils.Endl();
                 Utils.Cconsole.Color("DarkRed").WriteLine("You don't have any party saved.");

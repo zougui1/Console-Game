@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using ConsoleGame.building;
+﻿using ConsoleGame.building;
 using ConsoleGame.entity;
-using ConsoleGame.entity.stats;
 using ConsoleGame.entity.NPC;
+using ConsoleGame.entity.stats;
 using ConsoleGame.game;
 using ConsoleGame.items;
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.handed.weapons;
 using ConsoleGame.location;
-using ConsoleGame.misc;
 using ConsoleGame.misc.map;
-using ConsoleGame.utils;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ConsoleGame.json
 {
@@ -53,7 +45,7 @@ namespace ConsoleGame.json
                     return (Game)serializer.Deserialize(file, typeof(Game));
                 }
             }
-            catch(FileNotFoundException e)
+            catch (FileNotFoundException e)
             {
                 return null;
             }
@@ -129,13 +121,13 @@ namespace ConsoleGame.json
                 default: return null;
             }
         }
-        
+
         public static InitStats GetInitStats(string className)
         {
             GetJTokenByString(StatsPath, className, "Class", out JToken jToken);
             return jToken.ToObject<InitStats>();
         }
-        
+
         public static Stats GetClassStats(string className)
         {
             GetJTokenByString(StatsPath, className, "Class", out JToken jToken);
@@ -223,11 +215,11 @@ namespace ConsoleGame.json
         {
             JObject file = GetFile(ZonesPath);
 
-            foreach(JToken zone in file["data"])
+            foreach (JToken zone in file["data"])
             {
                 int id = int.Parse(zone["id"].ToString());
 
-                if(id != currentZone.Id)
+                if (id != currentZone.Id)
                 {
                     JToken coords = zone["Coords"];
                     JToken rect = zone["Rect"];
@@ -236,7 +228,7 @@ namespace ConsoleGame.json
                     int y = int.Parse(coords["Y"].ToString());
                     int width = int.Parse(rect["Width"].ToString());
                     int height = int.Parse(rect["Height"].ToString());
-                    
+
                     // seems to work, should test with more zones
                     if ((user.Coords.X >= x && user.Coords.X <= (x + width)) && (user.Coords.Y >= y && user.Coords.Y <= (y + height)))
                     {
@@ -244,7 +236,7 @@ namespace ConsoleGame.json
                     }
                 }
             }
-            
+
             return currentZone;
         }
     }

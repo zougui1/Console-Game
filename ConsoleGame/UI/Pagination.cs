@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ConsoleGame.utils;
+﻿using ConsoleGame.utils;
+using System;
 
 namespace ConsoleGame.UI
 {
@@ -106,7 +101,8 @@ namespace ConsoleGame.UI
         /// </summary>
         public virtual void Paginate()
         {
-            if (HideCursor) {
+            if (HideCursor)
+            {
                 Console.CursorVisible = false;
             }
 
@@ -141,7 +137,7 @@ namespace ConsoleGame.UI
         }
 
         /// <summary>
-        /// PaginayeChangePageWhile contains the while loop that is true until the user change of page
+        /// PaginateChangePageWhile contains the while loop that is true until the user change of page
         /// </summary>
         /// <param name="errorPosition"></param>
         private void PaginateChangePageWhile(int errorPosition)

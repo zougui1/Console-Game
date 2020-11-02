@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-using ConsoleGame.entity;
-using ConsoleGame.items;
+﻿using ConsoleGame.entity;
 using ConsoleGame.misc.coords;
 using ConsoleGame.misc.inventory;
 using ConsoleGame.UI.header;
 using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleGame.game
 {
@@ -47,7 +43,7 @@ namespace ConsoleGame.game
 
         public void ChooseAction()
         {
-            if(Console.CursorTop >= Console.WindowHeight - 15)
+            if (Console.CursorTop >= Console.WindowHeight - 15)
             {
                 Utils.SetTimeoutSync(() => Console.Clear(), 100);
             }
@@ -69,7 +65,7 @@ namespace ConsoleGame.game
                 }
             }
         }
-        
+
         public void ChooseDirection(object args)
         {
             Utils.Endl();
@@ -126,7 +122,8 @@ namespace ConsoleGame.game
             int totalXP = 0;
             int totalGold = 0;
 
-            MonstersInBattle.ForEach(monster => {
+            MonstersInBattle.ForEach(monster =>
+            {
                 totalXP += monster.EntityStats.Experiences;
                 totalGold += monster.Gold;
             });
@@ -140,7 +137,7 @@ namespace ConsoleGame.game
         public void WinMessage(int experiences, int gold)
         {
             Utils.Endl(2);
-            if(MonstersInBattle.Count > 1)
+            if (MonstersInBattle.Count > 1)
             {
                 Utils.Cconsole.Color("Red").WriteLine("The ennemies has been defeated!");
             }
@@ -150,7 +147,7 @@ namespace ConsoleGame.game
             }
 
             Utils.Endl();
-            if(Characters.Count > 1)
+            if (Characters.Count > 1)
             {
                 Utils.Cconsole.Color("Green").WriteLine("The whole team has earned {0} experiences and {1} GP", experiences, gold);
             }

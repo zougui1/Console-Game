@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGame.utils.classes
 {
@@ -28,16 +24,16 @@ namespace ConsoleGame.utils.classes
             {
                 string input = Console.ReadLine();
 
-                if(int.TryParse(input, out parsed))
+                if (int.TryParse(input, out parsed))
                 {
                     string[] param = Parameter.Split('-');
-                    if(param[0] == "range")
+                    if (param[0] == "range")
                     {
                         string[] numbers = param[1].Split('-');
                         int.TryParse(numbers[0], out int min);
                         int.TryParse(numbers[1], out int max);
 
-                        if(parsed >= min && parsed <= max)
+                        if (parsed >= min && parsed <= max)
                         {
                             validInput = true;
                         }

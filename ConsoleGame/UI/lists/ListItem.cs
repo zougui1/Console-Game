@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 using ConsoleGame.utils;
 
 namespace ConsoleGame.UI.lists
@@ -36,7 +31,7 @@ namespace ConsoleGame.UI.lists
         /// <param name="currentCursorTop">the current cursor top position</param>
         public void HandleFocus(int currentCursorTop)
         {
-            if(currentCursorTop == CursorTop)
+            if (currentCursorTop == CursorTop)
             {
                 DisplayFocus();
             }
@@ -72,11 +67,11 @@ namespace ConsoleGame.UI.lists
         {
             string tempColor = Color;
 
-            if(tempColor == "DarkGray")
+            if (tempColor == "DarkGray")
             {
                 tempColor = "White";
             }
-            
+
             Utils.Cconsole.Bg("DarkGray").Color(tempColor).Write(Item.ToString());
         }
     }
