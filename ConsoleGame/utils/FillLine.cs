@@ -6,10 +6,12 @@ namespace ConsoleGame.utils
     {
         public static void FillLine()
         {
-            for (int i = 0; i < Console.WindowWidth; i++)
+            Console.CursorLeft = 0;
+            for (int i = 0; i <= Console.WindowWidth; i++)
             {
                 Console.Write(' ');
             }
+            Console.CursorLeft = 0;
         }
 
         public static void FillLine(char character, string color = "White")

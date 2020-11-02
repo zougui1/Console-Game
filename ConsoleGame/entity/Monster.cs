@@ -24,7 +24,7 @@ namespace ConsoleGame.entity
         /// </summary>
         public LootTable[] LootsTable { get; set; }
         public int Gold { get; set; } = 0;
-        public List<Item> Items { get; set; }
+        public List<Item> Items { get; set; } = new List<Item>();
 
         public Monster(string name) : base(name)
         { }
@@ -93,7 +93,7 @@ namespace ConsoleGame.entity
                 {
                     ConsumeHeal(FindHealToConsume()); // the monster use the heal to regen himself
                 }
-                else if (GetStrongestCastableHealingSpell() != null)
+                else if (HasHealSpell())
                 {
                     CastHealingSpell(GetStrongestCastableHealingSpell());
                 }
@@ -252,7 +252,7 @@ namespace ConsoleGame.entity
                     ConsumeHeal(FindHealToConsume()); // the monster use the heal to regen himself
                     actionDone = true;
                 }
-                else if (GetStrongestCastableHealingSpell() != null)
+                else if (HasHealSpell())
                 {
                     CastHealingSpell(GetStrongestCastableHealingSpell());
                     actionDone = true;
@@ -570,7 +570,7 @@ namespace ConsoleGame.entity
         {
             Spell strongestSpell = GetStrongestCastableAttackingSpell();
 
-            if (GetDamages(target) > GetMagicalDamages(strongestSpell, target))
+            if (!HasAttackingSpell() || GetDamages(target) > GetMagicalDamages(strongestSpell, target))
             {
                 Attack(target);
             }
@@ -596,7 +596,27 @@ namespace ConsoleGame.entity
         /// <returns>returns whether or no the monster can heal himself</returns>
         private bool CanHeal(Monster monster)
         {
-            return monster.Items.Any(item => item.IsHeal) || GetStrongestCastableHealingSpell(monster) != null;
+            return monster.Items.Any(item => item.IsHeal) || HasHealSpell();
+        }
+
+        /// <summary>
+        /// get whether or no the monster has healing spells
+        /// </summary>
+        private bool HasHealSpell()
+        {
+            return Spells.Count == 0
+                ? false
+                : (GetStrongestCastableHealingSpell(this) != null);
+        }
+
+        /// <summary>
+        /// get whether or no the monster has attacking spells
+        /// </summary>
+        private bool HasAttackingSpell()
+        {
+            return Spells.Count == 0
+                ? false
+                : (GetStrongestCastableAttackingSpell() != null);
         }
 
         /// <summary>
@@ -656,7 +676,7 @@ namespace ConsoleGame.entity
         /// <returns>a list of healing spells</returns>
         private List<Spell> GetHealingSpells(List<Spell> spells)
         {
-            return spells.Where(spell => spell.Category == "heal").ToList();
+            return spells.Where(spell => spell.Category == "heal").ToList() ?? new List<Spell>();
         }
 
         /// <summary>
@@ -667,7 +687,7 @@ namespace ConsoleGame.entity
         /// <returns>a list of spells</returns>
         private List<Spell> GetCastableSpells(List<Spell> spells, Monster monster)
         {
-            return spells.Where(spell => monster.EntityStats.Mana >= spell.RequiredMana).ToList();
+            return spells.Where(spell => monster.EntityStats.Mana >= spell.RequiredMana).ToList() ?? new List<Spell>();
         }
 
         /// <summary>
@@ -677,7 +697,7 @@ namespace ConsoleGame.entity
         /// <returns>a list of attacking spells</returns>
         private List<Spell> GetAttackingSpells(List<Spell> spells)
         {
-            return spells.Where(spell => spell.Category == "attack").ToList();
+            return spells.Where(spell => spell.Category == "attack").ToList() ?? new List<Spell>();
         }
 
         /// <summary>
@@ -687,7 +707,10 @@ namespace ConsoleGame.entity
         /// <returns>the strongest spell</returns>
         private Spell GetStrongestSpell(List<Spell> spells)
         {
-            return spells.OrderByDescending(spell => spell.Power).ElementAt(0);
+            List<Spell> spellList = spells.OrderByDescending(spell => spell.Power).ToList();
+            return spellList.Count == 0
+                ? null
+                : spellList.ElementAt(0);
         }
 
         /// <summary>
@@ -699,7 +722,7 @@ namespace ConsoleGame.entity
             Regen(item.Restore);
             Items.Remove(item);
             Console.WriteLine("{0} consume {1}", Name, item.Name);
-            Utils.Cconsole.Color("DarkGreen").WriteLine("{0} has now {1} health points.", Name, EntityStats.Health);
+            Utils.Cconsole.DarkGreen.WriteLine("{0} has now {1} health points.", Name, EntityStats.Health);
         }
 
         /// <summary>
@@ -724,7 +747,7 @@ namespace ConsoleGame.entity
                 {
                     Item item = Json.GetRightItem(id, dataType);
                     drops.Add(item);
-                    Utils.Cconsole.Color("Blue").WriteLine("{0} dropped a {1}", Name, item.Name);
+                    Utils.Cconsole.Blue.WriteLine("{0} dropped a {1}", Name, item.Name);
                 }
             }
 

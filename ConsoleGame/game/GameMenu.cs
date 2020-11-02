@@ -36,7 +36,10 @@ namespace ConsoleGame.game
             Menu<Action, object> menu = new Menu<Action, object>("What do you want to do?")
                 .AddChoice("Start a new game", new TAction<object>(NewGame))
                 .AddChoice("Load a game", new TAction<object>(Loader));
-            menu.Choose();
+            //menu.Choose();
+            menu.Kind = "UI";
+            menu.SinglePage = true;
+            menu.InitSelection();
         }
 
         /// <summary>
@@ -50,7 +53,7 @@ namespace ConsoleGame.game
             if (Game?.User == null)
             {
                 Utils.Endl();
-                Utils.Cconsole.Color("DarkRed").WriteLine("You don't have any party saved.");
+                Utils.Cconsole.DarkRed.WriteLine("You don't have any party saved.");
                 Utils.Endl();
                 MainMenu();
             }
@@ -84,7 +87,10 @@ namespace ConsoleGame.game
                 .AddChoices(classes)
                 .AddActions(methods)
                 .AddArgs(args.ToList());
-            menu.Choose();
+            //menu.Choose();
+            menu.Kind = "UI";
+            menu.SinglePage = true;
+            menu.InitSelection();
         }
 
         public static void ChooseName(BeginClasses args)
@@ -104,7 +110,7 @@ namespace ConsoleGame.game
                     validName = true;
                     break;
                 }
-                Utils.Cconsole.Color("DarkRed").WriteLine("Enter a valid name.");
+                Utils.Cconsole.DarkRed.WriteLine("Enter a valid name.");
             }
 
             CreateParty();
@@ -120,7 +126,7 @@ namespace ConsoleGame.game
 
         public static void StartGame()
         {
-            Utils.Cconsole.Color("Green").WriteLine("The game is starting...");
+            Utils.Cconsole.Green.WriteLine("The game is starting...");
             Thread.Sleep(1000);
             Console.Clear();
 

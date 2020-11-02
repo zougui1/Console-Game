@@ -1,5 +1,6 @@
 ﻿using ConsoleGame.utils;
 using System;
+using System.Threading.Tasks;
 
 namespace ConsoleGame.UI
 {
@@ -14,14 +15,15 @@ namespace ConsoleGame.UI
         /// </summary>
         public event Action PaginationExited;
 
+        public bool HandleErrors { get; set; } = true;
         /// <summary>
         /// ListCount represent the number of elements we want to paginate over
         /// </summary>
-        public int ListCount { get; private set; }
+        public int ListCount { get; protected set; }
         /// <summary>
         /// ItemsPerPage represent the number of objects we want in a page
         /// </summary>
-        public int ItemsPerPage { get; private set; }
+        public int ItemsPerPage { get; set; }
         /// <summary>
         /// Page represent the current page of the pagination
         /// </summary>
@@ -46,6 +48,7 @@ namespace ConsoleGame.UI
         /// HideCursor define wether or no we want to hide the cursor during the pagination
         /// </summary>
         public bool HideCursor { get; set; } = true;
+        protected int CursorTop { get; set; } = Console.CursorTop;
         /// <summary>
         /// PageInfos represent the message to display at the right-bottom of the pagination about informations of the page
         /// if null a default message is displayed
@@ -60,7 +63,10 @@ namespace ConsoleGame.UI
         /// LastPage represent the last page possible of the pagination
         /// </summary>
         protected int LastPage { get; set; }
+        public Action Header { get; set; }
+        public int ErrorMarginTop { get; set; } = 0;
 
+        protected Pagination() { }
         public Pagination(int listCount, PaginateAction action = null, int itemsPerPage = 10)
         {
             ListCount = listCount;
@@ -86,6 +92,11 @@ namespace ConsoleGame.UI
             int addPage = (ListCount % ItemsPerPage > 0) ? 1 : 0;
             int lastPage = ListCount / ItemsPerPage + addPage;
             return lastPage;
+        }
+
+        protected virtual void ClearList(int entries, bool initializing)
+        {
+            Console.Clear();
         }
 
         /// <summary>
@@ -114,6 +125,31 @@ namespace ConsoleGame.UI
             PaginationExited?.Invoke();
         }
 
+        protected void TriggerPaginationExited()
+        {
+            PaginationExited?.Invoke();
+        }
+
+        /// <summary>
+        /// Paginate is used to paginate over the list
+        /// </summary>
+        public virtual void Paginate(bool returnPromise)
+        {
+            if (HideCursor)
+            {
+                Console.CursorVisible = false;
+            }
+
+            ExitPagination = false;
+            LastPage = GetLastPage();
+
+            PaginateExitWhile();
+
+            PaginationExited?.Invoke();
+            /*(int min, int max) = GetMinAndMaxIndex();
+            ClearList(min + max, false);*/
+        }
+
         /// <summary>
         /// PäginateExitWhile contains the while loop that is true until the user quit the pagination
         /// </summary>
@@ -123,8 +159,10 @@ namespace ConsoleGame.UI
             {
                 ChangePage = false;
                 (int min, int max) = GetMinAndMaxIndex();
+                Header?.Invoke();
                 CallAction(min, max);
                 Footer(min, max);
+                Utils.DeletePreviousLine(max - min + 2);
                 int entries = max - min;
                 int errorPosition = entries + 3;
 
@@ -132,7 +170,10 @@ namespace ConsoleGame.UI
 
                 PaginateChangePageWhile(errorPosition);
 
-                PageChanged?.Invoke();
+                if (!ExitPagination)
+                {
+                    PageChanged?.Invoke();
+                }
             }
         }
 
@@ -155,7 +196,6 @@ namespace ConsoleGame.UI
                         NextPage(LastPage, errorPosition);
                         break;
                     case ConsoleKey.Escape:
-                    case ConsoleKey.Enter:
                         Exit();
                         break;
                     default:
@@ -166,7 +206,7 @@ namespace ConsoleGame.UI
                         else
                         {
                             string text = Console.ReadLine();
-                            Utils.Cconsole.Color("Cyan").Write(key.KeyChar + text);
+                            Utils.Cconsole.Cyan.Write(key.KeyChar + text);
                         }
                         break;
                 }
@@ -179,10 +219,7 @@ namespace ConsoleGame.UI
         /// <returns>returns a value tuple with the min and max index of the current page</returns>
         protected (int min, int max) GetMinAndMaxIndex()
         {
-            int startIndex = (Page - 1) * ItemsPerPage;
-            int maxIndex = (Page * ItemsPerPage) >= ListCount ? ListCount : Page * ItemsPerPage;
-
-            return (startIndex, maxIndex);
+            return GetMinAndMaxIndex(Page);
         }
         /// <summary>
         /// GetMinAndMaxIndex is used to get the min and max index of the given page
@@ -204,7 +241,8 @@ namespace ConsoleGame.UI
         /// <param name="max">the max index of the page</param>
         private void CallAction(int min, int max)
         {
-            Console.Clear();
+            ClearList(max - min, false);
+            Console.CursorTop = CursorTop;
             Action(min, max);
         }
 
@@ -213,18 +251,18 @@ namespace ConsoleGame.UI
         /// </summary>
         /// <param name="min">the min index of the current page</param>
         /// <param name="max">the max index of the page</param>
-        public void Footer(int min, int max)
+        protected virtual void Footer(int min, int max)
         {
             Utils.Endl();
-            Utils.Cconsole.Color("Green").Write("page {0}", Page);
+            Utils.Cconsole.Green.Write("page {0}", Page);
 
             if (PageInfos == null)
             {
-                Utils.Cconsole.Right().Absolute().Offset(0).Color("Green").WriteLine($"{min}/{max} over {ListCount} items");
+                Utils.Cconsole.Right().Absolute().Offset(0).Green.WriteLine($"{min}/{max} over {ListCount} items");
             }
             else
             {
-                Utils.Cconsole.Right().Absolute().Offset(0).Color("Green").WriteLine(PageInfos);
+                Utils.Cconsole.Right().Absolute().Offset(0).Green.WriteLine(PageInfos);
             }
 
             Utils.Endl();
@@ -238,7 +276,10 @@ namespace ConsoleGame.UI
         {
             if (Page == 1)
             {
-                ErrorHandling("The page can't be less than 1", errorPosition);
+                if (HandleErrors)
+                {
+                    ErrorHandling("The page can't be less than 1", errorPosition);
+                }
             }
             else
             {
@@ -255,7 +296,10 @@ namespace ConsoleGame.UI
         {
             if (lastPage == Page)
             {
-                ErrorHandling($"The page can't be more than {lastPage}", errorPosition);
+                if (HandleErrors)
+                {
+                    ErrorHandling($"The page can't be more than {lastPage}", errorPosition);
+                }
             }
             else
             {
@@ -267,9 +311,11 @@ namespace ConsoleGame.UI
         /// <summary>
         /// Exit is used to display the ExitMessage and define both pagination loops condition to true (the condition in the loops are inversed)
         /// </summary>
-        private void Exit()
+        protected virtual void Exit()
         {
-            Utils.Cconsole.Color("Blue").WriteLine(ExitMessage);
+            (int min, int max) = GetMinAndMaxIndex();
+            ClearList(min + max, false);
+            Utils.Cconsole.Blue.WriteLine(ExitMessage);
             ExitPagination = true;
             ChangePage = true;
             Console.CursorVisible = true;
@@ -280,13 +326,14 @@ namespace ConsoleGame.UI
         /// </summary>
         /// <param name="message">the error message to display</param>
         /// <param name="cursorPosition">the top position where we want to display the error</param>
-        private void ErrorHandling(string message, int cursorPosition)
+        protected void ErrorHandling(string message, int cursorPosition)
         {
-            Console.SetCursorPosition(0, cursorPosition);
-            Utils.Cconsole.Color("Red").WriteLine(message);
+            cursorPosition += ErrorMarginTop;
+            Console.SetCursorPosition(0, CursorTop + cursorPosition);
+            Utils.Cconsole.Red.WriteLine(message);
             Utils.SetTimeout(() =>
             {
-                Console.SetCursorPosition(0, cursorPosition);
+                Console.SetCursorPosition(0, CursorTop + cursorPosition);
                 Utils.FillLine();
             }, 1000);
         }

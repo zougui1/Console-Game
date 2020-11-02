@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using ConsoleGame.items;
+using ConsoleGame.utils;
+
 namespace ConsoleGame.UI.lists
 {
     public class SelectionList<TList> : Listing<TList>
@@ -26,7 +29,10 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public int CurrentCursorTop { get; protected set; } = 0;
         public int CurrentPosition { get; protected set; } = 0;
+        public int InitialConsoleCursorTop { get; protected set; } = Console.CursorTop;
+        public DefaultKeyPress DefaultKeyPressSub { get; set; }
 
+        protected SelectionList() : base() { }
         public SelectionList(IList<TList> list, ItemListing<TList> action, int itemsPerPage = 10)
             : base(list, action, itemsPerPage)
         {
@@ -54,7 +60,7 @@ namespace ConsoleGame.UI.lists
         /// <summary>
         /// PaginationInit is used to initialize the pagination
         /// </summary>
-        private void PaginationInit()
+        protected void PaginationInit()
         {
             DefaultKeyPress = new DefaultKeyPress(DefaultKeyPressAction);
             PageChanged += new Action(ChangePageHandler);
@@ -65,23 +71,38 @@ namespace ConsoleGame.UI.lists
         /// DefaultKeyPressAction is used to get the pressed key when a key has been pressed and is not triggered by the pagination
         /// </summary>
         /// <param name="key">the pressed key</param>
-        private void DefaultKeyPressAction(ConsoleKeyInfo key)
+        protected void DefaultKeyPressAction(ConsoleKeyInfo key)
         {
             int min, max;
 
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    Console.Clear();
-                    LineChanged((CurrentCursorTop - 1) > 0 ? --CurrentCursorTop : 0);
                     (min, max) = GetMinAndMaxIndex();
+                    ClearList(max - min, false);
+                    Console.CursorTop = CursorTop;
+                    Header?.Invoke();
+                    LineChanged((CurrentCursorTop - 1) >= 0 ? --CurrentCursorTop : 0);
                     Footer(min, max);
                     break;
                 case ConsoleKey.DownArrow:
-                    Console.Clear();
-                    LineChanged(((CurrentCursorTop + 1) < ItemsPerPage) ? ++CurrentCursorTop : (ItemsPerPage - 1));
                     (min, max) = GetMinAndMaxIndex();
+                    ClearList(max - min, false);
+                    Console.CursorTop = CursorTop;
+                    Header?.Invoke();
+                    LineChanged(((CurrentCursorTop + 1) < max) ? ++CurrentCursorTop : (max - 1));
                     Footer(min, max);
+                    break;
+                default:
+                    if (DefaultKeyPressSub != null)
+                    {
+                        DefaultKeyPressSub(key);
+                    }
+                    else
+                    {
+                        string text = Console.ReadLine();
+                        Utils.Cconsole.Cyan.Write(key.KeyChar + text);
+                    }
                     break;
             }
         }
@@ -103,11 +124,11 @@ namespace ConsoleGame.UI.lists
             {
                 if (i % 2 == 0)
                 {
-                    InitListItem(List[i], CurrentPosition++, ColorEven);
+                    InitListItem(List[i], CurrentPosition++);
                 }
                 else
                 {
-                    InitListItem(List[i], CurrentPosition++, ColorOdd);
+                    InitListItem(List[i], CurrentPosition++);
                 }
 
                 InitEventAction(List[i]);
@@ -126,7 +147,7 @@ namespace ConsoleGame.UI.lists
         /// unlink the List's objects of the given page from the event
         /// </summary>
         /// <param name="page">the page where the objects are</param>
-        private void EventDestructor(int page)
+        protected void EventDestructor(int page)
         {
             (int min, int max) = GetMinAndMaxIndex(page);
 
@@ -141,7 +162,7 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         /// <param name="min">index minimum</param>
         /// <param name="max">index maximum</param>
-        private void EventDestructor(int min, int max)
+        protected void EventDestructor(int min, int max)
         {
             for (int i = min; i < max; ++i)
             {
@@ -164,9 +185,10 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public override void CallBeforeKeyTesting()
         {
-            Console.Clear();
-            LineChanged(CurrentCursorTop);
             (int min, int max) = GetMinAndMaxIndex();
+            ClearList(max - min, true);
+            Header?.Invoke();
+            LineChanged(CurrentCursorTop);
             Footer(min, max);
         }
     }

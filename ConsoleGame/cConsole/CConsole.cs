@@ -1,11 +1,24 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace ConsoleGame.cConsole
 {
     public partial class CConsole
     {
+        const int STD_OUTPUT_HANDLE = -11;
+        const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll")]
+        static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+        [DllImport("kernel32.dll")]
+        static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
         /// <summary>
         /// LeftProp determine wether or no the text should be written at left
         /// </summary>
@@ -38,8 +51,16 @@ namespace ConsoleGame.cConsole
         private int InitialTop { get; set; }
         private int TopProp { get; set; } = -1;
         private StringBuilder Message { get; set; } = new StringBuilder();
+        private StringBuilder EffectStr { get; set; } = new StringBuilder();
 
-        public CConsole() { }
+        public CConsole()
+        {
+            var handle = GetStdHandle(STD_OUTPUT_HANDLE);
+            uint mode;
+            GetConsoleMode(handle, out mode);
+            mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+            SetConsoleMode(handle, mode);
+        }
         private CConsole(bool multi)
         {
             MultiProp = true;
@@ -52,7 +73,6 @@ namespace ConsoleGame.cConsole
 
             if (!MultiProp)
             {
-                Console.ResetColor();
                 LeftProp = false;
                 RightProp = false;
                 CharOffsetProp = 0;
@@ -67,6 +87,127 @@ namespace ConsoleGame.cConsole
                 InitialTop = 0;
                 TopProp = -1;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public CConsole Rgb(int r, int g, int b)
+        {
+            Message.Append(Escape($"38;2;{r};{g};{b}"));
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public CConsole BgRgb(int r, int g, int b)
+        {
+            Message.Append(Escape($"48;2;{r};{g};{b}"));
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public CConsole Rgb(string color)
+        {
+            if(color == null)
+            {
+                return this;
+            }
+
+            string[] rgb = color.Split('(')[1].Split(')')[0].Split(',');
+            Rgb(int.Parse(rgb[0]), int.Parse(rgb[1]), int.Parse(rgb[2]));
+            return this;
+        }
+
+        public CConsole BgRgb(string color)
+        {
+            if (color == null)
+            {
+                return this;
+            }
+
+            string[] rgb = color.Split('(')[1].Split(')')[0].Split(',');
+            BgRgb(int.Parse(rgb[0]), int.Parse(rgb[1]), int.Parse(rgb[2]));
+            return this;
+        }
+
+        public CConsole Hex(string hex)
+        {
+            if (hex == null)
+            {
+                return this;
+            }
+
+            (int r, int g, int b) = HexToRgb(hex);
+
+            Message.Append(Escape($"38;2;{r};{g};{b}"));
+            return this;
+        }
+
+        public CConsole BgHex(string hex)
+        {
+            if (hex == null)
+            {
+                return this;
+            }
+
+            (int r, int g, int b) = HexToRgb(hex);
+
+            Message.Append(Escape($"48;2;{r};{g};{b}"));
+            return this;
+        }
+
+        public (int r, int g, int b) HexToRgb(string hex)
+        {
+            string hexCode = hex.Split('#')[1];
+            int r;
+            int g;
+            int b;
+
+            if (hexCode.Length == 3)
+            {
+                string hR = $"{hexCode[0]}{hexCode[0]}";
+                r = Convert.ToInt32(hR, 16);
+
+                string hG = $"{hexCode[1]}{hexCode[1]}";
+                g = Convert.ToInt32(hG, 16);
+
+                string hB = $"{hexCode[2]}{hexCode[2]}";
+                b = Convert.ToInt32(hB, 16);
+            }
+            else
+            {
+                string hR = $"{hexCode[0]}{hexCode[1]}";
+                r = Convert.ToInt32(hR, 16);
+
+                string hG = $"{hexCode[2]}{hexCode[3]}";
+                g = Convert.ToInt32(hG, 16);
+
+                string hB = $"{hexCode[4]}{hexCode[5]}";
+                b = Convert.ToInt32(hB, 16);
+            }
+
+            return (r, g, b);
+        }
+
+        private string Escape(string effect)
+        {
+            return $"\x1B[{effect}m";
         }
 
         /// <summary>
@@ -94,7 +235,7 @@ namespace ConsoleGame.cConsole
         /// </summary>
         public CConsole CharOffset(int offset)
         {
-            OffsetProp = offset;
+            CharOffsetProp = offset;
             return this;
         }
 
@@ -133,13 +274,52 @@ namespace ConsoleGame.cConsole
             return this;
         }
 
+        public CConsole NewLine(int amount = 1)
+        {
+            for(int i = 1; i < amount; i++)
+            {
+                Message.AppendLine();
+            }
+
+            WriteLine();
+            return this;
+        }
+
         /// <summary>
         /// Color is used to change the text color
         /// </summary>
         /// <param name="color">color name, shall beggin with an uppercase</param>
         public CConsole Color(string color)
         {
-            Console.ForegroundColor = GetColor(color);
+            if (color == null)
+            {
+                return this;
+            }
+
+            if (color[0] == '#')
+            {
+                Hex(color);
+            }
+            else if(color.Substring(0, 3) == "rgb")
+            {
+                Rgb(color);
+            }
+            else
+            {
+                Message.Append($"{Escape(GetColor(color).ToString())}");
+            }
+            EffectStr.Append(Escape(GetColor(color).ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Effect is used to change the text effect
+        /// </summary>
+        /// <param name="color">color name, shall beggin with an uppercase</param>
+        public CConsole Effect(string effect)
+        {
+            Message.Append($"{Escape(GetEffect(effect).ToString())}");
+            EffectStr.Append(Escape(GetColor(effect).ToString()));
             return this;
         }
 
@@ -149,7 +329,24 @@ namespace ConsoleGame.cConsole
         /// <param name="color">color name, shall beggin with an uppercase</param>
         public CConsole Bg(string color)
         {
-            Console.BackgroundColor = GetColor(color);
+            if (color == null)
+            {
+                return this;
+            }
+
+            if (color[0] == '#')
+            {
+                BgHex(color);
+            }
+            else if (color.Substring(0, 3) == "rgb")
+            {
+                BgRgb(color);
+            }
+            else
+            {
+                Message.Append($"{Escape(GetColor($"Bg{color}").ToString())}");
+            }
+            EffectStr.Append(Escape(GetColor($"Bg{color}").ToString()));
             return this;
         }
 
@@ -184,7 +381,7 @@ namespace ConsoleGame.cConsole
             return this;
         }
 
-        private ConsoleColor GetColor(string color)
+        private int GetColor(string color)
         {
             if (color == "Grey")
             {
@@ -195,7 +392,105 @@ namespace ConsoleGame.cConsole
                 color = "DarkGray";
             }
 
-            return (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color);
+            switch (color)
+            {
+                case "Reset":
+                    return Colors.Reset;
+
+                case "Black":
+                    return Colors.Black;
+                case "DarkRed":
+                    return Colors.DarkRed;
+                case "DarkGreen":
+                    return Colors.DarkGreen;
+                case "DarkYellow":
+                    return Colors.DarkYellow;
+                case "DarkBlue":
+                    return Colors.DarkBlue;
+                case "DarkMagenta":
+                    return Colors.DarkMagenta;
+                case "DarkCyan":
+                    return Colors.DarkCyan;
+                case "Gray":
+                    return Colors.Gray;
+
+                case "BgBlack":
+                    return Colors.BgBlack;
+                case "BgDarkRed":
+                    return Colors.BgDarkRed;
+                case "BgDarkGreen":
+                    return Colors.BgDarkGreen;
+                case "BgDarkYellow":
+                    return Colors.BgDarkYellow;
+                case "BgDarkBlue":
+                    return Colors.BgDarkBlue;
+                case "BgDarkMagenta":
+                    return Colors.BgDarkMagenta;
+                case "BgDarkCyan":
+                    return Colors.BgDarkCyan;
+                case "BgGray":
+                    return Colors.BgGray;
+
+                case "DarkGray":
+                    return Colors.DarkGray;
+                case "Red":
+                    return Colors.Red;
+                case "Green":
+                    return Colors.Green;
+                case "Yellow":
+                    return Colors.Yellow;
+                case "Blue":
+                    return Colors.Blue;
+                case "Magenta":
+                    return Colors.Magenta;
+                case "Cyan":
+                    return Colors.Cyan;
+                case "White":
+                    return Colors.White;
+
+                case "BgDarkGray":
+                    return Colors.BgDarkGray;
+                case "BgRed":
+                    return Colors.BgRed;
+                case "BgGreen":
+                    return Colors.BgGreen;
+                case "BgYellow":
+                    return Colors.BgYellow;
+                case "BgBlue":
+                    return Colors.BgBlue;
+                case "BgMagenta":
+                    return Colors.BgMagenta;
+                case "BgCyan":
+                    return Colors.BgCyan;
+                case "BgWhite":
+                    return Colors.BgWhite;
+
+                default:
+                    return Colors.White;
+            }
+        }
+
+        private int GetEffect(string effect)
+        {
+            switch (effect)
+            {
+                case "Reset":
+                    return Effects.Reset;
+
+                case "Bold":
+                    return Effects.Bold;
+                case "Faint":
+                    return Effects.Faint;
+                case "Italic":
+                    return Effects.Italic;
+                case "Underline":
+                    return Effects.Underline;
+                case "ReverseVideo":
+                    return Effects.ReverseVideo;
+
+                default:
+                    return Effects.Faint;
+            }
         }
 
         private void Writer()
@@ -222,7 +517,7 @@ namespace ConsoleGame.cConsole
                     {
                         if (!AbsoluteProp || OffsetProp < 0)
                         {
-                            Console.Write(' ');
+                            Console.Write("{0} ", EffectStr);
                         }
                     }
                 }
@@ -253,6 +548,8 @@ namespace ConsoleGame.cConsole
 
         private void Write()
         {
+            Color("Reset");
+
             if (Line)
             {
                 Console.WriteLine(Message);

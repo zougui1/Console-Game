@@ -28,7 +28,7 @@ namespace ConsoleGame.game
         /// <summary>
         /// The PercentOfMonster property represent the percent of chance to meet a monster at each movement
         /// </summary>
-        public int PercentOfMonster { get; set; } = 0;
+        public int PercentOfMonster { get; set; } = 105;
         public Map Map { get; private set; }
 
         public Game(User user)
@@ -100,6 +100,7 @@ namespace ConsoleGame.game
                 });
                 Utils.Endl();
                 Utils.FillLine('-');
+                Utils.Endl(2);
             }
 
             if (!User.BattleEnd())

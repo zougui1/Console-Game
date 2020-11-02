@@ -6,15 +6,11 @@ namespace ConsoleGame.utils
     {
         public static void DeletePreviousLine(int iterations = 1)
         {
-            for (int i = 1; i <= iterations; ++i)
+            for (int i = 0; i < iterations; ++i)
             {
-                --Console.CursorTop;
-                /*if(i > 1 && Console.CursorTop > 0)
-                {
-                    --Console.CursorTop;
-                }*/
+                Console.CursorTop--;
                 FillLine();
-                --Console.CursorTop;
+                Console.CursorTop--;
             }
         }
     }

@@ -81,9 +81,13 @@
     <Compile Include="building\ItemShop.cs" />
     <Compile Include="building\Shop.cs" />
     <Compile Include="building\WeaponShop.cs" />
+    <Compile Include="cConsole\EffectProperties.cs" />
+    <Compile Include="cConsole\Colors.cs" />
+    <Compile Include="cConsole\ColorProperties.cs" />
     <Compile Include="cConsole\Console-overrides\WriteLine.cs" />
     <Compile Include="cConsole\Console-overrides\Write.cs" />
     <Compile Include="cConsole\CConsole.cs" />
+    <Compile Include="cConsole\Effects.cs" />
     <Compile Include="entity\Character.cs" />
     <Compile Include="entity\classes\BeginClasses.cs" />
     <Compile Include="entity\classes\Classes.cs" />
@@ -129,6 +133,7 @@
     <Compile Include="entity\stats\StatUnits.cs" />
     <Compile Include="game\User.cs" />
     <Compile Include="UI\header\Header.cs" />
+    <Compile Include="UI\ItemInfo.cs" />
     <Compile Include="UI\lists\Listing.cs" />
     <Compile Include="UI\lists\ListItem.cs" />
     <Compile Include="UI\lists\SelectionList.cs" />

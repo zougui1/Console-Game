@@ -3,24 +3,12 @@
 ## character
 
 ### stats
-#### primary
-* migical mending
 
 ### classes
 
-#### primary
-
-choice menu with those
-
-* warrior
-* mage
-* priest
-* thief
-* martial artist
-
 #### secondary (after quests)
 
-be available after some quests are done
+> available after some quests are done
 
 * gladiator
 * sage

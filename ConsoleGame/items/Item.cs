@@ -4,11 +4,12 @@ namespace ConsoleGame.items
 {
     public class Item
     {
-        public string Name { get; protected set; }
-        public string Description { get; protected set; }
-        public int Coins { get; protected set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Coins { get; set; }
         public StringBuilder ListItemText { get; protected set; } = new StringBuilder();
         public bool IsHeal { get; set; } = false;
+        public bool IsMana { get; set; } = false;
         public int Restore { get; set; } = 0;
 
         public Item(string name, string description, int coins = 0)
@@ -19,7 +20,6 @@ namespace ConsoleGame.items
 
             ListItemText.Append(Name.PadRight(36));
             ListItemText.AppendFormat("{0} GP", Coins);
-            ListItemText.AppendLine();
         }
 
         public override string ToString()
@@ -31,8 +31,6 @@ namespace ConsoleGame.items
         {
             ListItemText.Append(Name.PadRight(36));
             ListItemText.AppendFormat("{0} GP", Coins);
-            /*Utils.Cconsole.Color(color).Write(Name.PadRight(36));
-            Utils.Cconsole.Color(color).WriteLine("{0} GP", Coins);*/
         }
     }
 }

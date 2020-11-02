@@ -21,7 +21,7 @@
 
         public void Choose()
         {
-            base.Paginate();
+            Paginate();
         }
 
         private void PaginateAction(int min, int max)
@@ -36,7 +36,7 @@
             if (Menu.Args.Count < count) argsCount = Menu.Args.Count;
             if (Menu.Args.Count < min) argsIndex = Menu.Args.Count;
 
-            Menu<TAction, TArgs> partialMenu = new Menu<TAction, TArgs>(Menu.Question)
+            Menu<TAction, TArgs> partialMenu = new Menu<TAction, TArgs>(Menu.Label)
                 .AddChoices(Menu.Choices.GetRange(min, count))
                 .AddActions(Menu.Actions.GetRange(min, count))
                 .AddArgs(Menu.Args.GetRange(argsIndex, argsCount));

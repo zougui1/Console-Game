@@ -16,11 +16,19 @@ namespace ConsoleGame.UI.lists
         /// <summary>
         /// Color represent the color of the text to display
         /// </summary>
-        public string Color { get; set; }
+        public string EvenColor { get; set; } = "White";
+        public string OddColor { get; set; } = "DarkGray";
+        public string EvenBgColor { get; set; }
+        public string OddBgColor { get; set; } = "#111";
+        public string FocusColor { get; set; }
+        public string FocusBgColor { get; set; } = "#1425ff";
+        public string Text { get; set; }
+        public bool IsEven { get; private set; }
 
         public ListItem(TItem item)
         {
             Item = item;
+            Text = Item.ToString();
         }
 
         /// <summary>
@@ -46,10 +54,10 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         /// <param name="cursorPosition">the top position of the text</param>
         /// <param name="color">the color of the text</param>
-        public void Init(int cursorPosition, string color = "White")
+        public void Init(int cursorPosition)
         {
-            Color = color;
             CursorTop = cursorPosition;
+            IsEven = CursorTop % 2 == 0;
         }
 
         /// <summary>
@@ -57,7 +65,21 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public void DisplayText()
         {
-            Utils.Cconsole.Color(Color).Write(Item.ToString());
+            Utils.Cconsole.Bg(GetBgColor()).Color(GetColor()).WriteLine(Text);
+        }
+
+        private string GetBgColor()
+        {
+            return IsEven
+                ? EvenBgColor
+                : OddBgColor;
+        }
+
+        private string GetColor()
+        {
+            return IsEven
+                ? EvenColor
+                : OddColor;
         }
 
         /// <summary>
@@ -65,14 +87,14 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public void DisplayFocus()
         {
-            string tempColor = Color;
 
-            if (tempColor == "DarkGray")
+            /*if (tempColor == "DarkGray")
             {
                 tempColor = "White";
-            }
+            }*/
 
-            Utils.Cconsole.Bg("DarkGray").Color(tempColor).Write(Item.ToString());
+            //Utils.Cconsole.BgDarkGray.Color(tempColor).WriteLine(Text);
+            Utils.Cconsole.Bg(FocusBgColor).Color(FocusColor ?? GetColor()).WriteLine(Text);
         }
     }
 }

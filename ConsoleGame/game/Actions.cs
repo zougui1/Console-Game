@@ -15,11 +15,14 @@ namespace ConsoleGame.game
         /// </summary>
         public static void Wilderness(User user)
         {
+            Utils.Endl();
             Menu<Action, object> menu = new Menu<Action, object>("What do you want to do?")
                 .AddChoice("Move", new TAction<object>(user.ChooseDirection))
                 .AddChoice("Rest", new TAction<object>(user.Rest))
-                .AddChoice("Inventory", new TAction<object>(user.Inventory.Display));
-            menu.Choose();
+                .AddChoice("Inventory", new TAction<object>(ChooseInventory));
+            menu.Kind = "UI";
+            menu.SinglePage = true;
+            menu.InitSelection();
             user.ChooseAction();
         }
 
@@ -41,7 +44,8 @@ namespace ConsoleGame.game
                     user.Coords.MoveDown();
                 }));
             Utils.Endl();
-            menu.Choose();
+            menu.Kind = "UI";
+            menu.InitSelection();
             user.ChooseAction();
         }
 
@@ -79,7 +83,8 @@ namespace ConsoleGame.game
             menu.AddChoice("Exit", new TAction<object>(BackToInLocation));
 
             Utils.Endl();
-            menu.Choose();
+            menu.Kind = "UI";
+            menu.InitSelection();
             user.ChooseAction();
         }
 
@@ -97,7 +102,8 @@ namespace ConsoleGame.game
             menu.AddChoice("none", new TAction<object>(BackToInLocation));
 
             Utils.Endl();
-            menu.Choose();
+            menu.Kind = "UI";
+            menu.InitSelection();
         }
 
         public static void ChooseBuilding(User user)
@@ -131,7 +137,27 @@ namespace ConsoleGame.game
             menu.AddChoice("none", new TAction<object>(BackToInLocation));
 
             Utils.Endl();
-            menu.Choose();
+            menu.Kind = "UI";
+            menu.InitSelection();
+        }
+
+        public static void ChooseInventory(object arg = null)
+        {
+            User user = GameMenu.Game.User;
+
+            Menu<Action, object> menu = new Menu<Action, object>("Which inventory do you want to look in?");
+
+            for(int i = 0; i < user.Characters.Count; i++)
+            {
+                menu.AddChoice(user.Characters[i].Name, new TAction<object>(user.Characters[i].Inventory.Display));
+            }
+
+            menu.AddChoice("Bag", user.Bag.Display);
+
+            Utils.Endl();
+            menu.Kind = "UI";
+            menu.SinglePage = true;
+            menu.InitSelection();
         }
 
         public static void BackToInLocation(object arg = null)

@@ -9,11 +9,7 @@ namespace ConsoleGame.items.stuff.armor
 {
     public class Armor : AbstractEquipment
     {
-        /// <summary>
-        /// Category represent the category of the armor (head, torso, arm, leg, feet)
-        /// </summary>
-        public string SubCategory { get; private set; }
-        public int Defense { get; protected set; }
+        public int Defense { get; set; }
 
         public Armor(string name, string description, int defense = 0) : base(name, description)
         {
@@ -23,8 +19,8 @@ namespace ConsoleGame.items.stuff.armor
         [JsonConstructor]
         public Armor(
             string name, string description, int coins, Stats stats, string category,
-            int defense, string subCategory, List<string> equipable
-        ) : base(name, description, coins, stats, category, equipable)
+            int defense, string subCategory
+        ) : base(name, description, coins, stats, category)
         {
             SubCategory = subCategory;
             Defense = defense;

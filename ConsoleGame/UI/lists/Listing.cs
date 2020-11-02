@@ -7,7 +7,7 @@ namespace ConsoleGame.UI.lists
         /// <summary>
         /// List contains the objects we want to display
         /// </summary>
-        public IList<TList> List { get; private set; }
+        public IList<TList> List { get; protected set; }
         /// <summary>
         /// Striped define wether or no we want to apply a striped style to the list
         /// </summary>
@@ -21,6 +21,7 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         public string ColorOdd { get; set; } = "DarkGray";
 
+        protected Listing() : base() { }
         public Listing(IList<TList> list, ItemListing<TList> action, int itemsPerPage = 10)
             : base(list.Count, itemsPerPage: itemsPerPage)
         {
@@ -52,7 +53,7 @@ namespace ConsoleGame.UI.lists
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        private PaginateAction PaginationAction(ItemListing<TList> action)
+        protected PaginateAction PaginationAction(ItemListing<TList> action)
         {
             return new PaginateAction((int min, int max) =>
             {

@@ -8,24 +8,27 @@ namespace ConsoleGame.items.stuff
         /// <summary>
         /// Stats represent the additional stats given by the equipment
         /// </summary>
-        public Stats Stats { get; protected set; }
-        public string Category { get; private set; }
+        public Stats Stats { get; set; }
+        public string Category { get; set; }
+        /// <summary>
+        /// SubCategory represent the kind of armor (chestplate, robe, costume, etc...)
+        /// </summary>
+        public string SubCategory { get; set; }
         /// <summary>
         /// Equipable is used to know which classes can wear this armor
         /// </summary>
-        public List<string> Equipable { get; private set; }
+        public List<string> Equipable { get; set; }
 
         public AbstractEquipment(string name, string description, int coins = 0) : base(name, description, coins)
         {
             Equipable = new List<string>();
         }
 
-        public AbstractEquipment(string name, string description, int coins, Stats stats, string category, List<string> equipable)
+        public AbstractEquipment(string name, string description, int coins, Stats stats, string category)
             : base(name, description, coins)
         {
             Stats = stats;
             Category = category;
-            Equipable = equipable;
         }
     }
 }

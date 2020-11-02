@@ -13,6 +13,38 @@
         public double Agility { get; set; }
         public double Deftness { get; set; }
 
+        public double this[string propertyName]
+        {
+            get
+            {
+                switch (propertyName)
+                {
+                    case "MaxHealth":
+                        return MaxHealth;
+                    case "Health":
+                        return Health;
+                    case "MaxMana":
+                        return MaxMana;
+                    case "Mana":
+                        return Mana;
+                    case "Strength":
+                        return Strength;
+                    case "Resistance":
+                        return Resistance;
+                    case "MagicalMight":
+                        return MagicalMight;
+                    case "MagicalMending":
+                        return MagicalMending;
+                    case "Agility":
+                        return Agility;
+                    case "Deftness":
+                        return Deftness;
+                    default:
+                        return 0;
+                }
+            }
+        }
+
         public Stats(
             double health = 0,
             double mana = 0,
@@ -40,6 +72,27 @@
         {
             strength = Strength;
             magicalMight = MagicalMight;
+        }
+
+        public void Deconstruct(
+            out double health,
+            out double mana,
+            out double strength,
+            out double resistance,
+            out double magicalMight,
+            out double magicalMending,
+            out double agility,
+            out double deftness
+        )
+        {
+            health = Health;
+            mana = Mana;
+            strength = Strength;
+            resistance = Resistance;
+            magicalMight = MagicalMight;
+            magicalMending = MagicalMending;
+            agility = Agility;
+            deftness = Deftness;
         }
 
         public virtual void Init()

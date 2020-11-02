@@ -1,6 +1,7 @@
 ﻿using ConsoleGame.entity;
 using ConsoleGame.misc.coords;
 using ConsoleGame.misc.inventory;
+using ConsoleGame.items;
 using ConsoleGame.UI.header;
 using ConsoleGame.UI.menus;
 using ConsoleGame.utils;
@@ -16,21 +17,33 @@ namespace ConsoleGame.game
         public List<Character> Characters { get; set; }
         public MovableCoords Coords { get; set; }
         public List<Monster> MonstersInBattle { get; set; }
-        public Inventory Inventory { get; set; }
+        public Inventory Bag { get; set; }
         public int Gold { get; set; } = 0;
 
         public User()
         {
             Coords = new MovableCoords();
             Characters = new List<Character>();
-            Inventory = new Inventory();
+            Bag = new Inventory();
         }
 
         public User(Character character)
         {
             Coords = new MovableCoords();
             Characters = new List<Character>() { character };
-            Inventory = new Inventory();
+            Bag = new Inventory();
+            Bag.Add(new Item("Small potion", "description"));
+            Bag.Add(new Item("Small potion", "description"));
+            Bag.Add(new Item("Small potion", "description"));
+            Bag.Add(new Item("Something else", "description"));
+            Bag.Add(new Item("Small potion", "description"));
+            Bag.Add(new Item("Something else", "description"));
+            Bag.Add(new Item("Something else", "description"));
+            Bag.Add(new Item("Something else", "description"));
+            Bag.Add(new Item("Small potion", "description"));
+            Bag.Add(new Item("nothing", "description"));
+            Bag.Add(new Item("nothing", "description"));
+            Bag.Add(new Item("nothing", "description"));
         }
 
         [JsonConstructor]
@@ -71,12 +84,14 @@ namespace ConsoleGame.game
             Utils.Endl();
             TAction<Directions> method = new TAction<Directions>(Coords.NumberMove);
 
-            Menu<TAction<Directions>, Directions> menu = new Menu<TAction<Directions>, Directions>("")
+            Menu<TAction<Directions>, Directions> menu = new Menu<TAction<Directions>, Directions>("Where do you want to move?")
                 .AddChoice("Up", method, Directions.Up)
                 .AddChoice("Left", method, Directions.Left)
                 .AddChoice("Down", method, Directions.Down)
                 .AddChoice("Right", method, Directions.Right);
-            menu.Choose();
+            menu.Kind = "UI";
+            menu.SinglePage = true;
+            menu.InitSelection();
         }
 
         public void Rest(object args = null)
@@ -87,7 +102,7 @@ namespace ConsoleGame.game
                 double maxHealth = character.EntityStats.MaxHealth;
                 int healthPoints = RandomNumber.Between((int)maxHealth / 8, (int)maxHealth / 4);
                 character.Regen(healthPoints);
-                Utils.Cconsole.Color("Green").WriteLine("After a little rest you recovered {0} health points", healthPoints);
+                Utils.Cconsole.Green.WriteLine("After a little rest you recovered {0} health points", healthPoints);
                 Utils.Cconsole.WriteLine("{0} has now {1} health points", character.Name, character.EntityStats.Health);
                 Utils.Endl();
             });
@@ -139,21 +154,21 @@ namespace ConsoleGame.game
             Utils.Endl(2);
             if (MonstersInBattle.Count > 1)
             {
-                Utils.Cconsole.Color("Red").WriteLine("The ennemies has been defeated!");
+                Utils.Cconsole.Red.WriteLine("The ennemies has been defeated!");
             }
             else
             {
-                Utils.Cconsole.Color("Red").WriteLine("{0} has been defeated!", MonstersInBattle[0].Name);
+                Utils.Cconsole.Red.WriteLine("{0} has been defeated!", MonstersInBattle[0].Name);
             }
 
             Utils.Endl();
             if (Characters.Count > 1)
             {
-                Utils.Cconsole.Color("Green").WriteLine("The whole team has earned {0} experiences and {1} GP", experiences, gold);
+                Utils.Cconsole.Green.WriteLine("The whole team has earned {0} experiences and {1} GP", experiences, gold);
             }
             else
             {
-                Utils.Cconsole.Color("Green").WriteLine("{0} has earned {1} experiences and {2} GP", Characters[0].Name, experiences, gold);
+                Utils.Cconsole.Green.WriteLine("{0} has earned {1} experiences and {2} GP", Characters[0].Name, experiences, gold);
             }
             Utils.Endl(2);
         }
@@ -161,7 +176,7 @@ namespace ConsoleGame.game
         public void LooseMessage()
         {
             Utils.Endl(2);
-            Utils.Cconsole.Color("Red").WriteLine("You died!");
+            Utils.Cconsole.Red.WriteLine("You died!");
             Utils.Endl(2);
         }
 
@@ -207,7 +222,7 @@ namespace ConsoleGame.game
 
         public void GetLoots()
         {
-            MonstersInBattle.ForEach(entity => entity.Loots().ForEach(item => Inventory.Items.Add(item)));
+            MonstersInBattle.ForEach(entity => entity.Loots().ForEach(item => Bag.Items.Add(item)));
         }
 
         public void RemoveFocus()

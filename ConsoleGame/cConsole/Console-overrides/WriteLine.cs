@@ -3,6 +3,13 @@
     public partial class CConsole
     {
         #region WriteLines
+        public CConsole WriteLine()
+        {
+            Line = true;
+            Writer();
+            ResetProperties();
+            return this;
+        }
         public CConsole WriteLine(float value)
         {
             Line = true;

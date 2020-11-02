@@ -64,7 +64,7 @@ namespace ConsoleGame.entity
             NeededExperiences = neededExperiences;
             ClassName = (Classes)className;
             HasSpells = hasSpells;
-            Inventory = inventory;
+            Inventory = inventory ?? new Inventory(16);
 
             LevelingManager = new LevelingManager(this);
         }
@@ -91,14 +91,17 @@ namespace ConsoleGame.entity
 
             menu.RemoveLines = lineNumber;
             Utils.Endl();
-            menu.Choose();
+            //Console.CursorTop = Console.WindowHeight - lineNumber;
+            menu.Kind = "UI";
+            menu.SinglePage = true;
+            menu.InitSelection();
         }
 
         public void ChooseSpell(Entity target)
         {
             if (Spells.Count == 0)
             {
-                Utils.Cconsole.Color("Red").WriteLine("You do not have any spell.");
+                Utils.Cconsole.Red.WriteLine("You do not have any spell.");
                 ChooseAction();
                 return;
             }
@@ -126,7 +129,7 @@ namespace ConsoleGame.entity
             if (EntityStats.Mana < spell.RequiredMana)
             {
                 Utils.Endl();
-                Utils.Cconsole.Color("DarkRed").WriteLine("You don't have enough mana to cast \"{0}\"", spell.Name);
+                Utils.Cconsole.DarkRed.WriteLine("You don't have enough mana to cast \"{0}\"", spell.Name);
                 ChooseAction();
                 return;
             }
@@ -164,7 +167,7 @@ namespace ConsoleGame.entity
             {
                 --Potions;
                 Regen(8);
-                Utils.Cconsole.Color("Green").WriteLine("{0} drink a potion and has now {1} health points.", Name, EntityStats.Health);
+                Utils.Cconsole.Green.WriteLine("{0} drink a potion and has now {1} health points.", Name, EntityStats.Health);
                 Utils.Cconsole.WriteLine("{0} has {1} potions left", Name, Potions);
             }
         }
@@ -261,7 +264,7 @@ namespace ConsoleGame.entity
                 EntityStats.Experiences -= NeededExperiences;
                 NeededExperiences *= 2;
                 Utils.Endl(2);
-                Utils.Cconsole.Color("Green").WriteLine("{0} has level up", Name);
+                Utils.Cconsole.Green.WriteLine("{0} has level up", Name);
                 LevelingManager.LevelUp();
                 Utils.Endl();
                 GetAllStats();

@@ -19,10 +19,9 @@ namespace ConsoleGame.misc.coords
         public void NumberMove(Directions direction)
         {
             Utils.Endl();
-            Utils.Cconsole.Color("DarkGray").WriteLine("How many time do you want to move? (1-100)");
+            Utils.Cconsole.DarkGray.WriteLine("How many time do you want to move? (1-100)");
             string parameter = "range:1-100";
-            int movements = 0;
-            movements = Utils.TryParseConsoleCin("Please enter a valid number (between 1 and 100 included)", parameter, "DarkRed");
+            int movements = Utils.TryParseConsoleCin("Please enter a valid number (between 1 and 100 included)", parameter, "DarkRed");
             Utils.DeletePreviousLine();
             Moves(movements, direction);
         }
@@ -65,9 +64,9 @@ namespace ConsoleGame.misc.coords
                 GameMenu.Game.Statement = GameStatement.InLocation;
 
                 Utils.Cconsole
-                    .Color("Cyan").Write("You entered in \"")
-                    .Color("DarkCyan").Write(currentLocation.Name)
-                    .Color("Cyan").WriteLine("\"");
+                    .Cyan.Write("You entered in \"")
+                    .DarkCyan.Write(currentLocation.Name)
+                    .Cyan.WriteLine("\"");
 
                 GameMenu.Game.User.ChooseAction();
                 return true;

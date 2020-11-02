@@ -9,8 +9,8 @@ namespace ConsoleGame.items.stuff.handed
         /// <summary>
         /// TwoHanded is used to know if the equipment need two hands to be used
         /// </summary>
-        public bool TwoHanded { get; private set; }
-        public int Damages { get; protected set; }
+        public bool TwoHanded { get; set; }
+        public int Damages { get; set; }
 
         public AbstractHanded(string name, string description, int coins = 0, int damages = 0) : base(name, description, coins)
         {
@@ -19,17 +19,12 @@ namespace ConsoleGame.items.stuff.handed
         }
 
         public AbstractHanded(
-            string name, string description, int coins, Stats stats, string category, int damages, List<string> equipable
-        ) : base(name, description, coins, stats, category, equipable)
+            string name, string description, int coins, Stats stats, string category, int damages
+        ) : base(name, description, coins, stats, category)
         {
             Damages = damages;
             TwoHanded = false;
         }
-
-        /*public void Display()
-        {
-            Console.WriteLine("Weapon: {0} (damages: {1})", Name, Damages);
-        }*/
 
         /// <summary>
         /// Init is used to initialize the equipment

@@ -1,4 +1,5 @@
-﻿using ConsoleGame.entity.stats;
+﻿using ConsoleGame.entity;
+using ConsoleGame.entity.stats;
 using ConsoleGame.items.stuff.armor;
 using ConsoleGame.items.stuff.handed.shields;
 using ConsoleGame.items.stuff.handed.weapons;
@@ -19,17 +20,23 @@ namespace ConsoleGame
         public double DodgeChancePerUnit { get; private set; }
         public double CriticalChancePerUnit { get; private set; }
         public List<Spell> Spells { get; protected set; }
-        public Shield Shield { get; protected set; }
-        public Armor Head { get; protected set; }
-        public Armor Torso { get; protected set; }
-        public Armor Arms { get; protected set; }
-        public Armor Legs { get; protected set; }
-        public Armor Feet { get; protected set; }
+        public Shield Shield { get; set; }
+        public Armor Head { get; set; }
+        public Armor Torso { get; set; }
+        public Armor Arms { get; set; }
+        public Armor Legs { get; set; }
+        public Armor Feet { get; set; }
 
-        public Entity(string name, Weapon weapon = null)
+        private Entity()
+        {
+            Defend = false;
+            DodgeChancePerUnit = 0.1;
+            CriticalChancePerUnit = 0.15;
+        }
+
+        public Entity(string name, Weapon weapon = null) : this()
         {
             Name = name;
-            Defend = false;
 
             if (weapon != null)
             {
@@ -37,43 +44,43 @@ namespace ConsoleGame
             }
 
             Weapon = weapon;
-            DodgeChancePerUnit = 0.1;
-            CriticalChancePerUnit = 0.15;
-            Spells = new List<Spell>();
+        }
+
+        public Entity(
+            string name,
+            Weapon weapon,
+            List<Spell> spells,
+            Shield shield,
+            Armor head,
+            Armor torso,
+            Armor arms,
+            Armor legs,
+            Armor feet
+        ) : this(name, weapon)
+        {
+            Spells = spells ?? new List<Spell>();
+            Shield = shield;
+            Head = head;
+            Torso = torso;
+            Arms = arms;
+            Legs = legs;
+            Feet = feet;
         }
 
         public Entity(
             string name, InitStats entityStats, Weapon weapon, List<Spell> spells,
             Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet
-        )
+        ) : this(name, weapon, spells, shield, head, torso, arms, legs, feet)
         {
-            Name = name;
             EntityStats = entityStats;
-            Weapon = weapon;
-            Spells = spells;
-            Shield = shield;
-            Head = head;
-            Torso = torso;
-            Arms = arms;
-            Legs = legs;
-            Feet = feet;
         }
 
         public Entity(
             string name, EntityStats entityStats, Weapon weapon, List<Spell> spells,
             Shield shield, Armor head, Armor torso, Armor arms, Armor legs, Armor feet
-        )
+        ) : this(name, weapon, spells, shield, head, torso, arms, legs, feet)
         {
-            Name = name;
             EntityStats = entityStats;
-            Weapon = weapon;
-            Spells = spells;
-            Shield = shield;
-            Head = head;
-            Torso = torso;
-            Arms = arms;
-            Legs = legs;
-            Feet = feet;
         }
 
         public bool IsAlive()
@@ -121,6 +128,48 @@ namespace ConsoleGame
             }
             return defense;
         }
+        
+        public int GetTotalStats(string statName)
+        {
+            double stat = EntityStats[statName];
+
+            if (Weapon != null)
+            {
+                stat += Weapon?.Stats[statName] ?? 0;
+            }
+
+            if (Shield != null)
+            {
+                stat += Shield?.Stats[statName] ?? 0;
+            }
+
+            if (Head != null)
+            {
+                stat += Head?.Stats[statName] ?? 0;
+            }
+
+            if (Torso != null)
+            {
+                stat += Torso?.Stats[statName] ?? 0;
+            }
+
+            if (Arms != null)
+            {
+                stat += Arms?.Stats[statName] ?? 0;
+            }
+
+            if (Legs != null)
+            {
+                stat += Legs?.Stats[statName] ?? 0;
+            }
+
+            if (Feet != null)
+            {
+                stat += Feet?.Stats[statName] ?? 0;
+            }
+
+            return (int)stat;
+        }
 
         public void Attack(Entity target)
         {
@@ -140,13 +189,13 @@ namespace ConsoleGame
                 weaponDamages = Weapon.Damages;
             }
 
-            double damages = EntityStats.Strength + (weaponDamages * 0.9) - (int)(target.EntityStats.Resistance + (target.GetTotalDefense() * 0.9));
+            double damages = GetTotalStats("Strength") + (weaponDamages * 0.9) - (int)(target.GetTotalStats("Resistance") + (target.GetTotalDefense() * 0.9));
             return damages * DamagesRandomizer();
         }
 
         public double GetMagicalDamages(Spell spell, Entity target)
         {
-            double damages = EntityStats.MagicalMight + (spell.Power * 0.95) - (int)(target.EntityStats.Resistance + (target.GetTotalDefense() * 0.8));
+            double damages = GetTotalStats("MagicalMight") + (spell.Power * 0.95) - (int)(target.GetTotalStats("Resistance") + (target.GetTotalDefense() * 0.8));
             return damages * DamagesRandomizer();
         }
 
@@ -230,7 +279,7 @@ namespace ConsoleGame
                 message = "{0} cast {1} to {2} and inflict {3} damages.";
             }
 
-            Utils.Cconsole.Color("Red").WriteLine(message, Name, spell.Name, target.Name, damages);
+            Utils.Cconsole.Red.WriteLine(message, Name, spell.Name, target.Name, damages);
         }
 
         public void PhysicalMessage(Entity target, int damages, bool isCritical)
@@ -246,13 +295,13 @@ namespace ConsoleGame
                 message = "{0} attack {1} and inflict {2} damages.";
             }
 
-            Utils.Cconsole.Color("Red").WriteLine(message, Name, target.Name, damages);
+            Utils.Cconsole.Red.WriteLine(message, Name, target.Name, damages);
         }
 
         public void Dodge(Entity target)
         {
-            Utils.Cconsole.Color("Grey").WriteLine("{0} attack {1}\t", Name, target.Name);
-            Utils.Cconsole.Color("Cyan").WriteLine("But {0} dodge\t", target.Name);
+            Utils.Cconsole.Gray.WriteLine("{0} attack {1}\t", Name, target.Name);
+            Utils.Cconsole.Cyan.WriteLine("But {0} dodge\t", target.Name);
         }
 
         public void ReceiveDamages(int damages)
@@ -266,7 +315,7 @@ namespace ConsoleGame
 
         public void Defending(Entity args = null)
         {
-            Utils.Cconsole.Color("DarkMagenta").WriteLine("{0} is defending", Name);
+            Utils.Cconsole.DarkMagenta.WriteLine("{0} is defending", Name);
             Defend = true;
         }
 

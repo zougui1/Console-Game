@@ -137,7 +137,8 @@ namespace ConsoleGame.json
         public static Monster GetMonster(int id)
         {
             GetJTokenById(MonstersPath, id, out JToken jToken);
-            return ToObject<Monster>(jToken);
+            Monster monster = ToObject<Monster>(jToken);
+            return monster;
         }
 
         public static Weapon GetWeapon(int id)

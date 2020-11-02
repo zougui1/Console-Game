@@ -148,9 +148,29 @@ namespace ConsoleGame.json
                 GetNestedObject<Weapon>(jToken, result);
             }
 
-            if (jToken["Head_id"] != null || jToken["Torso_id"] != null || jToken["Arms_id"] != null || jToken["Legs_id"] != null || jToken["Feet_id"] != null)
+            if (jToken["Head_id"] != null)
             {
-                GetNestedObject<Armor>(jToken, result);
+                GetNestedObject<Armor>(jToken, result, "Head");
+            }
+
+            if (jToken["Torso_id"] != null)
+            {
+                GetNestedObject<Armor>(jToken, result, "Torso");
+            }
+
+            if (jToken["Arms_id"] != null)
+            {
+                GetNestedObject<Armor>(jToken, result, "Arms");
+            }
+
+            if (jToken["Legs_id"] != null)
+            {
+                GetNestedObject<Armor>(jToken, result, "Legs");
+            }
+
+            if (jToken["Feet_id"] != null)
+            {
+                GetNestedObject<Armor>(jToken, result, "Feet");
             }
 
             if (jToken["Items_id"] != null || jToken["Item_id"] != null)
@@ -222,13 +242,21 @@ namespace ConsoleGame.json
         /// <typeparam name="T">The type of the wanted object</typeparam>
         /// <param name="jToken">the json object which contain the object</param>
         /// <param name="result">result is the parsed object that contain the nested ones</param>
-        public static void GetNestedObject<T>(JToken jToken, dynamic result)
+        public static void GetNestedObject<T>(JToken jToken, dynamic result, string fieldName = null)
         {
             foreach (JToken nestedJToken in jToken)
             {
                 string current = nestedJToken.ToString();
                 int indexId = current.IndexOf("_id");
                 string lastNamespace = Utils.GetLastNamespace(typeof(T).ToString());
+
+                if (typeof(T) == typeof(Armor))
+                {
+                    if (current.IndexOf(fieldName) >= 0)
+                    {
+                        lastNamespace = fieldName;
+                    }
+                }
 
                 if (indexId >= 0 && current.IndexOf(lastNamespace) >= 0)
                 {
